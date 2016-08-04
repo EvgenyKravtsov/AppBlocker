@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 import evgenykravtsov.appblocker.domain.model.exercise.ExerciseSettings;
 import evgenykravtsov.appblocker.domain.model.exercise.ExerciseType;
-import evgenykravtsov.appblocker.domain.model.exercise.MathSettings;
+import evgenykravtsov.appblocker.domain.model.exercise.math.MathSettings;
 import evgenykravtsov.appblocker.external.android.AppBlockerController;
 import evgenykravtsov.appblocker.domain.model.AppBlockerSettings;
 
@@ -59,24 +59,24 @@ public class SharedPreferencesHelper
     ////
 
     @Override
-    public ExerciseType loadExerciseType() {
-        String type = loadString(
-                ExerciseSettings.KEY_EXERCISE_TYPE,
-                ExerciseSettings.DEFAULT_EXERCISE_TYPE);
-        return mapStringToExerciseType(type);
+    public boolean loadExerciseTypeStatus(ExerciseType exerciseType) {
+        switch (exerciseType) {
+            case Math:
+                return loadBoolean(KEY_MATH_EXERCISE_TYPE, DEFAULT_MATH_EXERCISE_TYPE_STATUS);
+            default:
+                return false;
+        }
+    }
+
+    @Override
+    public void saveExerciseTypeStatus(ExerciseType exerciseType, boolean status) {
+        switch (exerciseType) {
+            case Math:
+                saveBoolean(KEY_MATH_EXERCISE_TYPE, status);
+        }
     }
 
     ////
-
-    @Override
-    public int loadMinResult() {
-        return loadInt(KEY_MIN_RESULT, DEFAULT_MIN_RESULT);
-    }
-
-    @Override
-    public void saveMinResult(int minResult) {
-        saveInt(KEY_MIN_RESULT, minResult);
-    }
 
     @Override
     public int loadMaxResult() {
@@ -89,13 +89,49 @@ public class SharedPreferencesHelper
     }
 
     @Override
-    public String loadOperatorSet() {
-        return loadString(KEY_OPERATOR_SET, DEFAULT_OPERATOR_SET);
+    public boolean loadAdditionStatus() {
+        return loadBoolean(MathSettings.KEY_ADDITION_STATUS, MathSettings.DEFAULT_ADDITION_STATUS);
     }
 
     @Override
-    public void saveOperatorSet(String operatorSet) {
-        saveString(KEY_OPERATOR_SET, operatorSet);
+    public void saveAdditionStatus(boolean enabled) {
+        saveBoolean(MathSettings.KEY_ADDITION_STATUS, enabled);
+    }
+
+    @Override
+    public boolean loadSubstractionStatus() {
+        return loadBoolean(
+                MathSettings.KEY_SUBSTRACTION_STATUS,
+                MathSettings.DEFAULT_SUBSTRACTION_STATUS
+        );
+    }
+
+    @Override
+    public void saveSubstractionStatus(boolean enabled) {
+        saveBoolean(MathSettings.KEY_SUBSTRACTION_STATUS, enabled);
+    }
+
+    @Override
+    public boolean loadMultiplicationStatus() {
+        return loadBoolean(
+                MathSettings.KEY_MULTIPLICATION_STATUS,
+                MathSettings.DEFAULT_MULTIPLICATION_STATUS
+        );
+    }
+
+    @Override
+    public void saveMultiplicationStatus(boolean enabled) {
+        saveBoolean(MathSettings.KEY_MULTIPLICATION_STATUS, enabled);
+    }
+
+    @Override
+    public boolean loadDivisionStatus() {
+        return loadBoolean(MathSettings.KEY_DIVISION_STATUS, MathSettings.DEFAULT_DIVISION_STATUS);
+    }
+
+    @Override
+    public void saveDivisionStatus(boolean enabled) {
+        saveBoolean(MathSettings.KEY_DIVISION_STATUS, enabled);
     }
 
     ////
@@ -138,16 +174,5 @@ public class SharedPreferencesHelper
 
     private String loadString(String key, String defaultValue) {
         return sharedPreferences.getString(key, defaultValue);
-    }
-
-    ////
-
-    private ExerciseType mapStringToExerciseType(String type) {
-        switch (type) {
-            case ExerciseSettings.MATH_EXERCISE_TYPE:
-                return ExerciseType.Math;
-        }
-
-        return ExerciseType.Math;
     }
 }

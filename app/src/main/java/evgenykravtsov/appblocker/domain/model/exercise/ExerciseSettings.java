@@ -2,11 +2,12 @@ package evgenykravtsov.appblocker.domain.model.exercise;
 
 public interface ExerciseSettings {
 
-    String KEY_EXERCISE_TYPE = "key_exercise_type";
-    String MATH_EXERCISE_TYPE = "math";
-    String DEFAULT_EXERCISE_TYPE = "math";
+    String KEY_MATH_EXERCISE_TYPE = "key_math_exercise_type";
+    boolean DEFAULT_MATH_EXERCISE_TYPE_STATUS = true;
 
     ////
 
-    ExerciseType loadExerciseType();
+    boolean loadExerciseTypeStatus(ExerciseType exerciseType);
+
+    void saveExerciseTypeStatus(ExerciseType exerciseType, boolean status);
 }

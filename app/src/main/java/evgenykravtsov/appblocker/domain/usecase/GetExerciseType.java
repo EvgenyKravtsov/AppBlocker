@@ -10,8 +10,8 @@ public class GetExerciseType implements UseCase {
 
     @Override
     public void execute() {
-        ExerciseSettings exerciseSettings = DependencyInjection.provideExerciseSettings();
-        EventBus.getDefault().post(new Executed(exerciseSettings.loadExerciseType()));
+        // TODO Provide proper logic
+        EventBus.getDefault().post(new Executed(ExerciseType.Math));
     }
 
     ////

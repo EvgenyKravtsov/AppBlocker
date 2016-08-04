@@ -14,14 +14,14 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.Locale;
 
 import evgenykravtsov.appblocker.R;
-import evgenykravtsov.appblocker.domain.model.exercise.MathExercise;
+import evgenykravtsov.appblocker.domain.model.exercise.math.MathExercise;
 import evgenykravtsov.appblocker.domain.usecase.UseCaseThreadPool;
-import evgenykravtsov.appblocker.presentation.presenter.MathExerciseViewPresenter;
+import evgenykravtsov.appblocker.presentation.presenter.MathExercisePresenter;
 
 public class MathExerciseFragment extends Fragment
-        implements MathExerciseViewPresenter.View {
+        implements MathExercisePresenter.View {
 
-    private MathExerciseViewPresenter presenter;
+    private MathExercisePresenter presenter;
 
     private TextView firstOperandTextView;
     private TextView operatorTextView;
@@ -79,7 +79,7 @@ public class MathExerciseFragment extends Fragment
     ////
 
     private void bindPresenter() {
-        presenter = new MathExerciseViewPresenter(this, UseCaseThreadPool.getInstance());
+        presenter = new MathExercisePresenter(this, UseCaseThreadPool.getInstance());
         EventBus.getDefault().register(presenter);
     }
 

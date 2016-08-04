@@ -1,4 +1,4 @@
-package evgenykravtsov.appblocker.domain.model.exercise;
+package evgenykravtsov.appblocker.domain.model.exercise.math;
 
 public class MathExercise {
 

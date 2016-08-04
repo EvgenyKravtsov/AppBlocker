@@ -28,6 +28,8 @@
             android:launchMode="singleInstance"
             android:excludeFromRecents="true" />
 
+        <activity android:name=".presentation.view.activity.ExerciseSettingsActivity" />
+
         <service android:name=".external.android.AppBlockerService" />
 
         <receiver

@@ -46,4 +46,8 @@ public class UseCaseFactory {
                 DependencyInjection.provideMathSettings(),
                 EventBus.getDefault());
     }
+
+    public static GetPicturesExercise provideGetPicturesExerciseUseCase() {
+        return new GetPicturesExercise();
+    }
 }

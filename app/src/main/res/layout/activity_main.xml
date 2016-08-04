@@ -8,6 +8,12 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Exercise settings"
+        android:id="@+id/main_activity_exercise_settings_button" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/main_activity_block_control_button" />
 
     <android.support.v7.widget.RecyclerView

@@ -7,7 +7,7 @@ import evgenykravtsov.appblocker.domain.usecase.GetExerciseType;
 import evgenykravtsov.appblocker.domain.usecase.UseCaseFactory;
 import evgenykravtsov.appblocker.domain.usecase.UseCaseThreadPool;
 
-public class BlockerViewPresenter {
+public class BlockerPresenter {
 
     public interface View {
 
@@ -20,7 +20,7 @@ public class BlockerViewPresenter {
 
     ////
 
-    public BlockerViewPresenter(View view) {
+    public BlockerPresenter(View view) {
         this.view = view;
     }
 

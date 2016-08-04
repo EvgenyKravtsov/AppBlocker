@@ -11,28 +11,28 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class MainViewPresenterTest {
+public class MainPresenterTest {
 
-    private MainViewPresenter mainViewPresenter;
+    private MainPresenter mainPresenter;
 
-    private MainViewPresenter.View viewMock;
+    private MainPresenter.View viewMock;
     private AppBlockerSettings appBlockerSettingsMock;
     private UseCaseThreadPool useCaseThreadPoolMock;
-    private MainViewPresenter mainViewPresenterSpy;
+    private MainPresenter mainPresenterSpy;
 
     ////
 
     @Before
     public void setUp() {
-        viewMock = mock(MainViewPresenter.View.class);
+        viewMock = mock(MainPresenter.View.class);
         appBlockerSettingsMock = mock(AppBlockerSettings.class);
         useCaseThreadPoolMock = mock(UseCaseThreadPool.class);
-        mainViewPresenter = new MainViewPresenter(
+        mainPresenter = new MainPresenter(
                 viewMock,
                 appBlockerSettingsMock,
                 useCaseThreadPoolMock);
 
-        mainViewPresenterSpy = spy(mainViewPresenter);
+        mainPresenterSpy = spy(mainPresenter);
     }
 
     ////
@@ -40,28 +40,28 @@ public class MainViewPresenterTest {
     @Test
     public void toggleAppBlocker_appBlockerServiceOff_startAppBlockerCalled() {
         when(appBlockerSettingsMock.loadAppBlockerServiceStatus()).thenReturn(false);
-        mainViewPresenterSpy.toggleAppBlocker();
-        verify(mainViewPresenterSpy).startAppBlocker();
+        mainPresenterSpy.toggleAppBlocker();
+        verify(mainPresenterSpy).startAppBlocker();
     }
 
     @Test
     public void toggleAppBlocker_appBlockerServiceOn_stopAppBlockerCalled() {
         when(appBlockerSettingsMock.loadAppBlockerServiceStatus()).thenReturn(true);
-        mainViewPresenterSpy.toggleAppBlocker();
-        verify(mainViewPresenterSpy).stopAppBlocker();
+        mainPresenterSpy.toggleAppBlocker();
+        verify(mainPresenterSpy).stopAppBlocker();
     }
 
     @Test
     public void toggleAppBlocker_appBlockerServiceOff_setBlockControlStateTrue() {
         when(appBlockerSettingsMock.loadAppBlockerServiceStatus()).thenReturn(false);
-        mainViewPresenterSpy.toggleAppBlocker();
+        mainPresenterSpy.toggleAppBlocker();
         verify(viewMock).setBlockControlState(true);
     }
 
     @Test
     public void toggleAppBlocker_appBlockerServiceOn_setBlockControlStateFalse() {
         when(appBlockerSettingsMock.loadAppBlockerServiceStatus()).thenReturn(true);
-        mainViewPresenterSpy.toggleAppBlocker();
+        mainPresenterSpy.toggleAppBlocker();
         verify(viewMock).setBlockControlState(false);
     }
 }

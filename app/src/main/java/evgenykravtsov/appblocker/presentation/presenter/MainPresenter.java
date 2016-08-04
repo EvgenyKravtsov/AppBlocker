@@ -11,7 +11,7 @@ import evgenykravtsov.appblocker.domain.usecase.UseCaseFactory;
 import evgenykravtsov.appblocker.domain.usecase.UseCaseThreadPool;
 import evgenykravtsov.appblocker.domain.model.AppBlockerSettings;
 
-public class MainViewPresenter {
+public class MainPresenter {
 
     public interface View {
 
@@ -28,9 +28,9 @@ public class MainViewPresenter {
 
     ////
 
-    public MainViewPresenter(View view,
-                             AppBlockerSettings appBlockerSettings,
-                             UseCaseThreadPool threadPool) {
+    public MainPresenter(View view,
+                         AppBlockerSettings appBlockerSettings,
+                         UseCaseThreadPool threadPool) {
         this.view = view;
         this.appBlockerSettings = appBlockerSettings;
         this.threadPool = threadPool;

@@ -3,8 +3,8 @@ package evgenykravtsov.appblocker.domain.usecase;
 import org.greenrobot.eventbus.EventBus;
 
 import evgenykravtsov.appblocker.domain.model.exercise.ExerciseGenerator;
-import evgenykravtsov.appblocker.domain.model.exercise.MathExercise;
-import evgenykravtsov.appblocker.domain.model.exercise.MathSettings;
+import evgenykravtsov.appblocker.domain.model.exercise.math.MathExercise;
+import evgenykravtsov.appblocker.domain.model.exercise.math.MathSettings;
 
 public class GetMathExercise implements UseCase {
 
@@ -29,6 +29,8 @@ public class GetMathExercise implements UseCase {
         MathExercise mathExercise = exerciseGenerator.generateMathExercise(mathSettings);
         if (mathExercise != null) eventBus.post(new Executed(mathExercise));
     }
+
+    ////
 
     public class Executed {
 

@@ -8,12 +8,13 @@ import org.greenrobot.eventbus.EventBus;
 
 import evgenykravtsov.appblocker.R;
 import evgenykravtsov.appblocker.domain.model.exercise.ExerciseType;
-import evgenykravtsov.appblocker.presentation.presenter.BlockerViewPresenter;
+import evgenykravtsov.appblocker.presentation.presenter.BlockerPresenter;
 import evgenykravtsov.appblocker.presentation.view.fragment.MathExerciseFragment;
+import evgenykravtsov.appblocker.presentation.view.fragment.PictureExerciseFragment;
 
-public class BlockerActivity extends AppCompatActivity implements BlockerViewPresenter.View {
+public class BlockerActivity extends AppCompatActivity implements BlockerPresenter.View {
 
-    private BlockerViewPresenter presenter;
+    private BlockerPresenter presenter;
 
     ////
 
@@ -59,7 +60,7 @@ public class BlockerActivity extends AppCompatActivity implements BlockerViewPre
     ////
 
     private void bindPresenter() {
-        presenter = new BlockerViewPresenter(this);
+        presenter = new BlockerPresenter(this);
         EventBus.getDefault().register(presenter);
     }
 

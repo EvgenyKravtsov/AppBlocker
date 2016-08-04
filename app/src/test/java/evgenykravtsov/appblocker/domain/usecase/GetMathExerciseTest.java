@@ -5,8 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import evgenykravtsov.appblocker.domain.model.exercise.ExerciseGenerator;
-import evgenykravtsov.appblocker.domain.model.exercise.MathExercise;
-import evgenykravtsov.appblocker.domain.model.exercise.MathSettings;
+import evgenykravtsov.appblocker.domain.model.exercise.math.MathExercise;
+import evgenykravtsov.appblocker.domain.model.exercise.math.MathSettings;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
