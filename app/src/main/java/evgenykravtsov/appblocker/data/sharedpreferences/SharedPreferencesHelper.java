@@ -63,6 +63,10 @@ public class SharedPreferencesHelper
         switch (exerciseType) {
             case Math:
                 return loadBoolean(KEY_MATH_EXERCISE_TYPE, DEFAULT_MATH_EXERCISE_TYPE_STATUS);
+            case Pictures:
+                return loadBoolean(KEY_PICTURES_EXERCISE_TYPE, DEFAULT_PICTURES_EXERCISE_TYPE_STATUS);
+            case Clock:
+                return loadBoolean(KEY_CLOCK_EXERCISE_TYPE, DEFAULT_CLOCK_EXERCISE_TYPE_STATUS);
             default:
                 return false;
         }
@@ -73,7 +77,24 @@ public class SharedPreferencesHelper
         switch (exerciseType) {
             case Math:
                 saveBoolean(KEY_MATH_EXERCISE_TYPE, status);
+                break;
+            case Pictures:
+                saveBoolean(KEY_PICTURES_EXERCISE_TYPE, status);
+                break;
+            case Clock:
+                saveBoolean(KEY_CLOCK_EXERCISE_TYPE, status);
+                break;
         }
+    }
+
+    @Override
+    public int loadSessionExerciseNumber() {
+        return loadInt(KEY_SESSION_EXERCISE_NUMBER, DEFAULT_SESSION_EXERCISE_NUMBER);
+    }
+
+    @Override
+    public void saveSessionExerciseNumber(int number) {
+        saveInt(KEY_SESSION_EXERCISE_NUMBER, number);
     }
 
     ////

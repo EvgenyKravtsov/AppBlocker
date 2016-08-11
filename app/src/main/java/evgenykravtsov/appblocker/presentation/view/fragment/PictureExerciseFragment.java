@@ -18,6 +18,7 @@ import evgenykravtsov.appblocker.R;
 import evgenykravtsov.appblocker.domain.model.exercise.pictures.Picture;
 import evgenykravtsov.appblocker.domain.model.exercise.pictures.PicturesExercise;
 import evgenykravtsov.appblocker.presentation.presenter.PicturesExercisePresenter;
+import evgenykravtsov.appblocker.presentation.view.activity.BlockerActivity;
 
 public class PictureExerciseFragment extends Fragment
         implements PicturesExercisePresenter.View {
@@ -73,8 +74,8 @@ public class PictureExerciseFragment extends Fragment
     }
 
     @Override
-    public void finish() {
-        getActivity().finish();
+    public void exerciseSolved() {
+        ((BlockerActivity) getActivity()).solveExercise();
     }
 
 

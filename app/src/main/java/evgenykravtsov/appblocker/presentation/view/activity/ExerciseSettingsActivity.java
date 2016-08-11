@@ -7,9 +7,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.Locale;
 
 import evgenykravtsov.appblocker.DependencyInjection;
 import evgenykravtsov.appblocker.R;
@@ -25,9 +28,14 @@ public class ExerciseSettingsActivity extends AppCompatActivity
     private ExerciseSettingsPresenter presenter;
     private ExerciseSettings exerciseSettings;
 
+    private EditText numberEditText;
     private Button mathButton;
     private CheckBox mathCheckBox;
     private FrameLayout mathLayout;
+    private Button picturesButton;
+    private CheckBox picturesCheckBox;
+    private Button clockButton;
+    private CheckBox clockCheckBox;
 
     private int activatedExerciseTypesCount;
 
@@ -53,12 +61,17 @@ public class ExerciseSettingsActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-
+        establishInitialViewsState();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+
+        presenter.setSessionExerciseNumber(
+                Integer.parseInt(numberEditText.getText().toString())
+        );
+
         unbindPresenter();
     }
 
@@ -74,6 +87,8 @@ public class ExerciseSettingsActivity extends AppCompatActivity
     }
 
     private void bindViews() {
+        numberEditText = (EditText) findViewById(R.id.exercise_settings_activity_number_edit_text);
+
         mathButton = (Button) findViewById(R.id.exercise_settings_activity_math_button);
 
         mathCheckBox = (CheckBox) findViewById(R.id.exercise_settings_activity_math_check_box);
@@ -82,6 +97,20 @@ public class ExerciseSettingsActivity extends AppCompatActivity
         mathCheckBox.setChecked(mathStatus);
 
         mathLayout = (FrameLayout) findViewById(R.id.exercise_settings_activity_math_layout);
+
+        picturesButton = (Button) findViewById(R.id.exercise_settings_activity_pictures_button);
+
+        picturesCheckBox = (CheckBox) findViewById(R.id.exercise_settings_activity_pictures_check_box);
+        boolean picturesStatus = exerciseSettings.loadExerciseTypeStatus(ExerciseType.Pictures);
+        if (picturesStatus) activatedExerciseTypesCount++;
+        picturesCheckBox.setChecked(picturesStatus);
+
+        clockButton = (Button) findViewById(R.id.exercise_settings_activity_clock_button);
+
+        clockCheckBox = (CheckBox) findViewById(R.id.exercise_settings_activity_clock_check_box);
+        boolean clockStatus = exerciseSettings.loadExerciseTypeStatus(ExerciseType.Clock);
+        if (clockStatus) activatedExerciseTypesCount++;
+        clockCheckBox.setChecked(clockStatus);
     }
 
     private void bindViewListeners() {
@@ -112,6 +141,49 @@ public class ExerciseSettingsActivity extends AppCompatActivity
                 }
             }
         });
+
+        picturesCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                if (!checked) {
+                    if (activatedExerciseTypesCount == 1) {
+                        // TODO Notify user
+                        picturesCheckBox.setChecked(true);
+                        return;
+                    }
+
+                    activatedExerciseTypesCount--;
+                    exerciseSettings.saveExerciseTypeStatus(ExerciseType.Pictures, false);
+                } else {
+                    activatedExerciseTypesCount++;
+                    exerciseSettings.saveExerciseTypeStatus(ExerciseType.Pictures, true);
+                }
+            }
+        });
+
+        clockCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                if (!checked) {
+                    if (activatedExerciseTypesCount == 1) {
+                        // TODO Notify user
+                        picturesCheckBox.setChecked(true);
+                        return;
+                    }
+
+                    activatedExerciseTypesCount--;
+                    exerciseSettings.saveExerciseTypeStatus(ExerciseType.Clock, false);
+                } else {
+                    activatedExerciseTypesCount++;
+                    exerciseSettings.saveExerciseTypeStatus(ExerciseType.Clock, true);
+                }
+            }
+        });
+    }
+
+    private void establishInitialViewsState() {
+        numberEditText.setText(
+                String.format(Locale.ROOT, "%d",presenter.getSessionExerciseNumber()));
     }
 }
 

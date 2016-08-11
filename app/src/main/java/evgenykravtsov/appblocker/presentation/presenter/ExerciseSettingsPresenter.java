@@ -1,8 +1,8 @@
 package evgenykravtsov.appblocker.presentation.presenter;
 
+
 import evgenykravtsov.appblocker.DependencyInjection;
 import evgenykravtsov.appblocker.domain.model.exercise.ExerciseSettings;
-import evgenykravtsov.appblocker.domain.model.exercise.ExerciseType;
 
 public class ExerciseSettingsPresenter {
 
@@ -11,16 +11,26 @@ public class ExerciseSettingsPresenter {
     ////
 
     private View view;
+    private ExerciseSettings exerciseSettings;
 
     ////
 
     public ExerciseSettingsPresenter(View view) {
         this.view = view;
+        exerciseSettings = DependencyInjection.provideExerciseSettings();
     }
 
     ////
 
     public void unbindView() {
         view = null;
+    }
+
+    public int getSessionExerciseNumber() {
+        return exerciseSettings.loadSessionExerciseNumber();
+    }
+
+    public void setSessionExerciseNumber(int number) {
+        exerciseSettings.saveSessionExerciseNumber(number);
     }
 }

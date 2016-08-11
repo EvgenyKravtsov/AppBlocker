@@ -1,6 +1,9 @@
 package evgenykravtsov.appblocker.external.android;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
+import android.app.usage.UsageStats;
+import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -9,6 +12,8 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import evgenykravtsov.appblocker.domain.model.App;
 import evgenykravtsov.appblocker.domain.model.AppBlocker;
@@ -48,20 +53,9 @@ public class SystemControllerAndroid implements SystemController, AppBlocker.Ope
 
     @Override
     public List<App> getForegroundApps() {
-        List<App> foregroundApps = new ArrayList<>();
-        List<ActivityManager.RunningAppProcessInfo> runningAppProcessInfoList =
-                activityManager.getRunningAppProcesses();
-
-        for (ActivityManager.RunningAppProcessInfo appProcessInfo : runningAppProcessInfoList) {
-            if (appProcessInfo.importance ==
-                    ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
-                foregroundApps.add(new App(
-                        getAppTitle(appProcessInfo),
-                        appProcessInfo.processName));
-            }
-        }
-
-        return foregroundApps;
+        if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.LOLLIPOP)
+            return getForegroundAppsPostLollipop();
+        else return getForefroundAppsPreLollipop();
     }
 
     @Override
@@ -78,10 +72,6 @@ public class SystemControllerAndroid implements SystemController, AppBlocker.Ope
 
     @Override
     public void execute() {
-
-        // TODO Delete test code
-        Log.d("LOG", "App Blocked");
-
         Intent intent = new Intent(context, BlockerActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
@@ -107,4 +97,83 @@ public class SystemControllerAndroid implements SystemController, AppBlocker.Ope
         }
         return "";
     }
+
+    private List<App> getForefroundAppsPreLollipop() {
+        List<App> foregroundApps = new ArrayList<>();
+        List<ActivityManager.RunningAppProcessInfo> runningAppProcessInfoList =
+                activityManager.getRunningAppProcesses();
+
+        for (ActivityManager.RunningAppProcessInfo appProcessInfo : runningAppProcessInfoList) {
+            if (appProcessInfo.importance ==
+                    ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                foregroundApps.add(new App(
+                        getAppTitle(appProcessInfo),
+                        appProcessInfo.processName));
+            }
+        }
+
+        return foregroundApps;
+    }
+
+    @SuppressLint("InlinedApi")
+    private List<App> getForegroundAppsPostLollipop() {
+        List<App> foregroundApps = new ArrayList<>();
+
+        UsageStatsManager manager = (UsageStatsManager)
+                context.getSystemService(Context.USAGE_STATS_SERVICE);
+
+        long time = System.currentTimeMillis();
+
+        List<UsageStats> appList = manager.queryUsageStats(
+                UsageStatsManager.INTERVAL_DAILY,
+                time - 1000 * 1000,
+                time);
+
+        if (appList != null && appList.size() > 0) {
+            SortedMap<Long, UsageStats> sortedMap = new TreeMap<>();
+
+            for (UsageStats usageStats : appList)
+                sortedMap.put(usageStats.getLastTimeUsed(), usageStats);
+
+            if (!sortedMap.isEmpty())
+                foregroundApps.add(
+                        new App("APP_NAME",
+                                sortedMap.get(sortedMap.lastKey()).getPackageName()));
+        }
+
+        return foregroundApps;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

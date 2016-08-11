@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Random;
 
 import evgenykravtsov.appblocker.DependencyInjection;
+import evgenykravtsov.appblocker.domain.model.exercise.clock.ClockExercise;
 import evgenykravtsov.appblocker.domain.model.exercise.math.MathExercise;
 import evgenykravtsov.appblocker.domain.model.exercise.math.MathSettings;
 import evgenykravtsov.appblocker.domain.model.exercise.pictures.Picture;
@@ -87,9 +88,8 @@ public class ExerciseGenerator {
         PictureCategory correctCategory = PictureCategory.getRandom();
 
         PictureCategory wrongCategory;
-        do {
-            wrongCategory = PictureCategory.getRandom();
-        } while (correctCategory == wrongCategory);
+        do wrongCategory = PictureCategory.getRandom();
+        while (correctCategory == wrongCategory);
 
         List<Picture> correctCategoryPictures = categorizedPictures.get(correctCategory);
         List<Picture> wrongCategoryPictures = categorizedPictures.get(wrongCategory);
@@ -121,6 +121,13 @@ public class ExerciseGenerator {
         }
 
         return new PicturesExercise(pictures, correctPictureIndex);
+    }
+
+    public ClockExercise generateClockExercise() {
+        int hours = random.nextInt(12);
+        int minutes = random.nextInt(12);
+
+        return new ClockExercise(hours, minutes * 5);
     }
 
     ////

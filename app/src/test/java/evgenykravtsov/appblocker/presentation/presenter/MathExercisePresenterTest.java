@@ -46,6 +46,6 @@ public class MathExercisePresenterTest {
         when(mathExerciseMock.getResult()).thenReturn(1);
         mathExercisePresenter.setMathExercise(mathExerciseMock);
         mathExercisePresenter.checkResult(2);
-        verify(viewMock, never()).finish();
+        verify(viewMock, never()).exerciseSolved();
     }
 }

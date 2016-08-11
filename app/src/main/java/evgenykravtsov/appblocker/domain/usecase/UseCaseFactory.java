@@ -50,4 +50,8 @@ public class UseCaseFactory {
     public static GetPicturesExercise provideGetPicturesExerciseUseCase() {
         return new GetPicturesExercise();
     }
+
+    public static GetClockExercise provideGetClockExerciseUseCase() {
+        return new GetClockExercise();
+    }
 }

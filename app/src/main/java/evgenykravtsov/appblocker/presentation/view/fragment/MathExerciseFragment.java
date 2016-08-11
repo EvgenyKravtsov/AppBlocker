@@ -17,6 +17,7 @@ import evgenykravtsov.appblocker.R;
 import evgenykravtsov.appblocker.domain.model.exercise.math.MathExercise;
 import evgenykravtsov.appblocker.domain.usecase.UseCaseThreadPool;
 import evgenykravtsov.appblocker.presentation.presenter.MathExercisePresenter;
+import evgenykravtsov.appblocker.presentation.view.activity.BlockerActivity;
 
 public class MathExerciseFragment extends Fragment
         implements MathExercisePresenter.View {
@@ -72,8 +73,8 @@ public class MathExerciseFragment extends Fragment
     }
 
     @Override
-    public void finish() {
-        getActivity().finish();
+    public void exerciseSolved() {
+        ((BlockerActivity) getActivity()).solveExercise();
     }
 
     ////

@@ -13,7 +13,7 @@ public class MathExercisePresenter {
 
         void showMathExercise(MathExercise mathExercise);
 
-        void finish();
+        void exerciseSolved();
     }
 
     ////
@@ -48,7 +48,7 @@ public class MathExercisePresenter {
     public void checkResult(int result) {
         if (result == mathExercise.getResult()) {
             threadPool.execute(UseCaseFactory.provideAllowAppUseCase());
-            view.finish();
+            view.exerciseSolved();
         }
     }
 
