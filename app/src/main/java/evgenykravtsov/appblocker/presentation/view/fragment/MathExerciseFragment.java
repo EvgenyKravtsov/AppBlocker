@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -75,6 +76,12 @@ public class MathExerciseFragment extends Fragment
     @Override
     public void exerciseSolved() {
         ((BlockerActivity) getActivity()).solveExercise();
+    }
+
+    @Override
+    public void notifyCheckResult(boolean solved) {
+        String message = solved ? "Correct!" : "Incorrect!";
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
     ////

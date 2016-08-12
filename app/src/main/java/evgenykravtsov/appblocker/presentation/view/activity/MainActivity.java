@@ -1,8 +1,8 @@
 package evgenykravtsov.appblocker.presentation.view.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,10 +20,12 @@ import evgenykravtsov.appblocker.domain.usecase.UseCaseThreadPool;
 import evgenykravtsov.appblocker.presentation.adapter.AppsAdapter;
 import evgenykravtsov.appblocker.presentation.presenter.MainPresenter;
 
-public class MainActivity extends AppCompatActivity implements MainPresenter.View {
+public class MainActivity extends AppCompatActivity
+        implements MainPresenter.View {
 
     private MainPresenter presenter;
 
+    private Button feedbackButton;
     private Button exerciseSettingsButton;
     private Button blockControlButton;
     private RecyclerView appsRecyclerView;
@@ -88,12 +90,21 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
     }
 
     private void bindViews() {
+        feedbackButton = (Button) findViewById(R.id.main_activity_feedback_button);
         exerciseSettingsButton = (Button) findViewById(R.id.main_activity_exercise_settings_button);
         blockControlButton = (Button) findViewById(R.id.main_activity_block_control_button);
         appsRecyclerView = (RecyclerView) findViewById(R.id.main_activity_apps_recycler_view);
     }
 
     private void bindViewListeners() {
+        feedbackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, FeedbackActivity.class);
+                startActivity(intent);
+            }
+        });
+
         exerciseSettingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

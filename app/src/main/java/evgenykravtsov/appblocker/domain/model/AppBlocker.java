@@ -64,6 +64,10 @@ public class AppBlocker {
     }
 
     public void executeBlockOperation() {
+
+        // TODO Delete test code
+        Log.d("debug", "block executed");
+
         operation.execute();
     }
 

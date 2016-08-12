@@ -11,6 +11,7 @@ import evgenykravtsov.appblocker.R;
 import evgenykravtsov.appblocker.domain.model.exercise.ExerciseType;
 import evgenykravtsov.appblocker.presentation.presenter.BlockerPresenter;
 import evgenykravtsov.appblocker.presentation.view.fragment.ClockExerciseFragment;
+import evgenykravtsov.appblocker.presentation.view.fragment.ColorExerciseFragment;
 import evgenykravtsov.appblocker.presentation.view.fragment.MathExerciseFragment;
 import evgenykravtsov.appblocker.presentation.view.fragment.PictureExerciseFragment;
 
@@ -71,6 +72,9 @@ public class BlockerActivity extends AppCompatActivity implements BlockerPresent
                 break;
             case Clock:
                 fragment = new ClockExerciseFragment();
+                break;
+            case Color:
+                fragment = new ColorExerciseFragment();
                 break;
         }
 

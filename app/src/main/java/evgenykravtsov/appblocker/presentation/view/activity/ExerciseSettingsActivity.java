@@ -1,6 +1,5 @@
 package evgenykravtsov.appblocker.presentation.view.activity;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,8 +8,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.Locale;
 
@@ -36,6 +33,8 @@ public class ExerciseSettingsActivity extends AppCompatActivity
     private CheckBox picturesCheckBox;
     private Button clockButton;
     private CheckBox clockCheckBox;
+    private Button colorButton;
+    private CheckBox colorCheckBox;
 
     private int activatedExerciseTypesCount;
 
@@ -111,6 +110,13 @@ public class ExerciseSettingsActivity extends AppCompatActivity
         boolean clockStatus = exerciseSettings.loadExerciseTypeStatus(ExerciseType.Clock);
         if (clockStatus) activatedExerciseTypesCount++;
         clockCheckBox.setChecked(clockStatus);
+
+        colorButton = (Button) findViewById(R.id.exercise_settings_activity_color_button);
+
+        colorCheckBox = (CheckBox) findViewById(R.id.exercise_settings_activity_color_check_box);
+        boolean colorStatus = exerciseSettings.loadExerciseTypeStatus(ExerciseType.Color);
+        if (colorStatus) activatedExerciseTypesCount++;
+        colorCheckBox.setChecked(colorStatus);
     }
 
     private void bindViewListeners() {
@@ -167,7 +173,7 @@ public class ExerciseSettingsActivity extends AppCompatActivity
                 if (!checked) {
                     if (activatedExerciseTypesCount == 1) {
                         // TODO Notify user
-                        picturesCheckBox.setChecked(true);
+                        clockCheckBox.setChecked(true);
                         return;
                     }
 
@@ -176,6 +182,25 @@ public class ExerciseSettingsActivity extends AppCompatActivity
                 } else {
                     activatedExerciseTypesCount++;
                     exerciseSettings.saveExerciseTypeStatus(ExerciseType.Clock, true);
+                }
+            }
+        });
+
+        colorCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                if (!checked) {
+                    if (activatedExerciseTypesCount == 1) {
+                        // TODO Notify user
+                        colorCheckBox.setChecked(true);
+                        return;
+                    }
+
+                    activatedExerciseTypesCount--;
+                    exerciseSettings.saveExerciseTypeStatus(ExerciseType.Color, false);
+                } else {
+                    activatedExerciseTypesCount++;
+                    exerciseSettings.saveExerciseTypeStatus(ExerciseType.Color, true);
                 }
             }
         });

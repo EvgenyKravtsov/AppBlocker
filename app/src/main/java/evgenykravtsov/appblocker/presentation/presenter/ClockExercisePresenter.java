@@ -1,7 +1,5 @@
 package evgenykravtsov.appblocker.presentation.presenter;
 
-import android.util.Log;
-
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -17,6 +15,8 @@ public class ClockExercisePresenter {
         void showClockExercise(ClockExercise clockExercise);
 
         void exerciseSolved();
+
+        void notifyCheckResult(boolean solved);
     }
 
     ////
@@ -51,8 +51,9 @@ public class ClockExercisePresenter {
     public void checkResult(int hours, int minutes) {
         if (hours == clockExercise.getHours() && minutes == clockExercise.getMinutes()) {
             threadPool.execute(UseCaseFactory.provideAllowAppUseCase());
+            view.notifyCheckResult(true);
             view.exerciseSolved();
-        }
+        } else view.notifyCheckResult(false);
     }
 
     ////
@@ -63,3 +64,23 @@ public class ClockExercisePresenter {
         view.showClockExercise(event.getClockExercise());
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

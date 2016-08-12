@@ -54,4 +54,8 @@ public class UseCaseFactory {
     public static GetClockExercise provideGetClockExerciseUseCase() {
         return new GetClockExercise();
     }
+
+    public static GetColorExercise provideGetColorExerciseUseCase() {
+        return new GetColorExercise(new ExerciseGenerator(), EventBus.getDefault());
+    }
 }

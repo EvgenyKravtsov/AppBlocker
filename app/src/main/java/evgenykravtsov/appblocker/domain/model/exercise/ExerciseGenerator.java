@@ -7,6 +7,8 @@ import java.util.Random;
 
 import evgenykravtsov.appblocker.DependencyInjection;
 import evgenykravtsov.appblocker.domain.model.exercise.clock.ClockExercise;
+import evgenykravtsov.appblocker.domain.model.exercise.color.ColorExercise;
+import evgenykravtsov.appblocker.domain.model.exercise.color.ColorType;
 import evgenykravtsov.appblocker.domain.model.exercise.math.MathExercise;
 import evgenykravtsov.appblocker.domain.model.exercise.math.MathSettings;
 import evgenykravtsov.appblocker.domain.model.exercise.pictures.Picture;
@@ -128,6 +130,11 @@ public class ExerciseGenerator {
         int minutes = random.nextInt(12);
 
         return new ClockExercise(hours, minutes * 5);
+    }
+
+    public ColorExercise generateColorExercise() {
+        ColorType answerColor = ColorType.values()[random.nextInt(ColorType.values().length)];
+        return new ColorExercise(answerColor);
     }
 
     ////

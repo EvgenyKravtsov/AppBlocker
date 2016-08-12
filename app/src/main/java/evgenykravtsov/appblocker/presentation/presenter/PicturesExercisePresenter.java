@@ -15,6 +15,8 @@ public class PicturesExercisePresenter {
         void showPicturesExercise(PicturesExercise picturesExercise);
 
         void exerciseSolved();
+
+        void notifyCheckResult(boolean solved);
     }
 
     ////
@@ -49,7 +51,11 @@ public class PicturesExercisePresenter {
     public void checkResult(int chosenPictureIndex) {
         if (chosenPictureIndex == picturesExercise.getCorrectPictureIndex()) {
             threadPool.execute(UseCaseFactory.provideAllowAppUseCase());
+            view.notifyCheckResult(true);
             view.exerciseSolved();
+        } else {
+            view.notifyCheckResult(false);
+            requestPicturesExrcise();
         }
     }
 

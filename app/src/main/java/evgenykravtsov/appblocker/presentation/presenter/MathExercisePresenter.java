@@ -14,6 +14,8 @@ public class MathExercisePresenter {
         void showMathExercise(MathExercise mathExercise);
 
         void exerciseSolved();
+
+        void notifyCheckResult(boolean solved);
     }
 
     ////
@@ -48,8 +50,9 @@ public class MathExercisePresenter {
     public void checkResult(int result) {
         if (result == mathExercise.getResult()) {
             threadPool.execute(UseCaseFactory.provideAllowAppUseCase());
+            view.notifyCheckResult(true);
             view.exerciseSolved();
-        }
+        } else view.notifyCheckResult(false);
     }
 
     ////

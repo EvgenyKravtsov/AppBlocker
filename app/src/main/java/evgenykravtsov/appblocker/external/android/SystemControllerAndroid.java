@@ -8,6 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -17,6 +20,7 @@ import java.util.TreeMap;
 
 import evgenykravtsov.appblocker.domain.model.App;
 import evgenykravtsov.appblocker.domain.model.AppBlocker;
+import evgenykravtsov.appblocker.domain.model.SoundTipType;
 import evgenykravtsov.appblocker.domain.model.SystemController;
 import evgenykravtsov.appblocker.presentation.view.activity.BlockerActivity;
 
@@ -66,6 +70,24 @@ public class SystemControllerAndroid implements SystemController, AppBlocker.Ope
     @Override
     public void stopAppBlockerService() {
         context.stopService(new Intent(context, AppBlockerService.class));
+    }
+
+    @Override
+    public void playSoundTip(SoundTipType type) {
+
+        // TODO Delete test code
+        Log.d("debug", "Sound Tip Played");
+
+        MediaPlayer tipPlayer = prepareMediaPlayerForSoundTip(type);
+        if (tipPlayer != null) tipPlayer.start();
+    }
+
+    @Override
+    public boolean isInternetAvailable() {
+        ConnectivityManager cm = (ConnectivityManager)
+                context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
     ////
@@ -142,6 +164,13 @@ public class SystemControllerAndroid implements SystemController, AppBlocker.Ope
         }
 
         return foregroundApps;
+    }
+
+    private MediaPlayer prepareMediaPlayerForSoundTip(SoundTipType type) {
+
+        // TODO Prepare logic
+
+        return null;
     }
 }
 

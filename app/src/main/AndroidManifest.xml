@@ -4,6 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="evgenykravtsov.appblocker">
 
+    <!-- Internet permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <!-- Boot permissions -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
@@ -20,7 +24,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
-        <activity android:name=".presentation.view.activity.MainActivity">
+        <activity android:name=".presentation.view.activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,12 +32,16 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".presentation.view.activity.MainActivity" />
+
         <activity
             android:name=".presentation.view.activity.BlockerActivity"
             android:launchMode="singleInstance"
             android:excludeFromRecents="true" />
 
         <activity android:name=".presentation.view.activity.ExerciseSettingsActivity" />
+
+        <activity android:name=".presentation.view.activity.FeedbackActivity" />
 
         <service android:name=".external.android.AppBlockerService" />
 

@@ -8,6 +8,12 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Feedback"
+        android:id="@+id/main_activity_feedback_button" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="Exercise settings"
         android:id="@+id/main_activity_exercise_settings_button" />
 

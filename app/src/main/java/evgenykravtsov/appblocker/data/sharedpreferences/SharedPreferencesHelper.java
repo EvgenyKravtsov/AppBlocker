@@ -56,6 +56,26 @@ public class SharedPreferencesHelper
         saveString(KEY_ALLOWED_PROCESS_NAME, processName);
     }
 
+    @Override
+    public boolean loadPasswordSetStatus() {
+        return loadBoolean(KEY_PASSWORD_SET_STATUS, DEFAULT_PASSWORD_SET_STATUS);
+    }
+
+    @Override
+    public void savePasswordSetStatus(boolean status) {
+        saveBoolean(KEY_PASSWORD_SET_STATUS, status);
+    }
+
+    @Override
+    public String loadPassword() {
+        return loadString(KEY_PASSWORD, DEFAULT_PASSWORD);
+    }
+
+    @Override
+    public void savePassword(String password) {
+        saveString(KEY_PASSWORD, password);
+    }
+
     ////
 
     @Override
@@ -67,6 +87,8 @@ public class SharedPreferencesHelper
                 return loadBoolean(KEY_PICTURES_EXERCISE_TYPE, DEFAULT_PICTURES_EXERCISE_TYPE_STATUS);
             case Clock:
                 return loadBoolean(KEY_CLOCK_EXERCISE_TYPE, DEFAULT_CLOCK_EXERCISE_TYPE_STATUS);
+            case Color:
+                return loadBoolean(KEY_COLOR_EXERCISE_TYPE, DEFAULT_COLOR_EXERCISE_TYPE_STATUS);
             default:
                 return false;
         }
@@ -83,6 +105,9 @@ public class SharedPreferencesHelper
                 break;
             case Clock:
                 saveBoolean(KEY_CLOCK_EXERCISE_TYPE, status);
+                break;
+            case Color:
+                saveBoolean(KEY_COLOR_EXERCISE_TYPE, status);
                 break;
         }
     }

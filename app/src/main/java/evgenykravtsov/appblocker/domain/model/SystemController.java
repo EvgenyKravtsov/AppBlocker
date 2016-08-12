@@ -11,4 +11,8 @@ public interface SystemController {
     void startAppBlockerService();
 
     void stopAppBlockerService();
+
+    void playSoundTip(SoundTipType type);
+
+    boolean isInternetAvailable();
 }

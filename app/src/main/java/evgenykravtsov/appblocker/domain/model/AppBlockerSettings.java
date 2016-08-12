@@ -8,6 +8,10 @@ public interface AppBlockerSettings {
     String DEFAULT_DENIED_PROCESS_NAME = "";
     String KEY_ALLOWED_PROCESS_NAME = "key_allowed_process_name";
     String DEFAULT_ALLOWED_PROCESS_NAME = "";
+    String KEY_PASSWORD_SET_STATUS = "key_password_key_status";
+    boolean DEFAULT_PASSWORD_SET_STATUS = false;
+    String KEY_PASSWORD = "key_password";
+    String DEFAULT_PASSWORD = "";
 
     ////
 
@@ -22,4 +26,12 @@ public interface AppBlockerSettings {
     String loadAllowedProcessName();
 
     void saveAllowedProcessName(String processName);
+
+    boolean loadPasswordSetStatus();
+
+    void savePasswordSetStatus(boolean status);
+
+    String loadPassword();
+
+    void savePassword(String password);
 }

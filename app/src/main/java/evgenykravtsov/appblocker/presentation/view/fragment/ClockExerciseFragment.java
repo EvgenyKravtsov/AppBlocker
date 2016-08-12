@@ -3,13 +3,12 @@ package evgenykravtsov.appblocker.presentation.view.fragment;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -17,7 +16,6 @@ import evgenykravtsov.appblocker.R;
 import evgenykravtsov.appblocker.domain.model.exercise.clock.ClockExercise;
 import evgenykravtsov.appblocker.domain.usecase.UseCaseThreadPool;
 import evgenykravtsov.appblocker.presentation.presenter.ClockExercisePresenter;
-import evgenykravtsov.appblocker.presentation.presenter.MathExercisePresenter;
 import evgenykravtsov.appblocker.presentation.view.activity.BlockerActivity;
 
 public class ClockExerciseFragment extends Fragment
@@ -74,6 +72,12 @@ public class ClockExerciseFragment extends Fragment
     @Override
     public void exerciseSolved() {
         ((BlockerActivity) getActivity()).solveExercise();
+    }
+
+    @Override
+    public void notifyCheckResult(boolean solved) {
+        String message = solved ? "Correct!" : "Incorrect!";
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
     ////

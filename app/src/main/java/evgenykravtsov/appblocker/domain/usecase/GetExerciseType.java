@@ -19,12 +19,14 @@ public class GetExerciseType implements UseCase {
         boolean mathStatus = exerciseSettings.loadExerciseTypeStatus(ExerciseType.Math);
         boolean picturesStatus = exerciseSettings.loadExerciseTypeStatus(ExerciseType.Pictures);
         boolean clockStatus = exerciseSettings.loadExerciseTypeStatus(ExerciseType.Clock);
+        boolean colorStatus = exerciseSettings.loadExerciseTypeStatus(ExerciseType.Color);
 
         List<ExerciseType> activatedExercuseTypes = new ArrayList<>();
 
         if (mathStatus) activatedExercuseTypes.add(ExerciseType.Math);
         if (picturesStatus) activatedExercuseTypes.add(ExerciseType.Pictures);
         if (clockStatus) activatedExercuseTypes.add(ExerciseType.Clock);
+        if (colorStatus) activatedExercuseTypes.add(ExerciseType.Color);
 
         Random random = new Random();
 
