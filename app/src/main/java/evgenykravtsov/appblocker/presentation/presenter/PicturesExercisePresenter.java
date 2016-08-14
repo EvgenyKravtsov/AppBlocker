@@ -17,12 +17,15 @@ public class PicturesExercisePresenter {
         void exerciseSolved();
 
         void notifyCheckResult(boolean solved);
+
+        void finish();
     }
 
     ////
 
-    private View view;
-    private PicturesExercise picturesExercise;
+    protected View view;
+    protected PicturesExercise picturesExercise;
+
     private UseCaseThreadPool threadPool;
 
     ////

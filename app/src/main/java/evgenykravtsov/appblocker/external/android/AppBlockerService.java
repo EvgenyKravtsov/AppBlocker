@@ -50,12 +50,7 @@ public class AppBlockerService extends Service {
         public void run() {
             while (serviceStatus) {
                 try {
-
-                    // TODO Delete test code
-                    Log.d(TAG, "Blocker Thread Pulse");
-
                     UseCaseFactory.provideCheckForegroundAppUseCase().execute();
-
                     TimeUnit.SECONDS.sleep(1);
                 } catch (InterruptedException e) {
                     e.printStackTrace();

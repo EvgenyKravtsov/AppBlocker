@@ -16,6 +16,9 @@ import evgenykravtsov.appblocker.R;
 import evgenykravtsov.appblocker.domain.model.exercise.clock.ClockExercise;
 import evgenykravtsov.appblocker.domain.usecase.UseCaseThreadPool;
 import evgenykravtsov.appblocker.presentation.presenter.ClockExercisePresenter;
+import evgenykravtsov.appblocker.presentation.presenter.PicturesExercisePresenter;
+import evgenykravtsov.appblocker.presentation.presenter.TestClockExercisePresenter;
+import evgenykravtsov.appblocker.presentation.presenter.TestPicturesExercisePresenter;
 import evgenykravtsov.appblocker.presentation.view.activity.BlockerActivity;
 
 public class ClockExerciseFragment extends Fragment
@@ -29,6 +32,20 @@ public class ClockExerciseFragment extends Fragment
     private EditText minutesEditText;
     private Button checkButton;
 
+    private int mode;
+
+    ////
+
+    public static ClockExerciseFragment newInstance(int mode) {
+        ClockExerciseFragment fragment = new ClockExerciseFragment();
+
+        Bundle args = new Bundle();
+        args.putInt(BlockerActivity.KEY_EXERCISE_FRAGMENT_MODE, mode);
+        fragment.setArguments(args);
+
+        return fragment;
+    }
+
     ////
 
     @Nullable
@@ -36,6 +53,9 @@ public class ClockExerciseFragment extends Fragment
     public android.view.View onCreateView(LayoutInflater inflater,
                                           ViewGroup container,
                                           Bundle savedInstanceState) {
+
+        mode = getArguments().getInt(BlockerActivity.KEY_EXERCISE_FRAGMENT_MODE);
+
         android.view.View layout = inflater.inflate(R.layout.fragment_clock_exercise, container, false);
         bindViews(layout);
         bindViewListeners();
@@ -80,10 +100,23 @@ public class ClockExerciseFragment extends Fragment
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void finish() {
+        getActivity().finish();
+    }
+
     ////
 
     private void bindPresenter() {
-        presenter = new ClockExercisePresenter(this, UseCaseThreadPool.getInstance());
+        switch (mode) {
+            case BlockerActivity.MODE_STANDARD:
+                presenter = new ClockExercisePresenter(this, UseCaseThreadPool.getInstance());
+                break;
+            case BlockerActivity.MODE_TEST:
+                presenter = new TestClockExercisePresenter(this, UseCaseThreadPool.getInstance());
+                break;
+        }
+
         EventBus.getDefault().register(presenter);
     }
 

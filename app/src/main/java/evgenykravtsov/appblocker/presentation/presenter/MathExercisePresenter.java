@@ -16,12 +16,15 @@ public class MathExercisePresenter {
         void exerciseSolved();
 
         void notifyCheckResult(boolean solved);
+
+        void finish();
     }
 
     ////
 
-    private View view;
-    private MathExercise mathExercise;
+    protected View view;
+    protected MathExercise mathExercise;
+
     private UseCaseThreadPool threadPool;
 
     ////

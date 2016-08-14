@@ -14,7 +14,11 @@ import org.greenrobot.eventbus.EventBus;
 import evgenykravtsov.appblocker.R;
 import evgenykravtsov.appblocker.domain.model.exercise.pictures.Picture;
 import evgenykravtsov.appblocker.domain.model.exercise.pictures.PicturesExercise;
+import evgenykravtsov.appblocker.domain.usecase.UseCaseThreadPool;
+import evgenykravtsov.appblocker.presentation.presenter.MathExercisePresenter;
 import evgenykravtsov.appblocker.presentation.presenter.PicturesExercisePresenter;
+import evgenykravtsov.appblocker.presentation.presenter.TestMathExercisePresenter;
+import evgenykravtsov.appblocker.presentation.presenter.TestPicturesExercisePresenter;
 import evgenykravtsov.appblocker.presentation.view.activity.BlockerActivity;
 
 public class PictureExerciseFragment extends Fragment
@@ -24,6 +28,20 @@ public class PictureExerciseFragment extends Fragment
 
     private ImageView[] imageViews;
 
+    private int mode;
+
+    ////
+
+    public static PictureExerciseFragment newInstance(int mode) {
+        PictureExerciseFragment fragment = new PictureExerciseFragment();
+
+        Bundle args = new Bundle();
+        args.putInt(BlockerActivity.KEY_EXERCISE_FRAGMENT_MODE, mode);
+        fragment.setArguments(args);
+
+        return fragment;
+    }
+
     ////
 
     @Nullable
@@ -31,6 +49,8 @@ public class PictureExerciseFragment extends Fragment
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
+
+        mode = getArguments().getInt(BlockerActivity.KEY_EXERCISE_FRAGMENT_MODE);
 
         View layout = inflater.inflate(
                 R.layout.fragment_picture_exercise, container, false
@@ -57,6 +77,11 @@ public class PictureExerciseFragment extends Fragment
     public void onStop() {
         super.onStop();
         unbindPresenter();
+    }
+
+    @Override
+    public void finish() {
+        getActivity().finish();
     }
 
     ////
@@ -115,7 +140,15 @@ public class PictureExerciseFragment extends Fragment
     }
 
     public void bindPresenter() {
-        presenter = new PicturesExercisePresenter(this);
+        switch (mode) {
+            case BlockerActivity.MODE_STANDARD:
+                presenter = new PicturesExercisePresenter(this);
+                break;
+            case BlockerActivity.MODE_TEST:
+                presenter = new TestPicturesExercisePresenter(this);
+                break;
+        }
+
         EventBus.getDefault().register(presenter);
     }
 

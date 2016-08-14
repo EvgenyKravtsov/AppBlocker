@@ -1,7 +1,9 @@
 package evgenykravtsov.appblocker.presentation.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -20,8 +22,6 @@ import evgenykravtsov.appblocker.presentation.presenter.ExerciseSettingsPresente
 public class ExerciseSettingsActivity extends AppCompatActivity
         implements ExerciseSettingsPresenter.View {
 
-    // TODO Add setting of count of exercises for one block session
-
     private ExerciseSettingsPresenter presenter;
     private ExerciseSettings exerciseSettings;
 
@@ -35,6 +35,10 @@ public class ExerciseSettingsActivity extends AppCompatActivity
     private CheckBox clockCheckBox;
     private Button colorButton;
     private CheckBox colorCheckBox;
+    private Button testMathButton;
+    private Button testPicturesButton;
+    private Button testClockButton;
+    private Button testColorButton;
 
     private int activatedExerciseTypesCount;
 
@@ -117,6 +121,11 @@ public class ExerciseSettingsActivity extends AppCompatActivity
         boolean colorStatus = exerciseSettings.loadExerciseTypeStatus(ExerciseType.Color);
         if (colorStatus) activatedExerciseTypesCount++;
         colorCheckBox.setChecked(colorStatus);
+
+        testMathButton = (Button) findViewById(R.id.exrcise_settings_activity_test_math_button);
+        testPicturesButton = (Button) findViewById(R.id.exrcise_settings_activity_test_pictures_button);
+        testClockButton = (Button) findViewById(R.id.exrcise_settings_activity_test_clock_button);
+        testColorButton = (Button) findViewById(R.id.exrcise_settings_activity_test_color_button);
     }
 
     private void bindViewListeners() {
@@ -204,11 +213,54 @@ public class ExerciseSettingsActivity extends AppCompatActivity
                 }
             }
         });
+
+        testMathButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigateToTestExerciseActivity(ExerciseType.Math);
+            }
+        });
+
+        testPicturesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigateToTestExerciseActivity(ExerciseType.Pictures);
+            }
+        });
+
+        testClockButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigateToTestExerciseActivity(ExerciseType.Clock);
+            }
+        });
+
+        testColorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigateToTestExerciseActivity(ExerciseType.Color);
+            }
+        });
     }
 
     private void establishInitialViewsState() {
         numberEditText.setText(
                 String.format(Locale.ROOT, "%d",presenter.getSessionExerciseNumber()));
+    }
+
+    private void navigateToTestExerciseActivity(ExerciseType exerciseToTest) {
+        int exerciseTypeCode = 5;
+
+        switch (exerciseToTest) {
+            case Math: exerciseTypeCode = TestExerciseActivity.EXTRA_MATH_TO_TEST; break;
+            case Pictures: exerciseTypeCode = TestExerciseActivity.EXTRA_PICTURES_TO_TEST; break;
+            case Clock: exerciseTypeCode = TestExerciseActivity.EXTRA_CLOCK_TO_TEST; break;
+            case Color: exerciseTypeCode = TestExerciseActivity.EXTRA_COLOR_TO_TEST; break;
+        }
+
+        Intent intent = new Intent(this, TestExerciseActivity.class);
+        intent.putExtra(TestExerciseActivity.EXTRA_TEST_KEY, exerciseTypeCode);
+        startActivity(intent);
     }
 }
 

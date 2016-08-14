@@ -20,12 +20,15 @@ public class ColorExercisePresenter {
         void exerciseSolved();
 
         void notifyCheckResult(boolean solved);
+
+        void finish();
     }
 
     ////
 
-    private View view;
-    private ColorExercise colorExercise;
+    protected View view;
+    protected ColorExercise colorExercise;
+
     private UseCaseThreadPool threadPool;
     private SystemController systemController;
     private SoundTipType soundTipType;

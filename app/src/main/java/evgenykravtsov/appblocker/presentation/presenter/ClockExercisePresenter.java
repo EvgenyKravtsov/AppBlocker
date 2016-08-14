@@ -17,12 +17,15 @@ public class ClockExercisePresenter {
         void exerciseSolved();
 
         void notifyCheckResult(boolean solved);
+
+        void finish();
     }
 
     ////
 
-    private View view;
-    private ClockExercise clockExercise;
+    protected View view;
+    protected ClockExercise clockExercise;
+
     private UseCaseThreadPool threadPool;
 
     ////

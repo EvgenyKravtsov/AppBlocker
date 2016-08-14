@@ -19,6 +19,10 @@ public class BlockerActivity extends AppCompatActivity implements BlockerPresent
 
     // TODO Write getInstance method for all fragments
 
+    public static final String KEY_EXERCISE_FRAGMENT_MODE = "key_exercise_fragment_mode";
+    public static final int MODE_STANDARD = 0;
+    public static final int MODE_TEST = 1;
+
     private BlockerPresenter presenter;
 
     private int numberOfSolvedExericies;
@@ -65,16 +69,16 @@ public class BlockerActivity extends AppCompatActivity implements BlockerPresent
 
         switch (exerciseType) {
             case Math:
-                fragment = new MathExerciseFragment();
+                fragment = MathExerciseFragment.newInstance(MODE_STANDARD);
                 break;
             case Pictures:
-                fragment = new PictureExerciseFragment();
+                fragment = PictureExerciseFragment.newInstance(MODE_STANDARD);
                 break;
             case Clock:
-                fragment = new ClockExerciseFragment();
+                fragment = ClockExerciseFragment.newInstance(MODE_STANDARD);
                 break;
             case Color:
-                fragment = new ColorExerciseFragment();
+                fragment = ColorExerciseFragment.newInstance(MODE_STANDARD);
                 break;
         }
 

@@ -55,7 +55,8 @@ public class MathSettingsFragment extends Fragment
     @Override
     public void onStop() {
         super.onStop();
-        presenter.setMaxValue(Integer.parseInt(maxResultEditText.getText().toString()));
+        if (presenter != null)
+            presenter.setMaxValue(Integer.parseInt(maxResultEditText.getText().toString()));
         unbindPresenter();
     }
 
@@ -181,8 +182,5 @@ public class MathSettingsFragment extends Fragment
         boolean divisionEnabled = presenter.getDivision();
         if (divisionEnabled) operationsActivatedCount++;
         divisionCheckBox.setChecked(divisionEnabled);
-
-        // TODO Delete test code
-        Log.d("debug", "count = " + operationsActivatedCount);
     }
 }

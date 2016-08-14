@@ -43,6 +43,8 @@
 
         <activity android:name=".presentation.view.activity.FeedbackActivity" />
 
+        <activity android:name=".presentation.view.activity.TestExerciseActivity" />
+
         <service android:name=".external.android.AppBlockerService" />
 
         <receiver

@@ -24,7 +24,10 @@ import evgenykravtsov.appblocker.R;
 import evgenykravtsov.appblocker.domain.model.exercise.color.ColorExercise;
 import evgenykravtsov.appblocker.domain.model.exercise.color.ColorType;
 import evgenykravtsov.appblocker.domain.usecase.UseCaseThreadPool;
+import evgenykravtsov.appblocker.presentation.presenter.ClockExercisePresenter;
 import evgenykravtsov.appblocker.presentation.presenter.ColorExercisePresenter;
+import evgenykravtsov.appblocker.presentation.presenter.TestClockExercisePresenter;
+import evgenykravtsov.appblocker.presentation.presenter.TestColorExercisePresenter;
 import evgenykravtsov.appblocker.presentation.view.activity.BlockerActivity;
 
 public class ColorExerciseFragment extends Fragment
@@ -37,6 +40,20 @@ public class ColorExerciseFragment extends Fragment
     private Map<View, Boolean> colorViews;
     private int correctColorId;
 
+    private int mode;
+
+    ////
+
+    public static ColorExerciseFragment newInstance(int mode) {
+        ColorExerciseFragment fragment = new ColorExerciseFragment();
+
+        Bundle args = new Bundle();
+        args.putInt(BlockerActivity.KEY_EXERCISE_FRAGMENT_MODE, mode);
+        fragment.setArguments(args);
+
+        return fragment;
+    }
+
     ////
 
     @Nullable
@@ -44,6 +61,9 @@ public class ColorExerciseFragment extends Fragment
     public android.view.View onCreateView(LayoutInflater inflater,
                                           ViewGroup container,
                                           Bundle savedInstanceState) {
+
+        mode = getArguments().getInt(BlockerActivity.KEY_EXERCISE_FRAGMENT_MODE);
+
         android.view.View layout = inflater.inflate(R.layout.fragment_color_exercise, container, false);
         bindViews(layout);
         bindViewListeners();
@@ -152,13 +172,28 @@ public class ColorExerciseFragment extends Fragment
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void finish() {
+        getActivity().finish();
+    }
+
     ////
 
     private void bindPresenter() {
-        presenter = new ColorExercisePresenter(
-                this,
-                UseCaseThreadPool.getInstance(),
-                DependencyInjection.provideSystemController());
+        switch (mode) {
+            case BlockerActivity.MODE_STANDARD:
+                presenter = new ColorExercisePresenter(
+                    this,
+                    UseCaseThreadPool.getInstance(),
+                    DependencyInjection.provideSystemController());
+                break;
+            case BlockerActivity.MODE_TEST:
+                presenter = new TestColorExercisePresenter(
+                        this,
+                        UseCaseThreadPool.getInstance(),
+                        DependencyInjection.provideSystemController());
+                break;
+        }
 
         EventBus.getDefault().register(presenter);
     }

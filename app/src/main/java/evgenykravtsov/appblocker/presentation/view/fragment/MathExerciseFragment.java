@@ -18,6 +18,7 @@ import evgenykravtsov.appblocker.R;
 import evgenykravtsov.appblocker.domain.model.exercise.math.MathExercise;
 import evgenykravtsov.appblocker.domain.usecase.UseCaseThreadPool;
 import evgenykravtsov.appblocker.presentation.presenter.MathExercisePresenter;
+import evgenykravtsov.appblocker.presentation.presenter.TestMathExercisePresenter;
 import evgenykravtsov.appblocker.presentation.view.activity.BlockerActivity;
 
 public class MathExerciseFragment extends Fragment
@@ -31,6 +32,20 @@ public class MathExerciseFragment extends Fragment
     private EditText resultEditText;
     private Button unblockButton;
 
+    private int mode;
+
+    ////
+
+    public static MathExerciseFragment newInstance(int mode) {
+        MathExerciseFragment fragment = new MathExerciseFragment();
+
+        Bundle args = new Bundle();
+        args.putInt(BlockerActivity.KEY_EXERCISE_FRAGMENT_MODE, mode);
+        fragment.setArguments(args);
+
+        return fragment;
+    }
+
     ////
 
     @Nullable
@@ -38,6 +53,9 @@ public class MathExerciseFragment extends Fragment
     public android.view.View onCreateView(LayoutInflater inflater,
                                           ViewGroup container,
                                           Bundle savedInstanceState) {
+
+        mode = getArguments().getInt(BlockerActivity.KEY_EXERCISE_FRAGMENT_MODE);
+
         android.view.View layout = inflater.inflate(R.layout.fragment_math_exercise, container, false);
         bindViews(layout);
         bindViewListeners();
@@ -60,6 +78,11 @@ public class MathExerciseFragment extends Fragment
     public void onStop() {
         super.onStop();
         unbindPresenter();
+    }
+
+    @Override
+    public void finish() {
+        getActivity().finish();
     }
 
     ////
@@ -87,7 +110,15 @@ public class MathExerciseFragment extends Fragment
     ////
 
     private void bindPresenter() {
-        presenter = new MathExercisePresenter(this, UseCaseThreadPool.getInstance());
+        switch (mode) {
+            case BlockerActivity.MODE_STANDARD:
+                presenter = new MathExercisePresenter(this, UseCaseThreadPool.getInstance());
+                break;
+            case BlockerActivity.MODE_TEST:
+                presenter = new TestMathExercisePresenter(this, UseCaseThreadPool.getInstance());
+                break;
+        }
+
         EventBus.getDefault().register(presenter);
     }
 

@@ -74,10 +74,6 @@ public class SystemControllerAndroid implements SystemController, AppBlocker.Ope
 
     @Override
     public void playSoundTip(SoundTipType type) {
-
-        // TODO Delete test code
-        Log.d("debug", "Sound Tip Played");
-
         MediaPlayer tipPlayer = prepareMediaPlayerForSoundTip(type);
         if (tipPlayer != null) tipPlayer.start();
     }
