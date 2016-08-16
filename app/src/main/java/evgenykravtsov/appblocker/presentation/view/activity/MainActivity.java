@@ -2,12 +2,22 @@ package evgenykravtsov.appblocker.presentation.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.DragEvent;
+import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -25,9 +35,10 @@ public class MainActivity extends AppCompatActivity
 
     private MainPresenter presenter;
 
-    private Button feedbackButton;
-    private Button exerciseSettingsButton;
-    private Button blockControlButton;
+    private DrawerLayout navigationDrawer;
+    private LinearLayout feedbackButton;
+    private LinearLayout exerciseSettingsButton;
+    private ImageButton blockControlButton;
     private RecyclerView appsRecyclerView;
 
     ////
@@ -36,6 +47,8 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        prepareActionBar();
+
         bindViews();
         bindViewListeners();
         prepareAppsRecyclerView();
@@ -50,7 +63,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        setBlockControlState(presenter.getAppBlockerStatus());
+
+        boolean appBlockerStatus = presenter.getAppBlockerStatus();
+        setBlockControlState(appBlockerStatus);
+        switchControlButtonState(appBlockerStatus);
+
         presenter.requestApps();
     }
 
@@ -58,6 +75,38 @@ public class MainActivity extends AppCompatActivity
     protected void onStop() {
         super.onStop();
         unbindPresenter();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case android.R.id.home:
+
+                if (navigationDrawer.isDrawerOpen(GravityCompat.START)) {
+                    navigationDrawer.closeDrawer(GravityCompat.START);
+                    switchActionBarHomeIcon(false);
+                } else {
+                    navigationDrawer.openDrawer(GravityCompat.START);
+                    switchActionBarHomeIcon(true);
+                }
+
+                return true;
+
+            default: return super.onOptionsItemSelected(menuItem);
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            if (navigationDrawer.isDrawerOpen(GravityCompat.START)) {
+                navigationDrawer.closeDrawer(GravityCompat.START);
+                switchActionBarHomeIcon(false);
+                return true;
+            }
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 
     ////
@@ -70,11 +119,16 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void setBlockControlState(boolean state) {
-        if (state) blockControlButton.setText("Turn Off");
-        else blockControlButton.setText("Turn On");
+        switchControlButtonState(state);
     }
 
     ////
+
+    @SuppressWarnings("ConstantConditions")
+    private void prepareActionBar() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.navigation_menu_icon);
+    }
 
     private void bindPresenter() {
         presenter = new MainPresenter(this,
@@ -90,13 +144,36 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void bindViews() {
-        feedbackButton = (Button) findViewById(R.id.main_activity_feedback_button);
-        exerciseSettingsButton = (Button) findViewById(R.id.main_activity_exercise_settings_button);
-        blockControlButton = (Button) findViewById(R.id.main_activity_block_control_button);
+        navigationDrawer = (DrawerLayout) findViewById(R.id.main_activity_navigation_drawer);
+        feedbackButton = (LinearLayout) findViewById(R.id.main_activity_feedback_button);
+        exerciseSettingsButton = (LinearLayout) findViewById(R.id.main_activity_exercise_settings_button);
+        blockControlButton = (ImageButton) findViewById(R.id.main_activity_block_control_button);
         appsRecyclerView = (RecyclerView) findViewById(R.id.main_activity_apps_recycler_view);
     }
 
     private void bindViewListeners() {
+        navigationDrawer.setDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                switchActionBarHomeIcon(true);
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                switchActionBarHomeIcon(false);
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
+
         feedbackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,5 +202,27 @@ public class MainActivity extends AppCompatActivity
         appsRecyclerView.setHasFixedSize(true);
         appsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         appsRecyclerView.setItemAnimator(new DefaultItemAnimator());
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    private void switchActionBarHomeIcon(boolean navigationDrawerOpened) {
+        if (navigationDrawerOpened)
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.navigation_arrow_back);
+        else
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.navigation_menu_icon);
+    }
+
+    private void switchControlButtonState(boolean enabled) {
+        if (enabled) {
+            blockControlButton.setImageDrawable(
+                    getResources().getDrawable(R.drawable.block_control_on_button_icon));
+            blockControlButton.setBackgroundDrawable(
+                    getResources().getDrawable(R.drawable.block_control_on_button_background_selector));
+        } else {
+            blockControlButton.setImageDrawable(
+                    getResources().getDrawable(R.drawable.block_control_off_button_icon));
+            blockControlButton.setBackgroundDrawable(
+                    getResources().getDrawable(R.drawable.block_control_off_button_background_selector));
+        }
     }
 }

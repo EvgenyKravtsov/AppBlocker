@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -37,6 +38,7 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         App app = apps.get(position);
+        holder.iconImageView.setImageDrawable(app.getIcon());
         holder.appTitleTextView.setText(app.getTitle());
         holder.blockedCheckBox.setChecked(app.isBlocked());
         holder.blockedCheckBox.setOnCheckedChangeListener(
@@ -61,6 +63,7 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
+        ImageView iconImageView;
         TextView appTitleTextView;
         CheckBox blockedCheckBox;
 
@@ -68,6 +71,8 @@ public class AppsAdapter extends RecyclerView.Adapter<AppsAdapter.ViewHolder> {
 
         public ViewHolder(View itemView) {
             super(itemView);
+            iconImageView = (ImageView) itemView
+                    .findViewById(R.id.apps_list_item_app_icon_image_view);
             appTitleTextView = (TextView) itemView
                     .findViewById(R.id.apps_list_item_app_title_text_view);
             blockedCheckBox = (CheckBox) itemView

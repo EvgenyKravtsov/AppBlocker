@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -6,6 +6,25 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="NavigationDrawerItemLayout">
+        <item name="android:layout_height">48dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/navigation_menu_button_background_selector</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingStart" tools:ignore="NewApi">16dp</item>
+    </style>
+
+    <style name="NavigationDrawerItemButton">
+        <item name="android:layout_marginLeft">32dp</item>
+        <item name="android:layout_marginStart" tools:ignore="NewApi">32dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:clickable">false</item>
     </style>
 
 </resources>

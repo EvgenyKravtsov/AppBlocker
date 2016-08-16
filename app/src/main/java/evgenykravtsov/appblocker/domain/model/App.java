@@ -1,9 +1,13 @@
 package evgenykravtsov.appblocker.domain.model;
 
+import android.graphics.drawable.Drawable;
+
 public class App {
 
     private final String title;
     private final String processName;
+
+    private Drawable icon;
     private boolean blocked;
 
     ////
@@ -21,6 +25,14 @@ public class App {
 
     public String getProcessName() {
         return processName;
+    }
+
+    public void setIcon(Drawable icon) {
+        this.icon = icon;
+    }
+
+    public Drawable getIcon() {
+        return icon;
     }
 
     public boolean isBlocked() {

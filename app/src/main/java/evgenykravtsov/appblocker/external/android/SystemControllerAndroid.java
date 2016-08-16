@@ -48,8 +48,16 @@ public class SystemControllerAndroid implements SystemController, AppBlocker.Ope
         for (ApplicationInfo applicationInfo : applicationInfoList) {
             if ((applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 1) continue;
 
-            App app = mapApplicationInfoToApp(applicationInfo);
-            if (!app.getTitle().equals(AppBlockerController.getAppTitle())) installedApps.add(app);
+            App app = null;
+
+            try {
+                app = mapApplicationInfoToApp(applicationInfo);
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            if (app != null && !app.getTitle().equals(AppBlockerController.getAppTitle()))
+                installedApps.add(app);
         }
 
         return installedApps;
@@ -101,9 +109,12 @@ public class SystemControllerAndroid implements SystemController, AppBlocker.Ope
         return packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
     }
 
-    private App mapApplicationInfoToApp(ApplicationInfo applicationInfo) {
-        return new App(applicationInfo.loadLabel(packageManager).toString(),
+    private App mapApplicationInfoToApp(ApplicationInfo applicationInfo) throws PackageManager.NameNotFoundException {
+        App app = new App(
+                applicationInfo.loadLabel(packageManager).toString(),
                 applicationInfo.processName);
+        app.setIcon(packageManager.getApplicationIcon(applicationInfo.processName));
+        return app;
     }
 
     private String getAppTitle(ActivityManager.RunningAppProcessInfo appProcessInfo) {
