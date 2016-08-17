@@ -1,7 +1,13 @@
 package evgenykravtsov.appblocker.presentation.view.activity;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -36,9 +42,10 @@ public class MainActivity extends AppCompatActivity
     private MainPresenter presenter;
 
     private DrawerLayout navigationDrawer;
+    private CoordinatorLayout coordinatorLayout;
     private LinearLayout feedbackButton;
     private LinearLayout exerciseSettingsButton;
-    private ImageButton blockControlButton;
+    private FloatingActionButton blockControlButton;
     private RecyclerView appsRecyclerView;
 
     ////
@@ -113,6 +120,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void showApps(List<App> apps) {
+
         AppsAdapter adapter = new AppsAdapter(apps);
         appsRecyclerView.setAdapter(adapter);
     }
@@ -120,6 +128,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void setBlockControlState(boolean state) {
         switchControlButtonState(state);
+    }
+
+    @Override
+    public void notifyBlockControlStateChanged(boolean state) {
+        String message = state ? "Blocker activated" : "Blocker deactivated";
+        showSnackbar(message);
     }
 
     ////
@@ -145,9 +159,10 @@ public class MainActivity extends AppCompatActivity
 
     private void bindViews() {
         navigationDrawer = (DrawerLayout) findViewById(R.id.main_activity_navigation_drawer);
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.main_activity_coordinator_layout);
         feedbackButton = (LinearLayout) findViewById(R.id.main_activity_feedback_button);
         exerciseSettingsButton = (LinearLayout) findViewById(R.id.main_activity_exercise_settings_button);
-        blockControlButton = (ImageButton) findViewById(R.id.main_activity_block_control_button);
+        blockControlButton = (FloatingActionButton) findViewById(R.id.main_activity_block_control_button);
         appsRecyclerView = (RecyclerView) findViewById(R.id.main_activity_apps_recycler_view);
     }
 
@@ -216,13 +231,16 @@ public class MainActivity extends AppCompatActivity
         if (enabled) {
             blockControlButton.setImageDrawable(
                     getResources().getDrawable(R.drawable.block_control_on_button_icon));
-            blockControlButton.setBackgroundDrawable(
-                    getResources().getDrawable(R.drawable.block_control_on_button_background_selector));
         } else {
             blockControlButton.setImageDrawable(
                     getResources().getDrawable(R.drawable.block_control_off_button_icon));
-            blockControlButton.setBackgroundDrawable(
-                    getResources().getDrawable(R.drawable.block_control_off_button_background_selector));
         }
+    }
+
+    private void showSnackbar(String message) {
+        Snackbar snackbar = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_SHORT);
+        View snackbarLayout = snackbar.getView();
+        snackbarLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        snackbar.show();
     }
 }

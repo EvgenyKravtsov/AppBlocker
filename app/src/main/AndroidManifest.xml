@@ -39,7 +39,13 @@
             android:launchMode="singleInstance"
             android:excludeFromRecents="true" />
 
-        <activity android:name=".presentation.view.activity.ExerciseSettingsActivity" />
+        <activity
+            android:name=".presentation.view.activity.ExerciseSettingsActivity"
+            android:label="Exercise settings">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".presentation.view.activity.MainActivity" />
+        </activity>
 
         <activity android:name=".presentation.view.activity.FeedbackActivity" />
 

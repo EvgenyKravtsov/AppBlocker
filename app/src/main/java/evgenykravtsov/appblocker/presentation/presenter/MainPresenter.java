@@ -3,6 +3,7 @@ package evgenykravtsov.appblocker.presentation.presenter;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import evgenykravtsov.appblocker.domain.model.App;
@@ -18,6 +19,8 @@ public class MainPresenter {
         void showApps(List<App> apps);
 
         void setBlockControlState(boolean state);
+
+        void notifyBlockControlStateChanged(boolean state);
     }
 
     ////
@@ -50,9 +53,11 @@ public class MainPresenter {
         if (appBlockerSettings.loadAppBlockerServiceStatus()) {
             stopAppBlocker();
             view.setBlockControlState(false);
+            view.notifyBlockControlStateChanged(false);
         } else {
             startAppBlocker();
             view.setBlockControlState(true);
+            view.notifyBlockControlStateChanged(true);
         }
     }
 
