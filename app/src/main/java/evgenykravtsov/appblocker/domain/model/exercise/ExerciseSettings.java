@@ -12,6 +12,8 @@ public interface ExerciseSettings {
     boolean DEFAULT_COLOR_EXERCISE_TYPE_STATUS = false;
     String KEY_SESSION_EXERCISE_NUMBER = "key_session_exercise_number";
     int DEFAULT_SESSION_EXERCISE_NUMBER = 5;
+    String KEY_SOUND_SUPPORT_STATUS = "key_sound_support_status";
+    boolean DEFAULT_SOUND_SUPPORT_STATUS = true;
 
     ////
 
@@ -22,4 +24,8 @@ public interface ExerciseSettings {
     int loadSessionExerciseNumber();
 
     void saveSessionExerciseNumber(int number);
+
+    boolean loadSoundSupportStatus();
+
+    void saveSoundSupportStatus(boolean status);
 }

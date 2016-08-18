@@ -26,5 +26,34 @@
         <item name="android:gravity">left|center_vertical</item>
         <item name="android:clickable">false</item>
     </style>
+    
+    <style name="ExerciseSettingsCard">
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingStart" tools:ignore="NewApi">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingEnd" tools:ignore="NewApi">16dp</item>
+    </style>
+
+    <style name="ExerciseSerringsCardTitle">
+        <item name="android:textSize">34sp</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:layout_marginBottom">16dp</item>
+    </style>
+
+    <style name="ExerciseSerringsCardDescription">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:layout_marginBottom">16dp</item>
+    </style>
+
+    <style name="AccentedEditText">
+        <item name="android:background">@drawable/accented_edit_text_background</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">3dp</item>
+    </style>
 
 </resources>

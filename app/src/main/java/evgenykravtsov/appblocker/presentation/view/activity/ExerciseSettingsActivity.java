@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 
 import java.util.Locale;
 
@@ -28,14 +29,12 @@ public class ExerciseSettingsActivity extends AppCompatActivity
     private ExerciseSettings exerciseSettings;
 
     private EditText numberEditText;
-    private Button mathButton;
+    private CheckBox soundSupportCheckBox;
+    private ImageButton expandMathButton;
     private CheckBox mathCheckBox;
     private FrameLayout mathLayout;
-    private Button picturesButton;
     private CheckBox picturesCheckBox;
-    private Button clockButton;
     private CheckBox clockCheckBox;
-    private Button colorButton;
     private CheckBox colorCheckBox;
     private Button testMathButton;
     private Button testPicturesButton;
@@ -110,7 +109,10 @@ public class ExerciseSettingsActivity extends AppCompatActivity
     private void bindViews() {
         numberEditText = (EditText) findViewById(R.id.exercise_settings_activity_number_edit_text);
 
-        mathButton = (Button) findViewById(R.id.exercise_settings_activity_math_button);
+        soundSupportCheckBox = (CheckBox)
+                findViewById(R.id.exercise_settings_activity_sound_support_check_box);
+
+        expandMathButton = (ImageButton) findViewById(R.id.exercise_settings_activity_expand_math_button);
 
         mathCheckBox = (CheckBox) findViewById(R.id.exercise_settings_activity_math_check_box);
         boolean mathStatus = exerciseSettings.loadExerciseTypeStatus(ExerciseType.Math);
@@ -119,21 +121,15 @@ public class ExerciseSettingsActivity extends AppCompatActivity
 
         mathLayout = (FrameLayout) findViewById(R.id.exercise_settings_activity_math_layout);
 
-        picturesButton = (Button) findViewById(R.id.exercise_settings_activity_pictures_button);
-
         picturesCheckBox = (CheckBox) findViewById(R.id.exercise_settings_activity_pictures_check_box);
         boolean picturesStatus = exerciseSettings.loadExerciseTypeStatus(ExerciseType.Pictures);
         if (picturesStatus) activatedExerciseTypesCount++;
         picturesCheckBox.setChecked(picturesStatus);
 
-        clockButton = (Button) findViewById(R.id.exercise_settings_activity_clock_button);
-
         clockCheckBox = (CheckBox) findViewById(R.id.exercise_settings_activity_clock_check_box);
         boolean clockStatus = exerciseSettings.loadExerciseTypeStatus(ExerciseType.Clock);
         if (clockStatus) activatedExerciseTypesCount++;
         clockCheckBox.setChecked(clockStatus);
-
-        colorButton = (Button) findViewById(R.id.exercise_settings_activity_color_button);
 
         colorCheckBox = (CheckBox) findViewById(R.id.exercise_settings_activity_color_check_box);
         boolean colorStatus = exerciseSettings.loadExerciseTypeStatus(ExerciseType.Color);
@@ -147,7 +143,14 @@ public class ExerciseSettingsActivity extends AppCompatActivity
     }
 
     private void bindViewListeners() {
-        mathButton.setOnClickListener(new View.OnClickListener() {
+        soundSupportCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                presenter.setSoundSupportStatus(checked);
+            }
+        });
+
+        expandMathButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int visibility = mathLayout.getVisibility();
@@ -264,6 +267,7 @@ public class ExerciseSettingsActivity extends AppCompatActivity
     private void establishInitialViewsState() {
         numberEditText.setText(
                 String.format(Locale.ROOT, "%d",presenter.getSessionExerciseNumber()));
+        soundSupportCheckBox.setChecked(presenter.getSoundSupportStatus());
     }
 
     private void navigateToTestExerciseActivity(ExerciseType exerciseToTest) {

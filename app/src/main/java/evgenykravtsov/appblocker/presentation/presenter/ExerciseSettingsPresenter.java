@@ -33,4 +33,12 @@ public class ExerciseSettingsPresenter {
     public void setSessionExerciseNumber(int number) {
         exerciseSettings.saveSessionExerciseNumber(number);
     }
+
+    public boolean getSoundSupportStatus() {
+        return exerciseSettings.loadSoundSupportStatus();
+    }
+
+    public void setSoundSupportStatus(boolean status) {
+        exerciseSettings.saveSoundSupportStatus(status);
+    }
 }

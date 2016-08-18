@@ -122,6 +122,16 @@ public class SharedPreferencesHelper
         saveInt(KEY_SESSION_EXERCISE_NUMBER, number);
     }
 
+    @Override
+    public boolean loadSoundSupportStatus() {
+        return loadBoolean(KEY_SOUND_SUPPORT_STATUS, DEFAULT_SOUND_SUPPORT_STATUS);
+    }
+
+    @Override
+    public void saveSoundSupportStatus(boolean status) {
+        saveBoolean(KEY_SOUND_SUPPORT_STATUS, status);
+    }
+
     ////
 
     @Override
