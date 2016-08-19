@@ -56,4 +56,31 @@
         <item name="android:padding">3dp</item>
     </style>
 
+    <style name="AccentedScrollbar">
+        <item name="android:scrollbarThumbVertical">@drawable/scrollbar_thumb_vertical</item>
+    </style>
+
+    <style name="ExerciseCheckButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:paddingTop">24dp</item>
+        <item name="android:paddingLeft">42dp</item>
+        <item name="android:paddingStart" tools:ignore="NewApi">42dp</item>
+        <item name="android:paddingRight">42dp</item>
+        <item name="android:paddingEnd" tools:ignore="NewApi">42dp</item>
+        <item name="android:paddingBottom">24dp</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="MathExerciseText">
+        <item name="android:textSize">34sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="PicturesExerciseImage">
+        <item name="android:layout_width">120dp</item>
+        <item name="android:layout_height">120dp</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
 </resources>

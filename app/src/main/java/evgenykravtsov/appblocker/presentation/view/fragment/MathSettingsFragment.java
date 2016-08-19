@@ -2,21 +2,18 @@ package evgenykravtsov.appblocker.presentation.view.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import java.util.Locale;
 
 import evgenykravtsov.appblocker.R;
-import evgenykravtsov.appblocker.domain.model.exercise.ExerciseType;
 import evgenykravtsov.appblocker.presentation.presenter.MathSettingsPresenter;
+import evgenykravtsov.appblocker.presentation.view.activity.ExerciseSettingsActivity;
 
 public class MathSettingsFragment extends Fragment
         implements MathSettingsPresenter.View {
@@ -53,10 +50,15 @@ public class MathSettingsFragment extends Fragment
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onPause() {
+        super.onPause();
         if (presenter != null)
             presenter.setMaxValue(Integer.parseInt(maxResultEditText.getText().toString()));
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
         unbindPresenter();
     }
 
@@ -82,7 +84,8 @@ public class MathSettingsFragment extends Fragment
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (!checked) {
                     if (operationsActivatedCount == 1) {
-                        // TODO Notify user
+                        ((ExerciseSettingsActivity) getActivity()).showSnackbar(
+                                "At least one operation should be selected");
                         additionCheckBox.setChecked(true);
                         return;
                     }
@@ -101,7 +104,8 @@ public class MathSettingsFragment extends Fragment
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (!checked) {
                     if (operationsActivatedCount == 1) {
-                        // TODO Notify user
+                        ((ExerciseSettingsActivity) getActivity()).showSnackbar(
+                                "At least one operation should be selected");
                         substractionCheckBox.setChecked(true);
                         return;
                     }
@@ -120,7 +124,8 @@ public class MathSettingsFragment extends Fragment
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (!checked) {
                     if (operationsActivatedCount == 1) {
-                        // TODO Notify user
+                        ((ExerciseSettingsActivity) getActivity()).showSnackbar(
+                                "At least one operation should be selected");
                         multiplicationCheckBox.setChecked(true);
                         return;
                     }
@@ -139,7 +144,8 @@ public class MathSettingsFragment extends Fragment
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (!checked) {
                     if (operationsActivatedCount == 1) {
-                        // TODO Notify user
+                        ((ExerciseSettingsActivity) getActivity()).showSnackbar(
+                                "At least one operation should be selected");
                         divisionCheckBox.setChecked(true);
                         return;
                     }

@@ -1,64 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:background="@android:color/white"
+    android:id="@+id/math_exercise_fragment_main_layout">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp"
         android:orientation="horizontal"
         android:id="@+id/math_exercise_fragment_exercise_layout">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="36sp"
-            android:textStyle="bold"
+            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
             android:id="@+id/math_exercise_fragment_first_operand_text_view"
+            style="@style/MathExerciseText"
             tools:text="2" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="36sp"
-            android:textStyle="bold"
+            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
             android:id="@+id/math_exercise_fragment_operator_text_view"
+            style="@style/MathExerciseText"
             tools:text="+" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="36sp"
-            android:textStyle="bold"
+            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
             android:id="@+id/math_exercise_fragment_second_operand_text_view"
+            style="@style/MathExerciseText"
             tools:text="5" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
+            android:textStyle="bold"
             android:text="="
-            android:textSize="36sp"
-            android:textStyle="bold" />
+            style="@style/MathExerciseText" />
 
         <EditText
-            android:layout_width="50dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:inputType="number"
-            android:maxLength="4"
-            android:textSize="36sp"
+            android:maxLength="8"
+            android:textSize="34sp"
             android:textStyle="bold"
-            android:id="@+id/math_exercise_fragment_result_edit_text" />
+            android:textColor="@color/colorPrimaryDark"
+            android:id="@+id/math_exercise_fragment_result_edit_text"
+            style="@style/AccentedEditText" />
 
     </LinearLayout>
 
     <Button
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/math_exercise_fragment_exercise_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp"
         android:text="Check"
-        android:id="@+id/math_exercise_fragment_unblock_button" />
+        android:id="@+id/math_exercise_fragment_unblock_button"
+        style="@style/ExerciseCheckButton" />
 
 </RelativeLayout>

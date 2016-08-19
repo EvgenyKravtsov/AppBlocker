@@ -1,112 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:padding="10dp">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+    <TableRow android:layout_marginBottom="4dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textColor="@color/colorTextPrimary"
             android:text="Max value" />
 
         <EditText
-            android:layout_width="30dp"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginStart="30dp"
-            android:inputType="numberDecimal"
-            android:id="@+id/math_settings_fragment_max_result_edit_text" />
+            android:layout_weight="1"
+            android:inputType="number"
+            android:id="@+id/math_settings_fragment_max_result_edit_text"
+            style="@style/AccentedEditText" />
 
-    </LinearLayout>
+    </TableRow>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="10dp"
-        android:text="Operations" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+    <TableRow android:layout_marginBottom="4dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textColor="@color/colorTextPrimary"
             android:text="Addition" />
 
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginStart="30dp"
+            android:layout_weight="1"
             android:id="@+id/math_settings_fragment_addition_check_box" />
 
-    </LinearLayout>
+    </TableRow>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+    <TableRow android:layout_marginBottom="4dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textColor="@color/colorTextPrimary"
             android:text="Substraction" />
 
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginStart="30dp"
+            android:layout_weight="1"
             android:id="@+id/math_settings_fragment_substraction_check_box" />
 
-    </LinearLayout>
+    </TableRow>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+    <TableRow android:layout_marginBottom="4dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textColor="@color/colorTextPrimary"
             android:text="Multiplication" />
 
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginStart="30dp"
+            android:layout_weight="1"
             android:id="@+id/math_settings_fragment_multiplication_check_box" />
 
-    </LinearLayout>
+    </TableRow>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+    <TableRow android:layout_marginBottom="4dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textColor="@color/colorTextPrimary"
             android:text="Division" />
 
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginStart="30dp"
+            android:layout_weight="1"
             android:id="@+id/math_settings_fragment_division_check_box" />
 
-    </LinearLayout>
+    </TableRow>
 
-</LinearLayout>
+</TableLayout>

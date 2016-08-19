@@ -1,67 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Pick odd picture"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+    android:id="@+id/picture_exercise_fragment_coordinator_layout">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:background="@color/colorPrimaryLight"
+        android:id="@+id/exercise_layout">
 
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginEnd="10dp"
-            android:id="@+id/picture_exercise_fragment_picture_1"
-            tools:background="@android:color/holo_green_light" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pick odd picture"
+            android:textSize="24sp"
+            android:textColor="@color/colorPrimaryDark"/>
 
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:id="@+id/picture_exercise_fragment_picture_2"
-            tools:background="@android:color/holo_green_light" />
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:shrinkColumns="1">
+
+            <TableRow android:gravity="center">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    card_view:cardCornerRadius="2dp"
+                    card_view:cardElevation="2dp">
+
+                    <ImageView
+                        android:id="@+id/picture_exercise_fragment_picture_1"
+                        style="@style/PicturesExerciseImage"
+                        tools:background="@android:color/holo_green_light" />
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    card_view:cardCornerRadius="2dp"
+                    card_view:cardElevation="2dp">
+
+                    <ImageView
+                        android:id="@+id/picture_exercise_fragment_picture_2"
+                        style="@style/PicturesExerciseImage"
+                        tools:background="@android:color/holo_green_light" />
+
+                </android.support.v7.widget.CardView>
+
+            </TableRow>
+
+            <TableRow android:gravity="center">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    card_view:cardCornerRadius="2dp"
+                    card_view:cardElevation="2dp">
+
+                    <ImageView
+                        android:id="@+id/picture_exercise_fragment_picture_3"
+                        style="@style/PicturesExerciseImage"
+                        tools:background="@android:color/holo_green_light" />
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    card_view:cardCornerRadius="2dp"
+                    card_view:cardElevation="2dp">
+
+                    <ImageView
+                        android:id="@+id/picture_exercise_fragment_picture_4"
+                        style="@style/PicturesExerciseImage"
+                        tools:background="@android:color/holo_green_light" />
+
+                </android.support.v7.widget.CardView>
+
+            </TableRow>
+
+        </TableLayout>
 
     </LinearLayout>
 
-    <LinearLayout
+    <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:layout_margin="16dp"
+        android:layout_gravity="bottom|end"
+        android:src="@drawable/sound_button_icon"
+        android:id="@+id/picture_exercise_fragment_sound_button"
+        app:fabSize="normal"
+        app:layout_anchor="@+id/exercise_layout"
+        app:layout_anchorGravity="bottom|right|end" />
 
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginEnd="10dp"
-            android:id="@+id/picture_exercise_fragment_picture_3"
-            tools:background="@android:color/holo_green_light" />
-
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:id="@+id/picture_exercise_fragment_picture_4"
-            tools:background="@android:color/holo_green_light" />
-
-    </LinearLayout>
-
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

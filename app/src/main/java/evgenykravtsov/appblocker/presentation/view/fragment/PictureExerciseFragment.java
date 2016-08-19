@@ -1,23 +1,25 @@
 package evgenykravtsov.appblocker.presentation.view.fragment;
 
 import android.app.Fragment;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
 import org.greenrobot.eventbus.EventBus;
 
 import evgenykravtsov.appblocker.R;
 import evgenykravtsov.appblocker.domain.model.exercise.pictures.Picture;
 import evgenykravtsov.appblocker.domain.model.exercise.pictures.PicturesExercise;
-import evgenykravtsov.appblocker.domain.usecase.UseCaseThreadPool;
-import evgenykravtsov.appblocker.presentation.presenter.MathExercisePresenter;
 import evgenykravtsov.appblocker.presentation.presenter.PicturesExercisePresenter;
-import evgenykravtsov.appblocker.presentation.presenter.TestMathExercisePresenter;
 import evgenykravtsov.appblocker.presentation.presenter.TestPicturesExercisePresenter;
 import evgenykravtsov.appblocker.presentation.view.activity.BlockerActivity;
 
@@ -26,7 +28,9 @@ public class PictureExerciseFragment extends Fragment
 
     private PicturesExercisePresenter presenter;
 
+    private CoordinatorLayout coordinatorLayout;
     private ImageView[] imageViews;
+    private FloatingActionButton soundButton;
 
     private int mode;
 
@@ -102,13 +106,15 @@ public class PictureExerciseFragment extends Fragment
 
     @Override
     public void notifyCheckResult(boolean solved) {
-        String message = solved ? "Correct!" : "Incorrect!";
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        showCorrectnessSnackbar(solved);
     }
 
     ////
 
     private void bindViews(View layout) {
+        coordinatorLayout = (CoordinatorLayout) layout
+                .findViewById(R.id.picture_exercise_fragment_coordinator_layout);
+
         imageViews = new ImageView[4];
 
         imageViews[0] = (ImageView)
@@ -119,6 +125,9 @@ public class PictureExerciseFragment extends Fragment
                 layout.findViewById(R.id.picture_exercise_fragment_picture_3);
         imageViews[3] = (ImageView)
                 layout.findViewById(R.id.picture_exercise_fragment_picture_4);
+
+        soundButton = (FloatingActionButton) layout
+                .findViewById(R.id.picture_exercise_fragment_sound_button);
     }
 
     private void bindViewListeners() {
@@ -137,6 +146,14 @@ public class PictureExerciseFragment extends Fragment
                 }
             });
         }
+
+        soundButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // TODO Make sound
+            }
+        });
     }
 
     public void bindPresenter() {
@@ -156,6 +173,30 @@ public class PictureExerciseFragment extends Fragment
         presenter.unbindView();
         EventBus.getDefault().unregister(presenter);
         presenter = null;
+    }
+
+    private void showCorrectnessSnackbar(boolean solved) {
+        String message = solved ? "Correct!" : "Incorrect!";
+        Drawable icon = solved ?
+                getResources().getDrawable(R.drawable.correct_icon) :
+                getResources().getDrawable(R.drawable.incorrect_icon);
+
+        Snackbar snackbar = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_SHORT);
+        View snackbarLayout = snackbar.getView();
+        snackbarLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+        ImageView imageView = new ImageView(getActivity());
+        imageView.setImageDrawable(icon);
+
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.gravity = Gravity.CENTER_VERTICAL;
+        imageView.setLayoutParams(layoutParams);
+
+        ((Snackbar.SnackbarLayout) snackbarLayout).addView(imageView);
+
+        snackbar.show();
     }
 }
 

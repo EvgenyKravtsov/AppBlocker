@@ -1,34 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:padding="20dp">
+    android:background="@color/colorPrimaryLight"
+    style="@style/AccentedScrollbar">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Send your feedback directly to developers" />
-
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textSize="15sp"
-        android:inputType="textMultiLine"
-        android:lines="8"
-        android:minLines="6"
-        android:maxLines="10"
-        android:gravity="top|left"
-        android:scrollbars="vertical"
-        android:id="@+id/feedback_activity_feedback_edit_text" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_horizontal_margin">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Send"
-        android:id="@+id/feedback_activity_send_button" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/colorTextPrimary"
+            android:text="Send email feedback directly to developers" />
 
-</LinearLayout>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:padding="4dp"
+            android:textSize="15sp"
+            android:textColor="@color/colorTextPrimary"
+            android:inputType="textMultiLine"
+            android:minLines="10"
+            android:maxLines="20"
+            android:gravity="top|start"
+            android:scrollbars="vertical"
+            android:id="@+id/feedback_activity_feedback_edit_text"
+            style="@style/AccentedEditText"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="end"
+            android:text="Send"
+            android:id="@+id/feedback_activity_send_button"
+            style="@style/Widget.AppCompat.Button.Colored" />
+
+    </LinearLayout>
+
+</ScrollView>

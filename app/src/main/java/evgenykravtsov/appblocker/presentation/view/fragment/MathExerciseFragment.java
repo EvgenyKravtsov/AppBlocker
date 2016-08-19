@@ -1,14 +1,20 @@
 package evgenykravtsov.appblocker.presentation.view.fragment;
 
 import android.app.Fragment;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -26,6 +32,7 @@ public class MathExerciseFragment extends Fragment
 
     private MathExercisePresenter presenter;
 
+    private RelativeLayout mainLayout;
     private TextView firstOperandTextView;
     private TextView operatorTextView;
     private TextView secondOperandTextView;
@@ -103,8 +110,7 @@ public class MathExerciseFragment extends Fragment
 
     @Override
     public void notifyCheckResult(boolean solved) {
-        String message = solved ? "Correct!" : "Incorrect!";
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        showCorrectnessSnackbar(solved);
     }
 
     ////
@@ -129,16 +135,18 @@ public class MathExerciseFragment extends Fragment
     }
 
     private void bindViews(android.view.View layout) {
-        firstOperandTextView = (TextView)
-                layout.findViewById(R.id.math_exercise_fragment_first_operand_text_view);
-        operatorTextView = (TextView)
-                layout.findViewById(R.id.math_exercise_fragment_operator_text_view);
-        secondOperandTextView = (TextView)
-                layout.findViewById(R.id.math_exercise_fragment_second_operand_text_view);
-        resultEditText = (EditText)
-                layout.findViewById(R.id.math_exercise_fragment_result_edit_text);
-        unblockButton = (Button)
-                layout.findViewById(R.id.math_exercise_fragment_unblock_button);
+        mainLayout = (RelativeLayout) layout
+                .findViewById(R.id.math_exercise_fragment_main_layout);
+        firstOperandTextView = (TextView) layout
+                .findViewById(R.id.math_exercise_fragment_first_operand_text_view);
+        operatorTextView = (TextView) layout
+                .findViewById(R.id.math_exercise_fragment_operator_text_view);
+        secondOperandTextView = (TextView) layout
+                .findViewById(R.id.math_exercise_fragment_second_operand_text_view);
+        resultEditText = (EditText) layout
+                .findViewById(R.id.math_exercise_fragment_result_edit_text);
+        unblockButton = (Button) layout
+                .findViewById(R.id.math_exercise_fragment_unblock_button);
     }
 
     private void bindViewListeners() {
@@ -149,5 +157,29 @@ public class MathExerciseFragment extends Fragment
                 if (!resultString.equals("")) presenter.checkResult(Integer.parseInt(resultString));
             }
         });
+    }
+
+    private void showCorrectnessSnackbar(boolean solved) {
+        String message = solved ? "Correct!" : "Incorrect!";
+        Drawable icon = solved ?
+                getResources().getDrawable(R.drawable.correct_icon) :
+                getResources().getDrawable(R.drawable.incorrect_icon);
+
+        Snackbar snackbar = Snackbar.make(mainLayout, message, Snackbar.LENGTH_SHORT);
+        View snackbarLayout = snackbar.getView();
+        snackbarLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+        ImageView imageView = new ImageView(getActivity());
+        imageView.setImageDrawable(icon);
+
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.gravity = Gravity.CENTER_VERTICAL;
+        imageView.setLayoutParams(layoutParams);
+
+        ((Snackbar.SnackbarLayout) snackbarLayout).addView(imageView);
+
+        snackbar.show();
     }
 }

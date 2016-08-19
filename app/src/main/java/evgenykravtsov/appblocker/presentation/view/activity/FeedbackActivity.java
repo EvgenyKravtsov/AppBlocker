@@ -1,7 +1,9 @@
 package evgenykravtsov.appblocker.presentation.view.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +29,7 @@ public class FeedbackActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
+        prepareActionBar();
         bindViews();
         bindViewListeners();
     }
@@ -43,6 +46,16 @@ public class FeedbackActivity extends AppCompatActivity
         unbindPresenter();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     ////
 
     private void bindPresenter() {
@@ -52,6 +65,11 @@ public class FeedbackActivity extends AppCompatActivity
     private void unbindPresenter() {
         if (presenter != null) presenter.unbindView();
         presenter = null;
+    }
+
+    private void prepareActionBar() {
+        assert getSupportActionBar() != null;
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void bindViews() {

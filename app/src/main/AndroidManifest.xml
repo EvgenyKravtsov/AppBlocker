@@ -27,7 +27,6 @@
         <activity android:name=".presentation.view.activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -41,13 +40,19 @@
 
         <activity
             android:name=".presentation.view.activity.ExerciseSettingsActivity"
-            android:label="Exercise settings">
+            android:label="Exercise settings"
+            android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".presentation.view.activity.MainActivity" />
         </activity>
 
-        <activity android:name=".presentation.view.activity.FeedbackActivity" />
+        <activity android:name=".presentation.view.activity.FeedbackActivity"
+            android:label="Feedback">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".presentation.view.activity.MainActivity" />
+        </activity>
 
         <activity android:name=".presentation.view.activity.TestExerciseActivity" />
 

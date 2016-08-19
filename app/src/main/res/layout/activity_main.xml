@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:id="@+id/main_activity_navigation_drawer">
 
     <android.support.design.widget.CoordinatorLayout

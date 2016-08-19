@@ -2,9 +2,9 @@ package evgenykravtsov.appblocker.presentation.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +13,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ScrollView;
 
 import java.util.Locale;
 
@@ -28,6 +29,7 @@ public class ExerciseSettingsActivity extends AppCompatActivity
     private ExerciseSettingsPresenter presenter;
     private ExerciseSettings exerciseSettings;
 
+    private ScrollView mainLayout;
     private EditText numberEditText;
     private CheckBox soundSupportCheckBox;
     private ImageButton expandMathButton;
@@ -42,6 +44,15 @@ public class ExerciseSettingsActivity extends AppCompatActivity
     private Button testColorButton;
 
     private int activatedExerciseTypesCount;
+
+    ////
+
+    public void showSnackbar(String message) {
+        Snackbar snackbar = Snackbar.make(mainLayout, message, Snackbar.LENGTH_SHORT);
+        View snackbarLayout = snackbar.getView();
+        snackbarLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        snackbar.show();
+    }
 
     ////
 
@@ -70,13 +81,16 @@ public class ExerciseSettingsActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-
+    protected void onPause() {
+        super.onPause();
         presenter.setSessionExerciseNumber(
                 Integer.parseInt(numberEditText.getText().toString())
         );
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
         unbindPresenter();
     }
 
@@ -107,6 +121,8 @@ public class ExerciseSettingsActivity extends AppCompatActivity
     }
 
     private void bindViews() {
+        mainLayout = (ScrollView) findViewById(R.id.exercise_settings_activity_main_layout);
+
         numberEditText = (EditText) findViewById(R.id.exercise_settings_activity_number_edit_text);
 
         soundSupportCheckBox = (CheckBox)
@@ -153,9 +169,18 @@ public class ExerciseSettingsActivity extends AppCompatActivity
         expandMathButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                expandMathButton.setRotation(180);
                 int visibility = mathLayout.getVisibility();
-                if (visibility == View.GONE) mathLayout.setVisibility(View.VISIBLE);
-                if (visibility == View.VISIBLE) mathLayout.setVisibility(View.GONE);
+                if (visibility == View.GONE) {
+                    expandMathButton.setRotation(180);
+                    mathLayout.setVisibility(View.VISIBLE);
+                    mainLayout.scrollTo(0, expandMathButton.getBottom());
+                }
+                if (visibility == View.VISIBLE) {
+                    expandMathButton.setRotation(0);
+                    mainLayout.scrollTo(expandMathButton.getBottom(), mathCheckBox.getBottom());
+                    mathLayout.setVisibility(View.GONE);
+                }
             }
         });
 
@@ -164,7 +189,7 @@ public class ExerciseSettingsActivity extends AppCompatActivity
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (!checked) {
                     if (activatedExerciseTypesCount == 1) {
-                        // TODO Notify user
+                        showSnackbar("At least one type should be activated");
                         mathCheckBox.setChecked(true);
                         return;
                     }
@@ -183,7 +208,7 @@ public class ExerciseSettingsActivity extends AppCompatActivity
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (!checked) {
                     if (activatedExerciseTypesCount == 1) {
-                        // TODO Notify user
+                        showSnackbar("At least one type should be activated");
                         picturesCheckBox.setChecked(true);
                         return;
                     }
@@ -202,7 +227,7 @@ public class ExerciseSettingsActivity extends AppCompatActivity
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (!checked) {
                     if (activatedExerciseTypesCount == 1) {
-                        // TODO Notify user
+                        showSnackbar("At least one type should be activated");
                         clockCheckBox.setChecked(true);
                         return;
                     }
@@ -221,7 +246,7 @@ public class ExerciseSettingsActivity extends AppCompatActivity
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (!checked) {
                     if (activatedExerciseTypesCount == 1) {
-                        // TODO Notify user
+                        showSnackbar("At least one type should be activated");
                         colorCheckBox.setChecked(true);
                         return;
                     }
