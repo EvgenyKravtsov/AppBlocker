@@ -126,7 +126,7 @@ public class ExerciseGenerator {
     }
 
     public ClockExercise generateClockExercise() {
-        int hours = random.nextInt(12);
+        int hours = random.nextInt(12) + 1;
         int minutes = random.nextInt(12);
 
         return new ClockExercise(hours, minutes * 5);

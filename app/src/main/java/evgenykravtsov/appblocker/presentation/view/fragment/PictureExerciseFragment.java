@@ -178,8 +178,8 @@ public class PictureExerciseFragment extends Fragment
     private void showCorrectnessSnackbar(boolean solved) {
         String message = solved ? "Correct!" : "Incorrect!";
         Drawable icon = solved ?
-                getResources().getDrawable(R.drawable.correct_icon) :
-                getResources().getDrawable(R.drawable.incorrect_icon);
+                getResources().getDrawable(R.drawable.block_control_on_button_icon) :
+                getResources().getDrawable(R.drawable.block_control_off_button_icon);
 
         Snackbar snackbar = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_SHORT);
         View snackbarLayout = snackbar.getView();

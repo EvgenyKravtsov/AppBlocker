@@ -2,8 +2,16 @@ package evgenykravtsov.appblocker.presentation.view.activity;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -106,5 +114,31 @@ public class BlockerActivity extends AppCompatActivity implements BlockerPresent
         ).commit();
 
         presenter.requestExerciseType();
+    }
+
+    private void showCorrectnessSnackbar(boolean solved) {
+        FrameLayout layout = (FrameLayout) findViewById(R.id.blocker_activity_fragment_container);
+
+        String message = solved ? "Correct!" : "Incorrect!";
+        Drawable icon = solved ?
+                getResources().getDrawable(R.drawable.block_control_on_button_icon) :
+                getResources().getDrawable(R.drawable.block_control_off_button_icon);
+
+        Snackbar snackbar = Snackbar.make(layout, message, Snackbar.LENGTH_SHORT);
+        View snackbarLayout = snackbar.getView();
+        snackbarLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+        ImageView imageView = new ImageView(this);
+        imageView.setImageDrawable(icon);
+
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.gravity = Gravity.CENTER_VERTICAL;
+        imageView.setLayoutParams(layoutParams);
+
+        ((Snackbar.SnackbarLayout) snackbarLayout).addView(imageView);
+
+        snackbar.show();
     }
 }
