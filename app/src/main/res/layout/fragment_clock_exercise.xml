@@ -1,73 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
+    android:background="@color/colorPrimaryLight"
     android:id="@+id/clock_exercise_fragment_main_layout">
 
-    <FrameLayout
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="10dp">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/clock"
-            android:id="@+id/clock_exercise_fragment_clock_image_view"/>
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/hour_clock_arrow"
-            android:id="@+id/clock_exercise_fragment_hour_arrow_image_view"/>
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/minute_clock_arrow"
-            android:id="@+id/clock_exercise_fragment_minute_arrow_image_view"/>
-
-    </FrameLayout>
-
-    <LinearLayout
+    <android.support.v7.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:orientation="horizontal">
+        android:layout_marginTop="16dp"
+        card_view:cardCornerRadius="2dp"
+        card_view:cardElevation="2dp">
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hours" />
+            android:orientation="vertical">
 
-        <EditText
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:id="@+id/clock_exercise_fragment_hours_edit_text" />
+            <FrameLayout
+                android:layout_width="260dp"
+                android:layout_height="260dp"
+                android:layout_margin="8dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginStart="30dp"
-            android:text="Minutes" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/clock"
+                    android:id="@+id/clock_exercise_fragment_clock_image_view"/>
 
-        <EditText
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:id="@+id/clock_exercise_fragment_minutes_edit_text" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/hour_clock_arrow"
+                    android:id="@+id/clock_exercise_fragment_hour_arrow_image_view"/>
 
-    </LinearLayout>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/minute_clock_arrow"
+                    android:id="@+id/clock_exercise_fragment_minute_arrow_image_view"/>
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:textSize="24sp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="Hours" />
+
+                <EditText
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:textSize="24sp"
+                    android:id="@+id/clock_exercise_fragment_hours_edit_text"
+                    style="@style/AccentedEditText" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:textSize="24sp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="Minutes" />
+
+                <EditText
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:textSize="24sp"
+                    android:id="@+id/clock_exercise_fragment_minutes_edit_text"
+                    style="@style/AccentedEditText" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_gravity="end"
         android:text="Check"
-        android:id="@+id/clock_exercise_fragment_check_button" />
+        android:id="@+id/clock_exercise_fragment_check_button"
+        style="@style/ExerciseCheckButton" />
 
 </LinearLayout>

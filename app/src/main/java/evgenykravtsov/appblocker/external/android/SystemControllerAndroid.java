@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import evgenykravtsov.appblocker.R;
 import evgenykravtsov.appblocker.domain.model.App;
 import evgenykravtsov.appblocker.domain.model.AppBlocker;
 import evgenykravtsov.appblocker.domain.model.SoundTipType;
@@ -175,9 +176,24 @@ public class SystemControllerAndroid implements SystemController, AppBlocker.Ope
 
     private MediaPlayer prepareMediaPlayerForSoundTip(SoundTipType type) {
 
-        // TODO Prepare logic
+        int soundResId;
 
-        return null;
+        switch (type) {
+            case OddPictureTip: soundResId = R.raw.odd_picture_tip; break;
+            case ColorTipRed: soundResId = R.raw.color_tip_red; break;
+            case ColorTipOrange: soundResId = R.raw.color_tip_orange; break;
+            case ColorTipYellow: soundResId = R.raw.color_tip_yellow; break;
+            case ColorTipGreen: soundResId = R.raw.color_tip_green; break;
+            case ColorTipLightBlue: soundResId = R.raw.color_tip_light_blue; break;
+            case ColorTipBlue: soundResId = R.raw.color_tip_blue; break;
+            case ColorTipPurple: soundResId = R.raw.color_tip_purple; break;
+            case ColorTipWhite: soundResId = R.raw.color_tip_white; break;
+            case ColorTipGray: soundResId = R.raw.color_tip_gray; break;
+            case ColorTipBlack: soundResId = R.raw.color_tip_black; break;
+            default: soundResId = R.raw.odd_picture_tip;
+        }
+
+        return MediaPlayer.create(context, soundResId);
     }
 }
 

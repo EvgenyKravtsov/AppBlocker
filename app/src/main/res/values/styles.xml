@@ -83,4 +83,10 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="ColorExerciseImage">
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_margin">1dp</item>
+    </style>
+
 </resources>

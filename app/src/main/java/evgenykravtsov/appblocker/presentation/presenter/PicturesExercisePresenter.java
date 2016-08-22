@@ -3,6 +3,10 @@ package evgenykravtsov.appblocker.presentation.presenter;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import evgenykravtsov.appblocker.DependencyInjection;
+import evgenykravtsov.appblocker.domain.model.SoundTipType;
+import evgenykravtsov.appblocker.domain.model.SystemController;
+import evgenykravtsov.appblocker.domain.model.exercise.ExerciseSettings;
 import evgenykravtsov.appblocker.domain.model.exercise.pictures.PicturesExercise;
 import evgenykravtsov.appblocker.domain.usecase.GetPicturesExercise;
 import evgenykravtsov.appblocker.domain.usecase.UseCaseFactory;
@@ -18,6 +22,8 @@ public class PicturesExercisePresenter {
 
         void notifyCheckResult(boolean solved);
 
+        void hideSoundButton();
+
         void finish();
     }
 
@@ -26,13 +32,19 @@ public class PicturesExercisePresenter {
     protected View view;
     protected PicturesExercise picturesExercise;
 
+    private SystemController systemController;
     private UseCaseThreadPool threadPool;
+    private ExerciseSettings exerciseSettings;
 
     ////
 
     public PicturesExercisePresenter(View view) {
         this.view = view;
         threadPool = UseCaseThreadPool.getInstance();
+        systemController = DependencyInjection.provideSystemController();
+        exerciseSettings = DependencyInjection.provideExerciseSettings();
+
+        if (!exerciseSettings.loadSoundSupportStatus()) view.hideSoundButton();
     }
 
     ////
@@ -62,11 +74,16 @@ public class PicturesExercisePresenter {
         }
     }
 
+    public void playSoundTip() {
+        systemController.playSoundTip(SoundTipType.OddPictureTip);
+    }
+
     ////
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(GetPicturesExercise.Executed event) {
         setPicturesExercise(event.getPicturesExercise());
         view.showPicturesExercise(event.getPicturesExercise());
+        if (exerciseSettings.loadSoundSupportStatus()) playSoundTip();
     }
 }

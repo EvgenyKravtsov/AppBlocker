@@ -2,12 +2,19 @@ package evgenykravtsov.appblocker.presentation.view.fragment;
 
 import android.app.Fragment;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,8 +42,9 @@ public class ColorExerciseFragment extends Fragment
 
     private ColorExercisePresenter presenter;
 
+    private CoordinatorLayout coordinatorLayout;
     private TextView colorTextView;
-    private Button soundButton;
+    private FloatingActionButton soundButton;
     private Map<View, Boolean> colorViews;
     private int correctColorId;
 
@@ -168,13 +176,17 @@ public class ColorExerciseFragment extends Fragment
 
     @Override
     public void notifyCheckResult(boolean solved) {
-        String message = solved ? "Correct!" : "Incorrect!";
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        showCorrectnessSnackbar(solved);
     }
 
     @Override
     public void finish() {
         getActivity().finish();
+    }
+
+    @Override
+    public void hideSoundButton() {
+        soundButton.setVisibility(View.GONE);
     }
 
     ////
@@ -205,10 +217,12 @@ public class ColorExerciseFragment extends Fragment
     }
 
     private void bindViews(View layout) {
-        colorTextView = (TextView)
-                layout.findViewById(R.id.color_exercise_fragment_color_text_view);
-        soundButton = (Button)
-                layout.findViewById(R.id.color_exercise_fragment_sound_button);
+        coordinatorLayout = (CoordinatorLayout) layout
+                .findViewById(R.id.color_exercise_fragment_coordinator_layout);
+        colorTextView = (TextView) layout
+                .findViewById(R.id.color_exercise_fragment_color_text_view);
+        soundButton = (FloatingActionButton) layout
+                .findViewById(R.id.color_exercise_fragment_sound_button);
 
         colorViews = new HashMap<>();
         for (int i = 0; i < ColorType.values().length; i++) {
@@ -261,6 +275,30 @@ public class ColorExerciseFragment extends Fragment
         }
 
         return null;
+    }
+
+    private void showCorrectnessSnackbar(boolean solved) {
+        String message = solved ? "Correct!" : "Incorrect!";
+        Drawable icon = solved ?
+                getResources().getDrawable(R.drawable.block_control_on_button_icon) :
+                getResources().getDrawable(R.drawable.block_control_off_button_icon);
+
+        Snackbar snackbar = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_SHORT);
+        View snackbarLayout = snackbar.getView();
+        snackbarLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+        ImageView imageView = new ImageView(getActivity());
+        imageView.setImageDrawable(icon);
+
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.gravity = Gravity.CENTER_VERTICAL;
+        imageView.setLayoutParams(layoutParams);
+
+        ((Snackbar.SnackbarLayout) snackbarLayout).addView(imageView);
+
+        snackbar.show();
     }
 }
 

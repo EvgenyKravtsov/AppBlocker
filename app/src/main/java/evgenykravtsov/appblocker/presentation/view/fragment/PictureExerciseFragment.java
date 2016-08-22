@@ -109,6 +109,11 @@ public class PictureExerciseFragment extends Fragment
         showCorrectnessSnackbar(solved);
     }
 
+    @Override
+    public void hideSoundButton() {
+        soundButton.setVisibility(View.GONE);
+    }
+
     ////
 
     private void bindViews(View layout) {
@@ -150,8 +155,7 @@ public class PictureExerciseFragment extends Fragment
         soundButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                // TODO Make sound
+                presenter.playSoundTip();
             }
         });
     }

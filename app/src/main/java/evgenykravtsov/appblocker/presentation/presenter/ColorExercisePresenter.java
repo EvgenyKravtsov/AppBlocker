@@ -3,8 +3,10 @@ package evgenykravtsov.appblocker.presentation.presenter;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import evgenykravtsov.appblocker.DependencyInjection;
 import evgenykravtsov.appblocker.domain.model.SoundTipType;
 import evgenykravtsov.appblocker.domain.model.SystemController;
+import evgenykravtsov.appblocker.domain.model.exercise.ExerciseSettings;
 import evgenykravtsov.appblocker.domain.model.exercise.color.ColorExercise;
 import evgenykravtsov.appblocker.domain.model.exercise.color.ColorType;
 import evgenykravtsov.appblocker.domain.usecase.GetColorExercise;
@@ -22,6 +24,8 @@ public class ColorExercisePresenter {
         void notifyCheckResult(boolean solved);
 
         void finish();
+
+        void hideSoundButton();
     }
 
     ////
@@ -32,6 +36,7 @@ public class ColorExercisePresenter {
     private UseCaseThreadPool threadPool;
     private SystemController systemController;
     private SoundTipType soundTipType;
+    private ExerciseSettings exerciseSettings;
 
     ////
 
@@ -43,6 +48,10 @@ public class ColorExercisePresenter {
         this.view = view;
         this.threadPool = threadPool;
         this.systemController = systemController;
+
+        exerciseSettings = DependencyInjection.provideExerciseSettings();
+
+        if (!exerciseSettings.loadSoundSupportStatus()) view.hideSoundButton();
     }
 
     ////
@@ -113,6 +122,7 @@ public class ColorExercisePresenter {
         setColorExercise(colorExercise);
         soundTipType = prepareSoundTipTypeForColor(colorExercise.getColorType());
         view.showColorExercise(colorExercise);
+        if (exerciseSettings.loadSoundSupportStatus()) playSoundTip();
     }
 }
 
