@@ -15,7 +15,7 @@
         android:orientation="vertical"
         android:gravity="center_horizontal"
         android:background="@color/colorPrimaryLight"
-        android:id="@+id/exercise_layout">
+        android:id="@+id/picture_exercise_fragment_exercise_layout">
 
         <TextView
             android:layout_width="wrap_content"
@@ -106,7 +106,7 @@
         android:src="@drawable/sound_button_icon"
         android:id="@+id/picture_exercise_fragment_sound_button"
         app:fabSize="normal"
-        app:layout_anchor="@+id/exercise_layout"
+        app:layout_anchor="@+id/picture_exercise_fragment_exercise_layout"
         app:layout_anchorGravity="bottom|right|end" />
 
 </android.support.design.widget.CoordinatorLayout>

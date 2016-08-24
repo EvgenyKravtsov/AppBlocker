@@ -1,29 +1,23 @@
 package evgenykravtsov.appblocker.presentation.view.activity;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.DragEvent;
+import android.support.v7.widget.SwitchCompat;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -42,10 +36,11 @@ public class MainActivity extends AppCompatActivity
     private MainPresenter presenter;
 
     private DrawerLayout navigationDrawer;
-    private CoordinatorLayout coordinatorLayout;
+    private LinearLayout coordinatorLayout;
     private LinearLayout feedbackButton;
     private LinearLayout exerciseSettingsButton;
-    private FloatingActionButton blockControlButton;
+    private TextView blockStatusTextView;
+    private SwitchCompat blockControlSwitch;
     private RecyclerView appsRecyclerView;
 
     ////
@@ -159,10 +154,11 @@ public class MainActivity extends AppCompatActivity
 
     private void bindViews() {
         navigationDrawer = (DrawerLayout) findViewById(R.id.main_activity_navigation_drawer);
-        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.main_activity_coordinator_layout);
+        coordinatorLayout = (LinearLayout) findViewById(R.id.main_activity_coordinator_layout);
         feedbackButton = (LinearLayout) findViewById(R.id.main_activity_feedback_button);
         exerciseSettingsButton = (LinearLayout) findViewById(R.id.main_activity_exercise_settings_button);
-        blockControlButton = (FloatingActionButton) findViewById(R.id.main_activity_block_control_button);
+        blockStatusTextView = (TextView) findViewById(R.id.main_activity_block_status_text_view);
+        blockControlSwitch = (SwitchCompat) findViewById(R.id.main_activity_block_control_switch);
         appsRecyclerView = (RecyclerView) findViewById(R.id.main_activity_apps_recycler_view);
     }
 
@@ -204,13 +200,6 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
-
-        blockControlButton.setOnClickListener(new android.view.View.OnClickListener() {
-            @Override
-            public void onClick(android.view.View view) {
-                presenter.toggleAppBlocker();
-            }
-        });
     }
 
     private void prepareAppsRecyclerView() {
@@ -228,13 +217,16 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void switchControlButtonState(boolean enabled) {
-        if (enabled) {
-            blockControlButton.setImageDrawable(
-                    getResources().getDrawable(R.drawable.block_control_on_button_icon));
-        } else {
-            blockControlButton.setImageDrawable(
-                    getResources().getDrawable(R.drawable.block_control_off_button_icon));
-        }
+        String blockStatus = enabled ? "Activated" : "Deactivated";
+        setTextAnimatedForTextView(blockStatusTextView, blockStatus);
+
+        blockControlSwitch.setChecked(enabled);
+        blockControlSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                presenter.toggleAppBlocker();
+            }
+        });
     }
 
     private void showSnackbar(String message) {
@@ -242,5 +234,17 @@ public class MainActivity extends AppCompatActivity
         View snackbarLayout = snackbar.getView();
         snackbarLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         snackbar.show();
+    }
+
+    private void setTextAnimatedForTextView(TextView textView, String text) {
+        Animation fadeOut = new AlphaAnimation(1.0f, 0.0f);
+        fadeOut.setDuration(400);
+        textView.startAnimation(fadeOut);
+
+        textView.setText(text);
+
+        Animation fadeIn = new AlphaAnimation(0.0f, 1.0f);
+        fadeIn.setDuration(400);
+        textView.startAnimation(fadeIn);
     }
 }

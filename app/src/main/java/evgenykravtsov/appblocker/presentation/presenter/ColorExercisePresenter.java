@@ -110,7 +110,7 @@ public class ColorExercisePresenter {
             case Black:
                 return SoundTipType.ColorTipBlack;
             default:
-                return null;
+                return SoundTipType.ColorTipRed; // TODO Add sounds for pink and brown
         }
     }
 

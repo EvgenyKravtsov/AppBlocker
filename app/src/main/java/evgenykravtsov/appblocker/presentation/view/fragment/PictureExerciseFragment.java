@@ -1,13 +1,11 @@
 package evgenykravtsov.appblocker.presentation.view.fragment;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.app.Fragment;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.concurrent.TimeUnit;
 
 import evgenykravtsov.appblocker.R;
 import evgenykravtsov.appblocker.domain.model.exercise.pictures.Picture;
@@ -28,7 +28,7 @@ public class PictureExerciseFragment extends Fragment
 
     private PicturesExercisePresenter presenter;
 
-    private CoordinatorLayout coordinatorLayout;
+    private LinearLayout exerciseLayout;
     private ImageView[] imageViews;
     private FloatingActionButton soundButton;
 
@@ -85,7 +85,17 @@ public class PictureExerciseFragment extends Fragment
 
     @Override
     public void finish() {
-        getActivity().finish();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    TimeUnit.MILLISECONDS.sleep(BlockerActivity.CORRECTNESS_ANIMATION_DURATION);
+                    getActivity().finish();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     ////
@@ -106,7 +116,7 @@ public class PictureExerciseFragment extends Fragment
 
     @Override
     public void notifyCheckResult(boolean solved) {
-        showCorrectnessSnackbar(solved);
+        notifyCorrectness(solved);
     }
 
     @Override
@@ -117,8 +127,8 @@ public class PictureExerciseFragment extends Fragment
     ////
 
     private void bindViews(View layout) {
-        coordinatorLayout = (CoordinatorLayout) layout
-                .findViewById(R.id.picture_exercise_fragment_coordinator_layout);
+        exerciseLayout = (LinearLayout) layout
+                .findViewById(R.id.picture_exercise_fragment_exercise_layout);
 
         imageViews = new ImageView[4];
 
@@ -179,28 +189,29 @@ public class PictureExerciseFragment extends Fragment
         presenter = null;
     }
 
-    private void showCorrectnessSnackbar(boolean solved) {
-        String message = solved ? "Correct!" : "Incorrect!";
-        Drawable icon = solved ?
-                getResources().getDrawable(R.drawable.block_control_on_button_icon) :
-                getResources().getDrawable(R.drawable.block_control_off_button_icon);
+    private void notifyCorrectness(boolean solved) {
+        int colorFrom = getResources().getColor(R.color.colorPrimaryLight);
 
-        Snackbar snackbar = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_SHORT);
-        View snackbarLayout = snackbar.getView();
-        snackbarLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        int colorTo = solved ?
+                getResources().getColor(R.color.colorRightAnswer) :
+                getResources().getColor(R.color.colorWrongAnswer);
 
-        ImageView imageView = new ImageView(getActivity());
-        imageView.setImageDrawable(icon);
+        ValueAnimator animator = ValueAnimator.ofObject(
+                new ArgbEvaluator(),
+                colorFrom,
+                colorTo,
+                colorFrom);
 
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.gravity = Gravity.CENTER_VERTICAL;
-        imageView.setLayoutParams(layoutParams);
+        animator.setDuration(BlockerActivity.CORRECTNESS_ANIMATION_DURATION);
 
-        ((Snackbar.SnackbarLayout) snackbarLayout).addView(imageView);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                exerciseLayout.setBackgroundColor((int) valueAnimator.getAnimatedValue());
+            }
+        });
 
-        snackbar.show();
+        animator.start();
     }
 }
 
