@@ -36,6 +36,8 @@ public class PicturesExercisePresenter {
     private UseCaseThreadPool threadPool;
     private ExerciseSettings exerciseSettings;
 
+    private boolean exerciseTypeTipPlayed;
+
     ////
 
     public PicturesExercisePresenter(View view) {
@@ -74,8 +76,8 @@ public class PicturesExercisePresenter {
         }
     }
 
-    public void playSoundTip() {
-        systemController.playSoundTip(SoundTipType.OddPictureTip);
+    public void playSoundTip(SoundTipType soundTipType) {
+        if (exerciseSettings.loadSoundSupportStatus()) systemController.playSoundTip(soundTipType);
     }
 
     ////
@@ -84,6 +86,9 @@ public class PicturesExercisePresenter {
     public void onEvent(GetPicturesExercise.Executed event) {
         setPicturesExercise(event.getPicturesExercise());
         view.showPicturesExercise(event.getPicturesExercise());
-        if (exerciseSettings.loadSoundSupportStatus()) playSoundTip();
+        if (exerciseSettings.loadSoundSupportStatus() && !exerciseTypeTipPlayed) {
+            playSoundTip(SoundTipType.OddPictureTip);
+            exerciseTypeTipPlayed = true;
+        }
     }
 }

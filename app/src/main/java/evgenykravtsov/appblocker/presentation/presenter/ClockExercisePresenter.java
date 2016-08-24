@@ -3,6 +3,10 @@ package evgenykravtsov.appblocker.presentation.presenter;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import evgenykravtsov.appblocker.DependencyInjection;
+import evgenykravtsov.appblocker.domain.model.SoundTipType;
+import evgenykravtsov.appblocker.domain.model.SystemController;
+import evgenykravtsov.appblocker.domain.model.exercise.ExerciseSettings;
 import evgenykravtsov.appblocker.domain.model.exercise.clock.ClockExercise;
 import evgenykravtsov.appblocker.domain.usecase.GetClockExercise;
 import evgenykravtsov.appblocker.domain.usecase.UseCaseFactory;
@@ -26,6 +30,8 @@ public class ClockExercisePresenter {
     protected View view;
     protected ClockExercise clockExercise;
 
+    private ExerciseSettings exerciseSettings;
+    private SystemController systemController;
     private UseCaseThreadPool threadPool;
 
     ////
@@ -33,6 +39,9 @@ public class ClockExercisePresenter {
     public ClockExercisePresenter(View view, UseCaseThreadPool threadPool) {
         this.view = view;
         this.threadPool = threadPool;
+
+        exerciseSettings = DependencyInjection.provideExerciseSettings();
+        systemController = DependencyInjection.provideSystemController();
     }
 
     ////
@@ -57,6 +66,10 @@ public class ClockExercisePresenter {
             view.notifyCheckResult(true);
             view.exerciseSolved();
         } else view.notifyCheckResult(false);
+    }
+
+    public void playSoundTip(SoundTipType soundTipType) {
+        if (exerciseSettings.loadSoundSupportStatus()) systemController.playSoundTip(soundTipType);
     }
 
     ////

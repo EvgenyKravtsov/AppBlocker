@@ -4,5 +4,5 @@ public enum SoundTipType {
 
     ColorTipRed, ColorTipOrange,ColorTipYellow,ColorTipGreen,ColorTipLightBlue,
     ColorTipBlue,ColorTipPurple,ColorTipWhite,ColorTipGray,ColorTipBlack,
-    OddPictureTip;
+    ColorTipPink, ColorTipBrown, OddPictureTip, RightAnswerTip, WrongAnswerTip;
 }

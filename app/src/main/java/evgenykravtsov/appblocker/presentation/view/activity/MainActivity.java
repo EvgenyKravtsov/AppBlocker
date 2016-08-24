@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity
     private MainPresenter presenter;
 
     private DrawerLayout navigationDrawer;
-    private LinearLayout coordinatorLayout;
+    private LinearLayout mainLayout;
     private LinearLayout feedbackButton;
     private LinearLayout exerciseSettingsButton;
     private TextView blockStatusTextView;
@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity
 
     private void bindViews() {
         navigationDrawer = (DrawerLayout) findViewById(R.id.main_activity_navigation_drawer);
-        coordinatorLayout = (LinearLayout) findViewById(R.id.main_activity_coordinator_layout);
+        mainLayout = (LinearLayout) findViewById(R.id.main_activity_main_layout);
         feedbackButton = (LinearLayout) findViewById(R.id.main_activity_feedback_button);
         exerciseSettingsButton = (LinearLayout) findViewById(R.id.main_activity_exercise_settings_button);
         blockStatusTextView = (TextView) findViewById(R.id.main_activity_block_status_text_view);
@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showSnackbar(String message) {
-        Snackbar snackbar = Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_SHORT);
+        Snackbar snackbar = Snackbar.make(mainLayout, message, Snackbar.LENGTH_SHORT);
         View snackbarLayout = snackbar.getView();
         snackbarLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         snackbar.show();

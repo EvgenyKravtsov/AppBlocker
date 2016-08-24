@@ -15,7 +15,7 @@ import evgenykravtsov.appblocker.presentation.presenter.FeedbackPresenter;
 public class FeedbackActivity extends AppCompatActivity
         implements FeedbackPresenter.View {
 
-    private static final String DEVELOPERS_ADDRESS = "rse@kevers.top";
+    private static final String DEVELOPERS_ADDRESS = "info@kevers.top";
     private static final String FEEDBACK_SUBJECT = "Feedback from user";
 
     private FeedbackPresenter presenter;

@@ -51,7 +51,7 @@ public class AppBlockerService extends Service {
             while (serviceStatus) {
                 try {
                     UseCaseFactory.provideCheckForegroundAppUseCase().execute();
-                    TimeUnit.SECONDS.sleep(1);
+                    TimeUnit.MILLISECONDS.sleep(1500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

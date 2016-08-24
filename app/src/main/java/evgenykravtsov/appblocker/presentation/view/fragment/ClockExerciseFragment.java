@@ -17,6 +17,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.concurrent.TimeUnit;
 
 import evgenykravtsov.appblocker.R;
+import evgenykravtsov.appblocker.domain.model.SoundTipType;
 import evgenykravtsov.appblocker.domain.model.exercise.clock.ClockExercise;
 import evgenykravtsov.appblocker.domain.usecase.UseCaseThreadPool;
 import evgenykravtsov.appblocker.presentation.presenter.ClockExercisePresenter;
@@ -94,11 +95,23 @@ public class ClockExerciseFragment extends Fragment
 
     @Override
     public void exerciseSolved() {
-        ((BlockerActivity) getActivity()).solveExercise();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    TimeUnit.MILLISECONDS.sleep(BlockerActivity.EXERCISE_CHANGE_DELAY);
+                    ((BlockerActivity) getActivity()).solveExercise();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     @Override
     public void notifyCheckResult(boolean solved) {
+        SoundTipType soundTipType = solved ? SoundTipType.RightAnswerTip : SoundTipType.WrongAnswerTip;
+        presenter.playSoundTip(soundTipType);
         showCorrectnessSnackbar(solved);
     }
 
@@ -108,7 +121,7 @@ public class ClockExerciseFragment extends Fragment
             @Override
             public void run() {
                 try {
-                    TimeUnit.MILLISECONDS.sleep(BlockerActivity.CORRECTNESS_ANIMATION_DURATION);
+                    TimeUnit.MILLISECONDS.sleep(BlockerActivity.EXERCISE_CHANGE_DELAY);
                     getActivity().finish();
                 } catch (InterruptedException e) {
                     e.printStackTrace();

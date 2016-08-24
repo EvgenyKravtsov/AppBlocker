@@ -2,6 +2,10 @@ package evgenykravtsov.appblocker.presentation.presenter;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import evgenykravtsov.appblocker.DependencyInjection;
+import evgenykravtsov.appblocker.domain.model.SoundTipType;
+import evgenykravtsov.appblocker.domain.model.SystemController;
+import evgenykravtsov.appblocker.domain.model.exercise.ExerciseSettings;
 import evgenykravtsov.appblocker.domain.model.exercise.math.MathExercise;
 import evgenykravtsov.appblocker.domain.usecase.GetMathExercise;
 import evgenykravtsov.appblocker.domain.usecase.UseCaseFactory;
@@ -25,6 +29,8 @@ public class MathExercisePresenter {
     protected View view;
     protected MathExercise mathExercise;
 
+    private ExerciseSettings exerciseSettings;
+    private SystemController systemController;
     private UseCaseThreadPool threadPool;
 
     ////
@@ -32,6 +38,9 @@ public class MathExercisePresenter {
     public MathExercisePresenter(View view, UseCaseThreadPool threadPool) {
         this.view = view;
         this.threadPool = threadPool;
+
+        exerciseSettings = DependencyInjection.provideExerciseSettings();
+        systemController = DependencyInjection.provideSystemController();
     }
 
     ////
@@ -56,6 +65,10 @@ public class MathExercisePresenter {
             view.notifyCheckResult(true);
             view.exerciseSolved();
         } else view.notifyCheckResult(false);
+    }
+
+    public void playSoundTip(SoundTipType soundTipType) {
+        if (exerciseSettings.loadSoundSupportStatus()) systemController.playSoundTip(soundTipType);
     }
 
     ////

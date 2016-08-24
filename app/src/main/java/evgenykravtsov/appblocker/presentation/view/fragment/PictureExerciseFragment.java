@@ -17,6 +17,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.concurrent.TimeUnit;
 
 import evgenykravtsov.appblocker.R;
+import evgenykravtsov.appblocker.domain.model.SoundTipType;
 import evgenykravtsov.appblocker.domain.model.exercise.pictures.Picture;
 import evgenykravtsov.appblocker.domain.model.exercise.pictures.PicturesExercise;
 import evgenykravtsov.appblocker.presentation.presenter.PicturesExercisePresenter;
@@ -83,21 +84,6 @@ public class PictureExerciseFragment extends Fragment
         unbindPresenter();
     }
 
-    @Override
-    public void finish() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    TimeUnit.MILLISECONDS.sleep(BlockerActivity.CORRECTNESS_ANIMATION_DURATION);
-                    getActivity().finish();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
-
     ////
 
     @Override
@@ -111,17 +97,44 @@ public class PictureExerciseFragment extends Fragment
 
     @Override
     public void exerciseSolved() {
-        ((BlockerActivity) getActivity()).solveExercise();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    TimeUnit.MILLISECONDS.sleep(BlockerActivity.EXERCISE_CHANGE_DELAY);
+                    ((BlockerActivity) getActivity()).solveExercise();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     @Override
     public void notifyCheckResult(boolean solved) {
+        SoundTipType soundTipType = solved ? SoundTipType.RightAnswerTip : SoundTipType.WrongAnswerTip;
+        presenter.playSoundTip(soundTipType);
         notifyCorrectness(solved);
     }
 
     @Override
     public void hideSoundButton() {
         soundButton.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void finish() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    TimeUnit.MILLISECONDS.sleep(BlockerActivity.EXERCISE_CHANGE_DELAY);
+                    getActivity().finish();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     ////
@@ -165,7 +178,7 @@ public class PictureExerciseFragment extends Fragment
         soundButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.playSoundTip();
+                presenter.playSoundTip(SoundTipType.OddPictureTip);
             }
         });
     }

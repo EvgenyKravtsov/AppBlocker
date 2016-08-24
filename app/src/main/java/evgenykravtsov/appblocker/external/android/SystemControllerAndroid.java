@@ -30,6 +30,7 @@ public class SystemControllerAndroid implements SystemController, AppBlocker.Ope
     private Context context;
     private PackageManager packageManager;
     private ActivityManager activityManager;
+    private MediaPlayer mediaPlayer;
 
     ////
 
@@ -83,8 +84,14 @@ public class SystemControllerAndroid implements SystemController, AppBlocker.Ope
 
     @Override
     public void playSoundTip(SoundTipType type) {
-        MediaPlayer tipPlayer = prepareMediaPlayerForSoundTip(type);
-        if (tipPlayer != null) tipPlayer.start();
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+
+        mediaPlayer = prepareMediaPlayerForSoundTip(type);
+        mediaPlayer.start();
     }
 
     @Override
@@ -190,6 +197,10 @@ public class SystemControllerAndroid implements SystemController, AppBlocker.Ope
             case ColorTipWhite: soundResId = R.raw.color_tip_white; break;
             case ColorTipGray: soundResId = R.raw.color_tip_gray; break;
             case ColorTipBlack: soundResId = R.raw.color_tip_black; break;
+            case ColorTipPink: soundResId = R.raw.color_tip_pink; break;
+            case ColorTipBrown: soundResId = R.raw.color_tip_brown; break;
+            case RightAnswerTip: soundResId = R.raw.right_answer_tip; break;
+            case WrongAnswerTip: soundResId = R.raw.wrong_answer_tip; break;
             default: soundResId = R.raw.odd_picture_tip;
         }
 

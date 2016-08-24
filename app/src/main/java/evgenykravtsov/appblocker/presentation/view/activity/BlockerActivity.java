@@ -17,12 +17,11 @@ import evgenykravtsov.appblocker.presentation.view.fragment.PictureExerciseFragm
 
 public class BlockerActivity extends AppCompatActivity implements BlockerPresenter.View {
 
-    // TODO Write getInstance method for all fragments
-
     public static final String KEY_EXERCISE_FRAGMENT_MODE = "key_exercise_fragment_mode";
     public static final int MODE_STANDARD = 0;
     public static final int MODE_TEST = 1;
     public static final int CORRECTNESS_ANIMATION_DURATION = 400;
+    public static final int EXERCISE_CHANGE_DELAY = 800;
 
     private BlockerPresenter presenter;
 

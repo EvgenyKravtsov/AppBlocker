@@ -38,6 +38,8 @@ public class ColorExercisePresenter {
     private SoundTipType soundTipType;
     private ExerciseSettings exerciseSettings;
 
+    private boolean exerciseTypeTipPlayed;
+
     ////
 
     public ColorExercisePresenter(
@@ -85,32 +87,28 @@ public class ColorExercisePresenter {
         systemController.playSoundTip(soundTipType);
     }
 
+    public void playCorrectnessSoundTip(boolean solved) {
+        SoundTipType soundTipType = solved ? SoundTipType.RightAnswerTip : SoundTipType.WrongAnswerTip;
+        if (exerciseSettings.loadSoundSupportStatus()) systemController.playSoundTip(soundTipType);
+    }
+
     ////
 
     private SoundTipType prepareSoundTipTypeForColor(ColorType colorType) {
         switch (colorType) {
-            case Red:
-                return SoundTipType.ColorTipRed;
-            case Orange:
-                return SoundTipType.ColorTipOrange;
-            case Yellow:
-                return SoundTipType.ColorTipYellow;
-            case Green:
-                return SoundTipType.ColorTipGreen;
-            case LightBlue:
-                return SoundTipType.ColorTipLightBlue;
-            case Blue:
-                return SoundTipType.ColorTipBlue;
-            case Purple:
-                return SoundTipType.ColorTipPurple;
-            case White:
-                return SoundTipType.ColorTipWhite;
-            case Gray:
-                return SoundTipType.ColorTipGray;
-            case Black:
-                return SoundTipType.ColorTipBlack;
-            default:
-                return SoundTipType.ColorTipRed; // TODO Add sounds for pink and brown
+            case Red: return SoundTipType.ColorTipRed;
+            case Orange: return SoundTipType.ColorTipOrange;
+            case Yellow: return SoundTipType.ColorTipYellow;
+            case Green: return SoundTipType.ColorTipGreen;
+            case LightBlue: return SoundTipType.ColorTipLightBlue;
+            case Blue: return SoundTipType.ColorTipBlue;
+            case Purple: return SoundTipType.ColorTipPurple;
+            case White: return SoundTipType.ColorTipWhite;
+            case Gray: return SoundTipType.ColorTipGray;
+            case Black: return SoundTipType.ColorTipBlack;
+            case Pink: return SoundTipType.ColorTipPink;
+            case Brown: return SoundTipType.ColorTipBrown;
+            default: return SoundTipType.ColorTipRed;
         }
     }
 
@@ -122,7 +120,10 @@ public class ColorExercisePresenter {
         setColorExercise(colorExercise);
         soundTipType = prepareSoundTipTypeForColor(colorExercise.getColorType());
         view.showColorExercise(colorExercise);
-        if (exerciseSettings.loadSoundSupportStatus()) playSoundTip();
+        if (exerciseSettings.loadSoundSupportStatus() && !exerciseTypeTipPlayed) {
+            playSoundTip();
+            exerciseTypeTipPlayed = true;
+        }
     }
 }
 
