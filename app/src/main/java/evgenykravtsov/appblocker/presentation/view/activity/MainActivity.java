@@ -196,6 +196,12 @@ public class MainActivity extends AppCompatActivity
         exerciseSettingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // TODO Sharing
+//                final Intent intent = new Intent(Intent.ACTION_SEND);
+//                intent.setType("text/plain");
+//                intent.putExtra(Intent.EXTRA_TEXT, "Try Android Yorshik!");
+//                startActivity(Intent.createChooser(intent, getString(R.string.app_name)));
+
                 Intent intent = new Intent(MainActivity.this, ExerciseSettingsActivity.class);
                 startActivity(intent);
             }

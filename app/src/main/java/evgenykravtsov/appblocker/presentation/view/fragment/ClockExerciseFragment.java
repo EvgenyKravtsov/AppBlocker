@@ -14,8 +14,6 @@ import android.widget.LinearLayout;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.concurrent.TimeUnit;
-
 import evgenykravtsov.appblocker.R;
 import evgenykravtsov.appblocker.domain.model.SoundTipType;
 import evgenykravtsov.appblocker.domain.model.exercise.clock.ClockExercise;
@@ -95,17 +93,7 @@ public class ClockExerciseFragment extends Fragment
 
     @Override
     public void exerciseSolved() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    TimeUnit.MILLISECONDS.sleep(BlockerActivity.EXERCISE_CHANGE_DELAY);
-                    ((BlockerActivity) getActivity()).solveExercise();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
+        ((BlockerActivity) getActivity()).solveExercise();
     }
 
     @Override
@@ -117,17 +105,7 @@ public class ClockExerciseFragment extends Fragment
 
     @Override
     public void finish() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    TimeUnit.MILLISECONDS.sleep(BlockerActivity.EXERCISE_CHANGE_DELAY);
-                    getActivity().finish();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
+        getActivity().finish();
     }
 
     ////

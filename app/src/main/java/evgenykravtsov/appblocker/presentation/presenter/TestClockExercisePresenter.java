@@ -1,6 +1,9 @@
 package evgenykravtsov.appblocker.presentation.presenter;
 
+import java.util.concurrent.TimeUnit;
+
 import evgenykravtsov.appblocker.domain.usecase.UseCaseThreadPool;
+import evgenykravtsov.appblocker.presentation.view.activity.BlockerActivity;
 
 public class TestClockExercisePresenter extends ClockExercisePresenter {
 
@@ -14,7 +17,30 @@ public class TestClockExercisePresenter extends ClockExercisePresenter {
     public void checkResult(int hours, int minutes) {
         if (hours == clockExercise.getHours() && minutes == clockExercise.getMinutes()) {
             view.notifyCheckResult(true);
-            view.finish();
-        } else view.notifyCheckResult(false);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(BlockerActivity.EXERCISE_CHANGE_DELAY);
+                        view.finish();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        } else {
+            view.notifyCheckResult(false);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(BlockerActivity.EXERCISE_CHANGE_DELAY);
+                        requestClockExercise();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        }
     }
 }

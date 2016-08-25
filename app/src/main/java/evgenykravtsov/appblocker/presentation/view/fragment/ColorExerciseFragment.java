@@ -20,11 +20,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 import evgenykravtsov.appblocker.DependencyInjection;
 import evgenykravtsov.appblocker.R;
-import evgenykravtsov.appblocker.domain.model.SoundTipType;
 import evgenykravtsov.appblocker.domain.model.exercise.color.ColorExercise;
 import evgenykravtsov.appblocker.domain.model.exercise.color.ColorType;
 import evgenykravtsov.appblocker.domain.usecase.UseCaseThreadPool;
@@ -176,17 +174,7 @@ public class ColorExerciseFragment extends Fragment
 
     @Override
     public void exerciseSolved() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    TimeUnit.MILLISECONDS.sleep(BlockerActivity.EXERCISE_CHANGE_DELAY);
-                    ((BlockerActivity) getActivity()).solveExercise();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
+        ((BlockerActivity) getActivity()).solveExercise();
     }
 
     @Override
@@ -197,17 +185,7 @@ public class ColorExerciseFragment extends Fragment
 
     @Override
     public void finish() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    TimeUnit.MILLISECONDS.sleep(BlockerActivity.EXERCISE_CHANGE_DELAY);
-                    getActivity().finish();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
+        getActivity().finish();
     }
 
     @Override

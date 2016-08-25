@@ -4,7 +4,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import java.util.concurrent.TimeUnit;
 
@@ -51,7 +50,7 @@ public class AppBlockerService extends Service {
             while (serviceStatus) {
                 try {
                     UseCaseFactory.provideCheckForegroundAppUseCase().execute();
-                    TimeUnit.MILLISECONDS.sleep(1500);
+                    TimeUnit.MILLISECONDS.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

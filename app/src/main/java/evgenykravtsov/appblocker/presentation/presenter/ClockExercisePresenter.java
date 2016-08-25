@@ -3,6 +3,8 @@ package evgenykravtsov.appblocker.presentation.presenter;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.concurrent.TimeUnit;
+
 import evgenykravtsov.appblocker.DependencyInjection;
 import evgenykravtsov.appblocker.domain.model.SoundTipType;
 import evgenykravtsov.appblocker.domain.model.SystemController;
@@ -11,6 +13,7 @@ import evgenykravtsov.appblocker.domain.model.exercise.clock.ClockExercise;
 import evgenykravtsov.appblocker.domain.usecase.GetClockExercise;
 import evgenykravtsov.appblocker.domain.usecase.UseCaseFactory;
 import evgenykravtsov.appblocker.domain.usecase.UseCaseThreadPool;
+import evgenykravtsov.appblocker.presentation.view.activity.BlockerActivity;
 
 public class ClockExercisePresenter {
 
@@ -62,10 +65,33 @@ public class ClockExercisePresenter {
 
     public void checkResult(int hours, int minutes) {
         if (hours == clockExercise.getHours() && minutes == clockExercise.getMinutes()) {
-            threadPool.execute(UseCaseFactory.provideAllowAppUseCase());
             view.notifyCheckResult(true);
-            view.exerciseSolved();
-        } else view.notifyCheckResult(false);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(BlockerActivity.EXERCISE_CHANGE_DELAY);
+                        threadPool.execute(UseCaseFactory.provideAllowAppUseCase());
+                        view.exerciseSolved();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        } else {
+            view.notifyCheckResult(false);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(BlockerActivity.EXERCISE_CHANGE_DELAY);
+                        requestClockExercise();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        }
     }
 
     public void playSoundTip(SoundTipType soundTipType) {

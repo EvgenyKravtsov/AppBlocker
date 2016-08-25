@@ -1,7 +1,5 @@
 package evgenykravtsov.appblocker.domain.model;
 
-import android.util.Log;
-
 import java.util.List;
 
 public class AppBlocker {
