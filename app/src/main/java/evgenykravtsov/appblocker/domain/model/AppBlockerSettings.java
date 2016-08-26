@@ -12,6 +12,8 @@ public interface AppBlockerSettings {
     boolean DEFAULT_PASSWORD_SET_STATUS = false;
     String KEY_PASSWORD = "key_password";
     String DEFAULT_PASSWORD = "";
+    String KEY_PASSWORD_ACTIVATION_STATUS = "key_password_activation_status";
+    boolean DEFAULT_PASSWORD_ACTIVATION_STATUS = false;
 
     ////
 
@@ -34,4 +36,8 @@ public interface AppBlockerSettings {
     String loadPassword();
 
     void savePassword(String password);
+
+    boolean loadPasswordActivationStatus();
+
+    void savePasswordActivationStatus(boolean status);
 }

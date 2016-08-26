@@ -40,18 +40,16 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textColor="@color/colorTextPrimary"
-                        android:text="Numer of exercises in session" />
+                        android:text="Parent password" />
 
-                    <EditText
-                        android:layout_width="40dp"
+                    <CheckBox
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:id="@+id/exercise_settings_activity_number_edit_text"
-                        style="@style/AccentedEditText" />
+                        android:id="@+id/exercise_settings_activity_parent_password_check_box" />
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow android:layout_marginBottom="4dp">
 
                     <TextView
                         android:layout_width="0dp"
@@ -64,6 +62,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/exercise_settings_activity_sound_support_check_box" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/colorTextPrimary"
+                        android:text="Number of exercises in session" />
+
+                    <EditText
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:id="@+id/exercise_settings_activity_number_edit_text"
+                        style="@style/AccentedEditText" />
 
                 </TableRow>
 

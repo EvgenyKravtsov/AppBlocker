@@ -1,21 +1,26 @@
 package evgenykravtsov.appblocker.presentation.view.activity;
 
+import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -60,6 +65,9 @@ public class MainActivity extends AppCompatActivity
     protected void onStart() {
         super.onStart();
         bindPresenter();
+
+        if (presenter.getPasswordActivationStatus() && !MainPresenter.passwordPassed)
+            showRequestPasswordDialog();
     }
 
     @Override
@@ -216,10 +224,8 @@ public class MainActivity extends AppCompatActivity
 
     @SuppressWarnings("ConstantConditions")
     private void switchActionBarHomeIcon(boolean navigationDrawerOpened) {
-        if (navigationDrawerOpened)
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.navigation_arrow_back);
-        else
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.navigation_menu_icon);
+        if (navigationDrawerOpened) getSupportActionBar().setHomeAsUpIndicator(R.drawable.navigation_arrow_back);
+        else getSupportActionBar().setHomeAsUpIndicator(R.drawable.navigation_menu_icon);
     }
 
     private void switchControlButtonState(boolean enabled) {
@@ -252,5 +258,54 @@ public class MainActivity extends AppCompatActivity
         Animation fadeIn = new AlphaAnimation(0.0f, 1.0f);
         fadeIn.setDuration(400);
         textView.startAnimation(fadeIn);
+    }
+
+    @SuppressLint("InflateParams")
+    private void showRequestPasswordDialog() {
+        View dialogLayout = LayoutInflater.from(this).inflate(R.layout.dialog_request_password, null);
+
+        final EditText passwordEditText = (EditText)
+                dialogLayout.findViewById(R.id.request_password_dialog_password_edit_text);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder
+                .setView(dialogLayout)
+                .setPositiveButton(android.R.string.ok, null)
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                });
+
+        final AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
+
+        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialogInterface, int keyCode, KeyEvent keyEvent) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    finish();
+                    return true;
+                } else return false;
+            }
+        });
+
+        dialog.show();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String password = passwordEditText.getText().toString();
+
+                if (presenter.checkPassword(password)) {
+                    MainPresenter.passwordPassed = true;
+                    dialog.dismiss();
+                } else notifyWrongPassword();
+            }
+        });
+    }
+
+    private void notifyWrongPassword() {
+        showSnackbar("Wrong password");
     }
 }

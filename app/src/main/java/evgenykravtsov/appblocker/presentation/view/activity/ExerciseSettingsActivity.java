@@ -1,10 +1,14 @@
 package evgenykravtsov.appblocker.presentation.view.activity;
 
+import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +35,7 @@ public class ExerciseSettingsActivity extends AppCompatActivity
 
     private ScrollView mainLayout;
     private EditText numberEditText;
+    private CheckBox parentPasswordCheckBox;
     private CheckBox soundSupportCheckBox;
     private ImageButton expandMathButton;
     private CheckBox mathCheckBox;
@@ -125,6 +130,9 @@ public class ExerciseSettingsActivity extends AppCompatActivity
 
         numberEditText = (EditText) findViewById(R.id.exercise_settings_activity_number_edit_text);
 
+        parentPasswordCheckBox = (CheckBox)
+                findViewById(R.id.exercise_settings_activity_parent_password_check_box);
+
         soundSupportCheckBox = (CheckBox)
                 findViewById(R.id.exercise_settings_activity_sound_support_check_box);
 
@@ -159,6 +167,13 @@ public class ExerciseSettingsActivity extends AppCompatActivity
     }
 
     private void bindViewListeners() {
+        parentPasswordCheckBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onParentPasswordStateChanged();
+            }
+        });
+
         soundSupportCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
@@ -290,9 +305,10 @@ public class ExerciseSettingsActivity extends AppCompatActivity
     }
 
     private void establishInitialViewsState() {
+        parentPasswordCheckBox.setChecked(presenter.getPasswordActivationStatus());
+        soundSupportCheckBox.setChecked(presenter.getSoundSupportStatus());
         numberEditText.setText(
                 String.format(Locale.ROOT, "%d",presenter.getSessionExerciseNumber()));
-        soundSupportCheckBox.setChecked(presenter.getSoundSupportStatus());
     }
 
     private void navigateToTestExerciseActivity(ExerciseType exerciseToTest) {
@@ -308,6 +324,66 @@ public class ExerciseSettingsActivity extends AppCompatActivity
         Intent intent = new Intent(this, TestExerciseActivity.class);
         intent.putExtra(TestExerciseActivity.EXTRA_TEST_KEY, exerciseTypeCode);
         startActivity(intent);
+    }
+
+    @SuppressLint("InflateParams")
+    private void showSetPasswordDialog() {
+        View dialogLayout = LayoutInflater.from(this).inflate(R.layout.dialog_set_password, null);
+
+        final EditText passwordEditText = (EditText)
+                dialogLayout.findViewById(R.id.set_password_dialog_password_edit_text);
+        final EditText controlPasswordEditText = (EditText)
+                dialogLayout.findViewById(R.id.set_password_dialog_control_password_edit_text);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder
+                .setView(dialogLayout)
+                .setPositiveButton(android.R.string.ok, null)
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        parentPasswordCheckBox.setChecked(presenter.getPasswordSetStatus());
+                        dialogInterface.dismiss();
+                    }
+                });
+
+        final AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
+
+        dialog.show();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String password = passwordEditText.getText().toString();
+                String controlPassword = controlPasswordEditText.getText().toString();
+
+                if (!password.equals(controlPassword))
+                    notifyPasswordsDontMatch();
+                else if (password.equals("") && controlPassword.equals(""))
+                    notifyPasswordsDontMatch();
+                else {
+                    notifyPasswordSaved();
+                    presenter.setPassword(password);
+                    parentPasswordCheckBox.setChecked(presenter.getPasswordSetStatus());
+                    dialog.dismiss();
+                }
+            }
+        });
+    }
+
+    private void notifyPasswordsDontMatch() {
+        showSnackbar("Passwords dont match");
+    }
+
+    private void notifyPasswordSaved() {
+        showSnackbar("Password saved");
+    }
+
+    //// Control callbacks
+
+    private void onParentPasswordStateChanged() {
+        if (!presenter.getPasswordSetStatus()) showSetPasswordDialog();
+        else presenter.setPasswordActivationStatus(parentPasswordCheckBox.isChecked());
     }
 }
 

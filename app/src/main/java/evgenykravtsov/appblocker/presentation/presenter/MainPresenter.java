@@ -3,14 +3,13 @@ package evgenykravtsov.appblocker.presentation.presenter;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import evgenykravtsov.appblocker.domain.model.App;
+import evgenykravtsov.appblocker.domain.model.AppBlockerSettings;
 import evgenykravtsov.appblocker.domain.usecase.GetApps;
 import evgenykravtsov.appblocker.domain.usecase.UseCaseFactory;
 import evgenykravtsov.appblocker.domain.usecase.UseCaseThreadPool;
-import evgenykravtsov.appblocker.domain.model.AppBlockerSettings;
 
 public class MainPresenter {
 
@@ -24,6 +23,8 @@ public class MainPresenter {
     }
 
     ////
+
+    public static boolean passwordPassed;
 
     private AppBlockerSettings appBlockerSettings;
     private View view;
@@ -71,6 +72,15 @@ public class MainPresenter {
 
     public boolean getAppBlockerStatus() {
         return appBlockerSettings.loadAppBlockerServiceStatus();
+    }
+
+    public boolean getPasswordActivationStatus() {
+        return appBlockerSettings.loadPasswordActivationStatus();
+    }
+
+    public boolean checkPassword(String password) {
+        String savedPassword = appBlockerSettings.loadPassword();
+        return savedPassword.equals(password);
     }
 
     ////

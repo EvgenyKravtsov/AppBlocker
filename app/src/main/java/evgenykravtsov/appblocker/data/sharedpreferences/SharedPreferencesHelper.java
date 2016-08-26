@@ -76,6 +76,16 @@ public class SharedPreferencesHelper
         saveString(KEY_PASSWORD, password);
     }
 
+    @Override
+    public boolean loadPasswordActivationStatus() {
+        return loadBoolean(KEY_PASSWORD_ACTIVATION_STATUS, DEFAULT_PASSWORD_ACTIVATION_STATUS);
+    }
+
+    @Override
+    public void savePasswordActivationStatus(boolean status) {
+        saveBoolean(KEY_PASSWORD_ACTIVATION_STATUS, status);
+    }
+
     ////
 
     @Override
