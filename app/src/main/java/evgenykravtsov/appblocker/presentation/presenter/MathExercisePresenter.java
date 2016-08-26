@@ -1,6 +1,7 @@
 package evgenykravtsov.appblocker.presentation.presenter;
 
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.concurrent.TimeUnit;
 
@@ -99,7 +100,7 @@ public class MathExercisePresenter {
 
     ////
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(GetMathExercise.Executed event) {
         setMathExercise(event.getMathExercise());
         view.showMathExercise(event.getMathExercise());

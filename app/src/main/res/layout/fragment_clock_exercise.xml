@@ -6,13 +6,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
+    android:padding="@dimen/activity_horizontal_margin"
     android:background="@color/colorPrimaryLight"
     android:id="@+id/clock_exercise_fragment_exercise_layout">
 
     <android.support.v7.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         card_view:cardCornerRadius="2dp"
         card_view:cardElevation="2dp">
 
@@ -20,31 +20,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <FrameLayout
-                android:layout_width="260dp"
-                android:layout_height="260dp"
-                android:layout_margin="8dp">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/clock"
-                    android:id="@+id/clock_exercise_fragment_clock_image_view"/>
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/hour_clock_arrow"
-                    android:id="@+id/clock_exercise_fragment_hour_arrow_image_view"/>
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/minute_clock_arrow"
-                    android:id="@+id/clock_exercise_fragment_minute_arrow_image_view"/>
-
-            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -91,18 +66,44 @@
 
             </LinearLayout>
 
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="Check"
+                android:id="@+id/clock_exercise_fragment_check_button"
+                style="@style/ExerciseCheckButton" />
+
+            <FrameLayout
+                android:layout_width="260dp"
+                android:layout_height="260dp"
+                android:layout_margin="8dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/clock"
+                    android:id="@+id/clock_exercise_fragment_clock_image_view"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/hour_clock_arrow"
+                    android:id="@+id/clock_exercise_fragment_hour_arrow_image_view"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/minute_clock_arrow"
+                    android:id="@+id/clock_exercise_fragment_minute_arrow_image_view"/>
+
+            </FrameLayout>
+
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="16dp"
-        android:layout_gravity="end"
-        android:text="Check"
-        android:id="@+id/clock_exercise_fragment_check_button"
-        style="@style/ExerciseCheckButton" />
 
 </LinearLayout>
