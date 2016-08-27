@@ -97,6 +97,7 @@ public class ColorExercisePresenter {
                 public void run() {
                     try {
                         TimeUnit.MILLISECONDS.sleep(BlockerActivity.EXERCISE_CHANGE_DELAY);
+                        exerciseTypeTipPlayed = false;
                         requestColorExercise();
                     } catch (InterruptedException e) {
                         e.printStackTrace();

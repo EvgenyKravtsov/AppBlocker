@@ -42,7 +42,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textColor="@color/colorTextPrimary"
-                        android:text="Parent password" />
+                        android:text="@string/exercise_settings_screen_parent_password" />
 
                     <CheckBox
                         android:layout_width="wrap_content"
@@ -58,7 +58,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textColor="@color/colorTextPrimary"
-                        android:text="Sound support" />
+                        android:text="@string/exercise_settings_screen_sound_support" />
 
                     <CheckBox
                         android:layout_width="wrap_content"
@@ -67,14 +67,15 @@
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow android:gravity="center_vertical">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:maxLines="2"
                         android:textColor="@color/colorTextPrimary"
-                        android:text="Number of exercises in session" />
+                        android:text="@string/exercise_settings_screen_number_of_exercises_in_session" />
 
                     <EditText
                         android:layout_width="40dp"
@@ -108,7 +109,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:text="Math"
+                    android:text="@string/exercise_settings_screen_math"
                     android:id="@+id/math_title"
                     style="@style/ExerciseSerringsCardTitle" />
 
@@ -124,7 +125,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/math_title"
-                    android:text="Provides arithmetic exercises for all four basic operarions. You can adjust complexity by changing number of operations and number range."
+                    android:text="@string/exercise_settings_screen_math_description"
                     android:id="@+id/math_description"
                     style="@style/ExerciseSerringsCardDescription" />
 
@@ -149,7 +150,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/exercise_settings_activity_math_layout"
-                    android:text="Test"
+                    android:text="@string/exercise_settings_screen_test"
                     android:id="@+id/exrcise_settings_activity_test_math_button"
                     style="@style/Widget.AppCompat.Button.Borderless.Colored" />
 
@@ -186,7 +187,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:text="Odd picture"
+                    android:text="@string/exercise_settings_screen_odd_picture"
                     android:id="@+id/pictures_title"
                     style="@style/ExerciseSerringsCardTitle" />
 
@@ -202,7 +203,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/pictures_title"
-                    android:text="Provides four pictures, one of which is odd. Can be used to improve cognitive skills."
+                    android:text="@string/exercise_settings_screen_odd_picture_description"
                     android:id="@+id/pictures_description"
                     style="@style/ExerciseSerringsCardDescription" />
 
@@ -210,7 +211,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/pictures_description"
-                    android:text="Test"
+                    android:text="@string/exercise_settings_screen_test"
                     android:id="@+id/exrcise_settings_activity_test_pictures_button"
                     style="@style/Widget.AppCompat.Button.Borderless.Colored" />
 
@@ -237,7 +238,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:text="Clock"
+                    android:text="@string/exercise_settings_screen_clock"
                     android:id="@+id/clock_title"
                     style="@style/ExerciseSerringsCardTitle" />
 
@@ -253,7 +254,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/clock_title"
-                    android:text="Represent a classical clock with arrows. Child should enter correct time, base on arrows placement."
+                    android:text="@string/exercise_settings_screen_clock_description"
                     android:id="@+id/clock_description"
                     style="@style/ExerciseSerringsCardDescription" />
 
@@ -261,7 +262,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/clock_description"
-                    android:text="Test"
+                    android:text="@string/exercise_settings_screen_test"
                     android:id="@+id/exrcise_settings_activity_test_clock_button"
                     style="@style/Widget.AppCompat.Button.Borderless.Colored" />
 
@@ -271,7 +272,7 @@
                     android:layout_below="@+id/clock_description"
                     android:layout_toRightOf="@+id/exrcise_settings_activity_test_clock_button"
                     android:layout_toEndOf="@+id/exrcise_settings_activity_test_clock_button"
-                    android:text="Unlock"
+                    android:text="@string/exercise_settings_screen_unlock"
                     android:id="@+id/exercise_settings_activity_unlock_clock_button"
                     style="@style/Widget.AppCompat.Button.Borderless.Colored" />
 
@@ -298,7 +299,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:text="Find color"
+                    android:text="@string/exercise_settings_screen_find_color"
                     android:id="@+id/color_title"
                     style="@style/ExerciseSerringsCardTitle" />
 
@@ -314,7 +315,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/color_title"
-                    android:text="Show a ten basic colors, randomly placed. Child should pick one of those colors."
+                    android:text="@string/exercise_settings_screen_color_description"
                     android:id="@+id/color_description"
                     style="@style/ExerciseSerringsCardDescription" />
 
@@ -322,7 +323,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/color_description"
-                    android:text="Test"
+                    android:text="@string/exercise_settings_screen_test"
                     android:id="@+id/exrcise_settings_activity_test_color_button"
                     style="@style/Widget.AppCompat.Button.Borderless.Colored" />
 
@@ -332,7 +333,7 @@
                     android:layout_below="@+id/color_description"
                     android:layout_toRightOf="@+id/exrcise_settings_activity_test_color_button"
                     android:layout_toEndOf="@+id/exrcise_settings_activity_test_color_button"
-                    android:text="Unlock"
+                    android:text="@string/exercise_settings_screen_unlock"
                     android:id="@+id/exercise_settings_activity_unlock_color_button"
                     style="@style/Widget.AppCompat.Button.Borderless.Colored" />
 

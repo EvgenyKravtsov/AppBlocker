@@ -83,7 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:text="Check"
+                android:text="@string/math_exercise_screen_check"
                 android:id="@+id/math_exercise_fragment_unblock_button"
                 style="@style/ExerciseCheckButton" />
 

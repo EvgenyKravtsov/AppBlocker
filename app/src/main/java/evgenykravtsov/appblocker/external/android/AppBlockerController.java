@@ -5,8 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 
 import evgenykravtsov.appblocker.DependencyInjection;
+import evgenykravtsov.appblocker.presentation.onboarding.OnboardingSettings;
 
 public class AppBlockerController extends Application {
+
+    public static boolean passwordPassed;
 
     private static Context context;
 

@@ -10,7 +10,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:textColor="@color/colorTextPrimary"
-            android:text="Max value" />
+            android:text="@string/math_exercise_settings_screen_max_value" />
 
         <EditText
             android:layout_width="40dp"
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:textColor="@color/colorTextPrimary"
-            android:text="Addition" />
+            android:text="@string/math_exercise_settings_screen_addition" />
 
         <CheckBox
             android:layout_width="wrap_content"
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:textColor="@color/colorTextPrimary"
-            android:text="Substraction" />
+            android:text="@string/math_exercise_settings_screen_substraction" />
 
         <CheckBox
             android:layout_width="wrap_content"
@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:textColor="@color/colorTextPrimary"
-            android:text="Multiplication" />
+            android:text="@string/math_exercise_settings_screen_multiplication" />
 
         <CheckBox
             android:layout_width="wrap_content"
@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:textColor="@color/colorTextPrimary"
-            android:text="Division" />
+            android:text="@string/math_exercise_settings_screen_division" />
 
         <CheckBox
             android:layout_width="wrap_content"

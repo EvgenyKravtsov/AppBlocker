@@ -6,9 +6,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ShareActionProvider;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -50,6 +56,8 @@ public class ExerciseSettingsActivity extends AppCompatActivity
     private Button testColorButton;
 
     private int activatedExerciseTypesCount;
+    private MenuItem shareMenuItem;
+    private ShareActionProvider shareActionProvider;
 
     ////
 
@@ -101,13 +109,34 @@ public class ExerciseSettingsActivity extends AppCompatActivity
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_exercise_settings, menu);
+
+        shareMenuItem = menu.findItem(R.id.menu_exercise_settings_item_share);
+        shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareMenuItem);
+
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
+            case R.id.menu_exercise_settings_item_share:
+                onShareMenuItemClick();
+                return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    ////
+
+    @Override
+    public void showExerciseSettingsTip() {
+        showOnboardingDialog(getString(R.string.exercise_settings_screen_exercises_tip_text), null);
     }
 
     ////
@@ -205,7 +234,7 @@ public class ExerciseSettingsActivity extends AppCompatActivity
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (!checked) {
                     if (activatedExerciseTypesCount == 1) {
-                        showSnackbar("At least one type should be activated");
+                        showSnackbar(getString(R.string.exercise_settings_screen_one_type_warning));
                         mathCheckBox.setChecked(true);
                         return;
                     }
@@ -224,7 +253,7 @@ public class ExerciseSettingsActivity extends AppCompatActivity
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (!checked) {
                     if (activatedExerciseTypesCount == 1) {
-                        showSnackbar("At least one type should be activated");
+                        showSnackbar(getString(R.string.exercise_settings_screen_one_type_warning));
                         picturesCheckBox.setChecked(true);
                         return;
                     }
@@ -243,7 +272,7 @@ public class ExerciseSettingsActivity extends AppCompatActivity
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (!checked) {
                     if (activatedExerciseTypesCount == 1) {
-                        showSnackbar("At least one type should be activated");
+                        showSnackbar(getString(R.string.exercise_settings_screen_one_type_warning));
                         clockCheckBox.setChecked(true);
                         return;
                     }
@@ -262,7 +291,7 @@ public class ExerciseSettingsActivity extends AppCompatActivity
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (!checked) {
                     if (activatedExerciseTypesCount == 1) {
-                        showSnackbar("At least one type should be activated");
+                        showSnackbar(getString(R.string.exercise_settings_screen_one_type_warning));
                         colorCheckBox.setChecked(true);
                         return;
                     }
@@ -373,11 +402,20 @@ public class ExerciseSettingsActivity extends AppCompatActivity
     }
 
     private void notifyPasswordsDontMatch() {
-        showSnackbar("Passwords dont match");
+        showSnackbar(getString(R.string.exercise_settings_screen_password_dont_match));
     }
 
     private void notifyPasswordSaved() {
-        showSnackbar("Password saved");
+        showSnackbar(getString(R.string.exercise_settings_screen_password_saved));
+    }
+
+    private void showOnboardingDialog(String message, DialogInterface.OnClickListener positiveListener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, positiveListener);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     //// Control callbacks
@@ -385,6 +423,24 @@ public class ExerciseSettingsActivity extends AppCompatActivity
     private void onParentPasswordStateChanged() {
         if (!presenter.getPasswordSetStatus()) showSetPasswordDialog();
         else presenter.setPasswordActivationStatus(parentPasswordCheckBox.isChecked());
+    }
+
+    private void onShareMenuItemClick() {
+        Intent sendIntent = new Intent(Intent.ACTION_SEND);
+        sendIntent.setType("text/plain");
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "Try Android Yorshik!");
+        Intent intent = Intent.createChooser(sendIntent, getString(R.string.app_name));
+
+        shareActionProvider.setShareIntent(sendIntent);
+        shareActionProvider.setOnShareTargetSelectedListener(new ShareActionProvider.OnShareTargetSelectedListener() {
+            @Override
+            public boolean onShareTargetSelected(ShareActionProvider source, Intent intent) {
+                Log.d("debug", "chosen");
+                return false;
+            }
+        });
+
+        startActivity(intent);
     }
 }
 

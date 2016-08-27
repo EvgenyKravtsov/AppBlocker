@@ -1,0 +1,95 @@
+<resources>
+    <string name="app_name">Babyka</string>
+
+    <!-- Main screen -->
+    <string name="main_screen_exercise_settings">Настройки упражнений</string>
+    <string name="main_screen_feedback">Отзыв</string>
+    <string name="main_screen_blocker_activated">Блокировка включена</string>
+    <string name="main_screen_blocker_deactivated">Блокировка выключена</string>
+    <string name="main_screen_set_parent_password_recommendation_text">Мы рекоммендуем установить
+        родительский пароль на вход в приложение. Это можно сделать в меню настроек.</string>
+    <string name="main_screen_set_parent_password_recommendation_button_label">Перейти в настройки</string>
+    <string name="main_screen_user_feedback_request_text">Спасибо за использование нашего приложения.
+        Мы надеемся, что оно принесло вам пользу. Если у вас есть вопросы или пожелание, вы может
+        отправить отзыв непосредственно разработчикам.</string>
+    <string name="main_screen_user_feedback_recommendation_button_label">Отправить отзыв</string>
+    <string name="main_screen_activated">Включено</string>
+    <string name="main_screen_deactivated">Выключено</string>
+    <string name="main_screen_wrong_password">Неправильный пароль</string>
+
+    <!-- Exercise settings screen -->
+    <string name="exercise_settings_screent_title">Настройки упражнений</string>
+    <string name="exercise_settings_screen_share">Поделиться</string>
+    <string name="exercise_settings_screen_parent_password">Родительский пароль</string>
+    <string name="exercise_settings_screen_sound_support">Звуковая поддержка упражнений</string>
+    <string name="exercise_settings_screen_number_of_exercises_in_session">Количество упражнений в
+        одном сеансе блокировки</string>
+    <string name="exercise_settings_screen_math">Математика</string>
+    <string name="exercise_settings_screen_math_description">Содержит простые арифметические примеры.
+        Вы можете настроить набор математических операций и числовой диапазон.</string>
+    <string name="exercise_settings_screen_test">Тест</string>
+    <string name="exercise_settings_screen_odd_picture">Лишняя картинка</string>
+    <string name="exercise_settings_screen_odd_picture_description">Ребенку предлагается выбрать
+        одну неподходящую картинку из четырех.</string>
+    <string name="exercise_settings_screen_clock">Часы</string>
+    <string name="exercise_settings_screen_clock_description">Представляет классические часы со
+        стрелками. Чтобы пройти упражнение, нужно правильно указать показанное время.</string>
+    <string name="exercise_settings_screen_unlock">Разблокировать</string>
+    <string name="exercise_settings_screen_find_color">Найди цвет</string>
+    <string name="exercise_settings_screen_color_description">Предлагает ребенку найти цвет из
+        таблицы двенадцати основных цветов.</string>
+    <string name="exercise_settings_screen_exercises_tip_text">Здесь вы можете включать и исключать
+        типы упражнений, просто отмечая нужные галочкой. В ходе сеанса блокировки приложение
+        случайно выбирает упражнения из списка активированных.</string>
+    <string name="exercise_settings_screen_one_type_warning">Хотя бы один тип должен быть активен</string>
+    <string name="exercise_settings_screen_password_dont_match">Пароли не совпадают</string>
+    <string name="exercise_settings_screen_password_saved">Пароль сохранен</string>
+
+    <!-- Feedback screen -->
+    <string name="feedback_screen_title">Отзыв</string>
+    <string name="feedback_screen_send_email_feedback_directly_to_developers">Отправьте отзыв
+        или вопрос разработчикам.</string>
+    <string name="feedback_screen_send">Отправить</string>
+
+    <!-- Dialogs -->
+    <string name="dialogs_enter_password">Введите пароль</string>
+    <string name="dialogs_password">Пароль</string>
+    <string name="dialogs_set_parent_password">Установите родительский пароль</string>
+    <string name="dialogs_repeat_password">Повторите пароль</string>
+
+    <!-- Clock exercise screen -->
+    <string name="clock_exercise_screen_hours">Часы</string>
+    <string name="clock_exercise_screen_minutes">Минуты</string>
+    <string name="clock_exercise_screen_check">Проверить</string>
+
+    <!-- Color exercise screen -->
+    <string name="color_exercise_screen_choose">Найди</string>
+    <string name="color_exercise_screen_red">КРАСНЫЙ</string>
+    <string name="color_exercise_screen_orange">ОРАНЖЕВЫЙ</string>
+    <string name="color_exercise_screen_yellow">ЖЕЛТЫЙ</string>
+    <string name="color_exercise_screen_green">ЗЕЛЕНЫЙ</string>
+    <string name="color_exercise_screen_light_blue">ГОЛУБОЙ</string>
+    <string name="color_exercise_screen_blue">СИНИЙ</string>
+    <string name="color_exercise_screen_purple">ФИОЛЕТОВЫЙ</string>
+    <string name="color_exercise_screen_white">БЕЛЫЙ</string>
+    <string name="color_exercise_screen_gray">СЕРЫЙ</string>
+    <string name="color_exercise_screen_black">ЧЕРНЫЙ</string>
+    <string name="color_exercise_screen_pink">РОЗОВЫЙ</string>
+    <string name="color_exercise_screen_brown">КОРИЧНЕВЫЙ</string>
+
+    <!-- Math exercise screen -->
+    <string name="math_exercise_screen_check">Проверить</string>
+
+    <!-- Math exercise settings screen -->
+    <string name="math_exercise_settings_screen_max_value">Максимальное число</string>
+    <string name="math_exercise_settings_screen_addition">Сложение</string>
+    <string name="math_exercise_settings_screen_substraction">Вычитание</string>
+    <string name="math_exercise_settings_screen_multiplication">Умножение</string>
+    <string name="math_exercise_settings_screen_division">Деление</string>
+    <string name="math_exercise_settings_screen_one_operaion_warning">Хотя бы одна операция должны
+        быть активирована</string>
+
+    <!-- Picture exercise screen -->
+    <string name="picture_exercise_screen_pick_odd_picture">Найди лишнюю картинку</string>
+
+</resources>

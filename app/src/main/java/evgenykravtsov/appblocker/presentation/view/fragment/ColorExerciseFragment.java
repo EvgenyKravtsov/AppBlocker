@@ -98,51 +98,51 @@ public class ColorExerciseFragment extends Fragment
 
         switch (colorExercise.getColorType()) {
             case Red:
-                colorTitle = "RED";
+                colorTitle = getString(R.string.color_exercise_screen_red);
                 correctColorId = R.color.colorExerciseRed;
                 break;
             case Orange:
-                colorTitle = "ORANGE";
+                colorTitle = getString(R.string.color_exercise_screen_orange);
                 correctColorId = R.color.colorExerciseOrange;
                 break;
             case Yellow:
-                colorTitle = "YELLOW";
+                colorTitle = getString(R.string.color_exercise_screen_yellow);
                 correctColorId = R.color.colorExerciseYellow;
                 break;
             case Green:
-                colorTitle = "GREEN";
+                colorTitle = getString(R.string.color_exercise_screen_green);
                 correctColorId = R.color.colorExerciseGreen;
                 break;
             case LightBlue:
-                colorTitle = "LIGHT BLUE";
+                colorTitle = getString(R.string.color_exercise_screen_light_blue);
                 correctColorId = R.color.colorExerciseLightBlue;
                 break;
             case Blue:
-                colorTitle = "BLUE";
+                colorTitle = getString(R.string.color_exercise_screen_blue);
                 correctColorId = R.color.colorExerciseBlue;
                 break;
             case Purple:
-                colorTitle = "PURPLE";
+                colorTitle = getString(R.string.color_exercise_screen_purple);
                 correctColorId = R.color.colorExercisePurple;
                 break;
             case White:
-                colorTitle = "WHITE";
+                colorTitle = getString(R.string.color_exercise_screen_white);
                 correctColorId = R.color.colorExerciseWhite;
                 break;
             case Gray:
-                colorTitle = "GRAY";
+                colorTitle = getString(R.string.color_exercise_screen_gray);
                 correctColorId = R.color.colorExerciseGray;
                 break;
             case Black:
-                colorTitle = "BLACK";
+                colorTitle = getString(R.string.color_exercise_screen_black);
                 correctColorId = R.color.colorExerciseBlack;
                 break;
             case Pink:
-                colorTitle = "PINK";
+                colorTitle = getString(R.string.color_exercise_screen_pink);
                 correctColorId = R.color.colorExercisePink;
                 break;
             case Brown:
-                colorTitle = "BROWN";
+                colorTitle = getString(R.string.color_exercise_screen_brown);
                 correctColorId = R.color.colorExerciseBrown;
                 break;
         }

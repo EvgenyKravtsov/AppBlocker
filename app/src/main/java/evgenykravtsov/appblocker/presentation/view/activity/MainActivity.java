@@ -12,7 +12,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -32,6 +34,7 @@ import evgenykravtsov.appblocker.DependencyInjection;
 import evgenykravtsov.appblocker.R;
 import evgenykravtsov.appblocker.domain.model.App;
 import evgenykravtsov.appblocker.domain.usecase.UseCaseThreadPool;
+import evgenykravtsov.appblocker.external.android.AppBlockerController;
 import evgenykravtsov.appblocker.presentation.adapter.AppsAdapter;
 import evgenykravtsov.appblocker.presentation.presenter.MainPresenter;
 
@@ -66,7 +69,7 @@ public class MainActivity extends AppCompatActivity
         super.onStart();
         bindPresenter();
 
-        if (presenter.getPasswordActivationStatus() && !MainPresenter.passwordPassed)
+        if (presenter.getPasswordActivationStatus() && !AppBlockerController.passwordPassed)
             showRequestPasswordDialog();
     }
 
@@ -135,8 +138,38 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void notifyBlockControlStateChanged(boolean state) {
-        String message = state ? "Blocker activated" : "Blocker deactivated";
+        String message = state ?
+                getString(R.string.main_screen_blocker_activated) :
+                getString(R.string.main_screen_blocker_deactivated);
         showSnackbar(message);
+    }
+
+    @Override
+    public void showSetParentPasswordRecommendation() {
+        showOnboardingDialog(
+                getString(R.string.main_screen_set_parent_password_recommendation_text),
+                getString(R.string.main_screen_set_parent_password_recommendation_button_label),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(MainActivity.this, ExerciseSettingsActivity.class);
+                        startActivity(intent);
+                    }
+                });
+    }
+
+    @Override
+    public void showUserFeedbackRequest() {
+        showOnboardingDialog(
+                getString(R.string.main_screen_user_feedback_request_text),
+                getString(R.string.main_screen_user_feedback_recommendation_button_label),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(MainActivity.this, FeedbackActivity.class);
+                        startActivity(intent);
+                    }
+                });
     }
 
     ////
@@ -193,24 +226,18 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        feedbackButton.setOnClickListener(new View.OnClickListener() {
+        exerciseSettingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, FeedbackActivity.class);
+                Intent intent = new Intent(MainActivity.this, ExerciseSettingsActivity.class);
                 startActivity(intent);
             }
         });
 
-        exerciseSettingsButton.setOnClickListener(new View.OnClickListener() {
+        feedbackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO Sharing
-//                final Intent intent = new Intent(Intent.ACTION_SEND);
-//                intent.setType("text/plain");
-//                intent.putExtra(Intent.EXTRA_TEXT, "Try Android Yorshik!");
-//                startActivity(Intent.createChooser(intent, getString(R.string.app_name)));
-
-                Intent intent = new Intent(MainActivity.this, ExerciseSettingsActivity.class);
+                Intent intent = new Intent(MainActivity.this, FeedbackActivity.class);
                 startActivity(intent);
             }
         });
@@ -229,7 +256,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void switchControlButtonState(boolean enabled) {
-        String blockStatus = enabled ? "Activated" : "Deactivated";
+        String blockStatus = enabled ?
+                getString(R.string.main_screen_activated) :
+                getString(R.string.main_screen_deactivated);
         setTextAnimatedForTextView(blockStatusTextView, blockStatus);
 
         blockControlSwitch.setChecked(enabled);
@@ -298,7 +327,7 @@ public class MainActivity extends AppCompatActivity
                 String password = passwordEditText.getText().toString();
 
                 if (presenter.checkPassword(password)) {
-                    MainPresenter.passwordPassed = true;
+                    AppBlockerController.passwordPassed = true;
                     dialog.dismiss();
                 } else notifyWrongPassword();
             }
@@ -306,6 +335,19 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void notifyWrongPassword() {
-        showSnackbar("Wrong password");
+        showSnackbar(getString(R.string.main_screen_wrong_password));
+    }
+
+    private void showOnboardingDialog(
+            String message,
+            String positiveLabel,
+            DialogInterface.OnClickListener positiveListener) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setMessage(message)
+                .setPositiveButton(positiveLabel, positiveListener);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

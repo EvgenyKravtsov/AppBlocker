@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:textColor="@color/colorTextPrimary"
-            android:text="Send email feedback directly to developers" />
+            android:text="@string/feedback_screen_send_email_feedback_directly_to_developers" />
 
         <EditText
             android:layout_width="match_parent"
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_gravity="end"
-            android:text="Send"
+            android:text="@string/feedback_screen_send"
             android:id="@+id/feedback_activity_send_button"
             style="@style/Widget.AppCompat.Button.Colored" />
 

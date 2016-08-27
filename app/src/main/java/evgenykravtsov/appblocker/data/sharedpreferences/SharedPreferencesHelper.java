@@ -8,9 +8,10 @@ import evgenykravtsov.appblocker.domain.model.exercise.ExerciseType;
 import evgenykravtsov.appblocker.domain.model.exercise.math.MathSettings;
 import evgenykravtsov.appblocker.external.android.AppBlockerController;
 import evgenykravtsov.appblocker.domain.model.AppBlockerSettings;
+import evgenykravtsov.appblocker.presentation.onboarding.OnboardingSettings;
 
 public class SharedPreferencesHelper
-        implements AppBlockerSettings, ExerciseSettings, MathSettings {
+        implements AppBlockerSettings, ExerciseSettings, MathSettings, OnboardingSettings {
 
     private static final String SHARED_PREFERENCES =
             AppBlockerController.class.getSimpleName() + "_shared_preferences";
@@ -198,6 +199,40 @@ public class SharedPreferencesHelper
     @Override
     public void saveDivisionStatus(boolean enabled) {
         saveBoolean(MathSettings.KEY_DIVISION_STATUS, enabled);
+    }
+
+    ////
+
+    @Override
+    public boolean loadSetParentPasswordRecommendationStatus() {
+        return loadBoolean(
+                KEY_SET_PARENT_PASSWORD_RECOMMENDATION_STATUS,
+                DEFAULT_SET_PARENT_PASSWORD_RECOMMENDATION_STATUS);
+    }
+
+    @Override
+    public void saveSetParentPasswordRecommendationStatus(boolean status) {
+        saveBoolean(KEY_SET_PARENT_PASSWORD_RECOMMENDATION_STATUS, status);
+    }
+
+    @Override
+    public boolean loadExerciseSettingsTipStatus() {
+        return loadBoolean(KEY_EXERCISE_SETTINGS_TIP_STATUS, DEFAULT_EXERCISE_SETTINGS_TIP_STATUS);
+    }
+
+    @Override
+    public void saveExerciseSettingsTipStatus(boolean status) {
+        saveBoolean(KEY_EXERCISE_SETTINGS_TIP_STATUS, status);
+    }
+
+    @Override
+    public int loadNumberOfAppLaunches() {
+        return loadInt(KEY_NUMBER_OF_APP_LAUNCHES, DEFAULT_NUMBER_OF_APP_LAUNCHES);
+    }
+
+    @Override
+    public void saveNumberOfAppLaunches(int number) {
+        saveInt(KEY_NUMBER_OF_APP_LAUNCHES, number);
     }
 
     ////

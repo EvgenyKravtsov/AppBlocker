@@ -2,10 +2,7 @@ package evgenykravtsov.appblocker.presentation.presenter;
 
 public class FeedbackPresenter {
 
-    public interface View {
-
-
-    }
+    public interface View {}
 
     ////
 

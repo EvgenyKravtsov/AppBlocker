@@ -4,16 +4,22 @@ package evgenykravtsov.appblocker.presentation.presenter;
 import evgenykravtsov.appblocker.DependencyInjection;
 import evgenykravtsov.appblocker.domain.model.AppBlockerSettings;
 import evgenykravtsov.appblocker.domain.model.exercise.ExerciseSettings;
+import evgenykravtsov.appblocker.external.android.AppBlockerController;
+import evgenykravtsov.appblocker.presentation.onboarding.OnboardingSettings;
 
 public class ExerciseSettingsPresenter {
 
-    public interface View {}
+    public interface View {
+
+        void showExerciseSettingsTip();
+    }
 
     ////
 
     private View view;
     private ExerciseSettings exerciseSettings;
     private AppBlockerSettings appBlockerSettings;
+    private OnboardingSettings onboardingSettings;
 
     ////
 
@@ -21,6 +27,9 @@ public class ExerciseSettingsPresenter {
         this.view = view;
         exerciseSettings = DependencyInjection.provideExerciseSettings();
         appBlockerSettings = DependencyInjection.provideAppBlockerSettings();
+        onboardingSettings = DependencyInjection.provideOnboardingSettings();
+
+        checkOnboardingEvents();
     }
 
     ////
@@ -53,7 +62,7 @@ public class ExerciseSettingsPresenter {
         appBlockerSettings.savePasswordSetStatus(true);
         appBlockerSettings.savePasswordActivationStatus(true);
         appBlockerSettings.savePassword(password);
-        MainPresenter.passwordPassed = true;
+        AppBlockerController.passwordPassed = true;
     }
 
     public boolean getPasswordActivationStatus() {
@@ -62,5 +71,14 @@ public class ExerciseSettingsPresenter {
 
     public void setPasswordActivationStatus(boolean status) {
         appBlockerSettings.savePasswordActivationStatus(status);
+    }
+
+    ////
+
+    private void checkOnboardingEvents() {
+        if (!onboardingSettings.loadExerciseSettingsTipStatus()) {
+            view.showExerciseSettingsTip();
+            onboardingSettings.saveExerciseSettingsTipStatus(true);
+        }
     }
 }

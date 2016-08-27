@@ -85,7 +85,7 @@ public class MathSettingsFragment extends Fragment
                 if (!checked) {
                     if (operationsActivatedCount == 1) {
                         ((ExerciseSettingsActivity) getActivity()).showSnackbar(
-                                "At least one operation should be selected");
+                                getString(R.string.math_exercise_settings_screen_one_operaion_warning));
                         additionCheckBox.setChecked(true);
                         return;
                     }
@@ -105,7 +105,7 @@ public class MathSettingsFragment extends Fragment
                 if (!checked) {
                     if (operationsActivatedCount == 1) {
                         ((ExerciseSettingsActivity) getActivity()).showSnackbar(
-                                "At least one operation should be selected");
+                                getString(R.string.math_exercise_settings_screen_one_operaion_warning));
                         substractionCheckBox.setChecked(true);
                         return;
                     }
@@ -125,7 +125,7 @@ public class MathSettingsFragment extends Fragment
                 if (!checked) {
                     if (operationsActivatedCount == 1) {
                         ((ExerciseSettingsActivity) getActivity()).showSnackbar(
-                                "At least one operation should be selected");
+                                getString(R.string.math_exercise_settings_screen_one_operaion_warning));
                         multiplicationCheckBox.setChecked(true);
                         return;
                     }
@@ -145,7 +145,7 @@ public class MathSettingsFragment extends Fragment
                 if (!checked) {
                     if (operationsActivatedCount == 1) {
                         ((ExerciseSettingsActivity) getActivity()).showSnackbar(
-                                "At least one operation should be selected");
+                                getString(R.string.math_exercise_settings_screen_one_operaion_warning));
                         divisionCheckBox.setChecked(true);
                         return;
                     }

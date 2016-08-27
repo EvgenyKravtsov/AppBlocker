@@ -20,7 +20,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pick odd picture"
+            android:text="@string/picture_exercise_screen_pick_odd_picture"
             android:textSize="24sp"
             android:textColor="@color/colorPrimaryDark"/>
 

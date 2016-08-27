@@ -35,7 +35,7 @@
                     android:layout_marginEnd="8dp"
                     android:textSize="24sp"
                     android:textColor="@color/colorPrimaryDark"
-                    android:text="Hours" />
+                    android:text="@string/clock_exercise_screen_hours" />
 
                 <EditText
                     android:layout_width="40dp"
@@ -54,7 +54,7 @@
                     android:layout_marginEnd="8dp"
                     android:textSize="24sp"
                     android:textColor="@color/colorPrimaryDark"
-                    android:text="Minutes" />
+                    android:text="@string/clock_exercise_screen_minutes" />
 
                 <EditText
                     android:layout_width="40dp"
@@ -73,7 +73,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="Check"
+                android:text="@string/clock_exercise_screen_check"
                 android:id="@+id/clock_exercise_fragment_check_button"
                 style="@style/ExerciseCheckButton" />
 

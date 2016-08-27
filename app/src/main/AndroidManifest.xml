@@ -38,14 +38,14 @@
 
         <activity
             android:name=".presentation.view.activity.ExerciseSettingsActivity"
-            android:label="Exercise settings">
+            android:label="@string/exercise_settings_screent_title">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".presentation.view.activity.MainActivity" />
         </activity>
 
         <activity android:name=".presentation.view.activity.FeedbackActivity"
-            android:label="Feedback">
+            android:label="@string/feedback_screen_title">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".presentation.view.activity.MainActivity" />

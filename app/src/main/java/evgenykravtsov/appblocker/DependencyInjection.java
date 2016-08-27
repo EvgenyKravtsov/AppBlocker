@@ -13,6 +13,7 @@ import evgenykravtsov.appblocker.external.android.AppBlockerController;
 import evgenykravtsov.appblocker.domain.model.AppBlockerSettings;
 import evgenykravtsov.appblocker.external.android.InternalPicturesRepository;
 import evgenykravtsov.appblocker.external.android.SystemControllerAndroid;
+import evgenykravtsov.appblocker.presentation.onboarding.OnboardingSettings;
 
 public class DependencyInjection {
 
@@ -46,6 +47,10 @@ public class DependencyInjection {
     }
 
     public static MathSettings provideMathSettings() {
+        return new SharedPreferencesHelper();
+    }
+
+    public static OnboardingSettings provideOnboardingSettings() {
         return new SharedPreferencesHelper();
     }
 

@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="24sp"
                 android:textColor="@color/colorPrimaryDark"
-                android:text="Choose"/>
+                android:text="@string/color_exercise_screen_choose"/>
 
             <TextView
                 android:layout_width="wrap_content"
