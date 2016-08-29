@@ -65,7 +65,7 @@
                     android:text="="
                     style="@style/MathExerciseText" />
 
-                7<EditText
+                <EditText
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"

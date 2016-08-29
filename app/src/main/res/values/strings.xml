@@ -17,6 +17,8 @@
     <string name="main_screen_wrong_password">Wrong password</string>
 
     <!-- Exercise settings screen -->
+    <string name="exercise_settings_share_math_text">Share Babyka to unlock additional settings for
+        math module. By default, there are addition exercises for numbers from 1 to 10.</string>
     <string name="exercise_settings_screent_title">Exercise settings</string>
     <string name="exercise_settings_screen_share">Share</string>
     <string name="exercise_settings_screen_parent_password">Parent password</string>

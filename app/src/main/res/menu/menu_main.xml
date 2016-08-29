@@ -3,10 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_exercise_settings_item_share"
+        android:id="@+id/menu_main_item_share"
         android:title="@string/exercise_settings_screen_share"
         android:icon="@drawable/share_icon"
-        app:actionProviderClass="android.support.v7.widget.ShareActionProvider"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
 
 </menu>

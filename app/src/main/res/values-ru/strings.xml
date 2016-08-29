@@ -18,6 +18,9 @@
     <string name="main_screen_wrong_password">Неправильный пароль</string>
 
     <!-- Exercise settings screen -->
+    <string name="exercise_settings_share_math_text">Поделитесь нашим приложением с друзьями или
+        знакомыми, и вас откроется доступ к дополнительным настройкам модуля Математика. По-умолчанию
+        мы активировали задачки на сложение чисел от 1 до 10.</string>
     <string name="exercise_settings_screent_title">Настройки упражнений</string>
     <string name="exercise_settings_screen_share">Поделиться</string>
     <string name="exercise_settings_screen_parent_password">Родительский пароль</string>

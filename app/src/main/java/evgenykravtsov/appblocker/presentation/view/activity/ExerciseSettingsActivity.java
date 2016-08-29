@@ -6,18 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.ShareActionProvider;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -56,8 +49,6 @@ public class ExerciseSettingsActivity extends AppCompatActivity
     private Button testColorButton;
 
     private int activatedExerciseTypesCount;
-    private MenuItem shareMenuItem;
-    private ShareActionProvider shareActionProvider;
 
     ////
 
@@ -109,24 +100,10 @@ public class ExerciseSettingsActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_exercise_settings, menu);
-
-        shareMenuItem = menu.findItem(R.id.menu_exercise_settings_item_share);
-        shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareMenuItem);
-
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
-                return true;
-            case R.id.menu_exercise_settings_item_share:
-                onShareMenuItemClick();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -214,6 +191,11 @@ public class ExerciseSettingsActivity extends AppCompatActivity
         expandMathButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!presenter.isAppShared()) {
+                    showShareMathDialog();
+                    return;
+                }
+
                 expandMathButton.setRotation(180);
                 int visibility = mathLayout.getVisibility();
                 if (visibility == View.GONE) {
@@ -338,17 +320,25 @@ public class ExerciseSettingsActivity extends AppCompatActivity
         parentPasswordCheckBox.setChecked(presenter.getPasswordActivationStatus());
         soundSupportCheckBox.setChecked(presenter.getSoundSupportStatus());
         numberEditText.setText(
-                String.format(Locale.ROOT, "%d",presenter.getSessionExerciseNumber()));
+                String.format(Locale.ROOT, "%d", presenter.getSessionExerciseNumber()));
     }
 
     private void navigateToTestExerciseActivity(ExerciseType exerciseToTest) {
         int exerciseTypeCode = 5;
 
         switch (exerciseToTest) {
-            case Math: exerciseTypeCode = TestExerciseActivity.EXTRA_MATH_TO_TEST; break;
-            case Pictures: exerciseTypeCode = TestExerciseActivity.EXTRA_PICTURES_TO_TEST; break;
-            case Clock: exerciseTypeCode = TestExerciseActivity.EXTRA_CLOCK_TO_TEST; break;
-            case Color: exerciseTypeCode = TestExerciseActivity.EXTRA_COLOR_TO_TEST; break;
+            case Math:
+                exerciseTypeCode = TestExerciseActivity.EXTRA_MATH_TO_TEST;
+                break;
+            case Pictures:
+                exerciseTypeCode = TestExerciseActivity.EXTRA_PICTURES_TO_TEST;
+                break;
+            case Clock:
+                exerciseTypeCode = TestExerciseActivity.EXTRA_CLOCK_TO_TEST;
+                break;
+            case Color:
+                exerciseTypeCode = TestExerciseActivity.EXTRA_COLOR_TO_TEST;
+                break;
         }
 
         Intent intent = new Intent(this, TestExerciseActivity.class);
@@ -425,22 +415,25 @@ public class ExerciseSettingsActivity extends AppCompatActivity
         else presenter.setPasswordActivationStatus(parentPasswordCheckBox.isChecked());
     }
 
-    private void onShareMenuItemClick() {
-        Intent sendIntent = new Intent(Intent.ACTION_SEND);
-        sendIntent.setType("text/plain");
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "Try Android Yorshik!");
-        Intent intent = Intent.createChooser(sendIntent, getString(R.string.app_name));
+    private void showShareMathDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.exercise_settings_share_math_text))
+                .setPositiveButton(getString(R.string.exercise_settings_screen_share),
+                        new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent sendIntent = new Intent();
+                        sendIntent.setAction(Intent.ACTION_SEND);
+                        sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+                        sendIntent.setType("text/plain");
+                        startActivity(Intent.createChooser(sendIntent, "Share"));
+                        presenter.appHasBeenShared();
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, null);
 
-        shareActionProvider.setShareIntent(sendIntent);
-        shareActionProvider.setOnShareTargetSelectedListener(new ShareActionProvider.OnShareTargetSelectedListener() {
-            @Override
-            public boolean onShareTargetSelected(ShareActionProvider source, Intent intent) {
-                Log.d("debug", "chosen");
-                return false;
-            }
-        });
-
-        startActivity(intent);
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
 

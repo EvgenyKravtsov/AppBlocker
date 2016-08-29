@@ -11,6 +11,7 @@ import evgenykravtsov.appblocker.domain.model.AppBlockerSettings;
 import evgenykravtsov.appblocker.domain.usecase.GetApps;
 import evgenykravtsov.appblocker.domain.usecase.UseCaseFactory;
 import evgenykravtsov.appblocker.domain.usecase.UseCaseThreadPool;
+import evgenykravtsov.appblocker.billing.BillingSettings;
 import evgenykravtsov.appblocker.presentation.onboarding.OnboardingSettings;
 
 public class MainPresenter {
@@ -34,6 +35,7 @@ public class MainPresenter {
     private View view;
     private UseCaseThreadPool threadPool;
     private OnboardingSettings onboardingSettings;
+    private BillingSettings billingSettings;
 
     ////
 
@@ -45,6 +47,7 @@ public class MainPresenter {
         this.appBlockerSettings = appBlockerSettings;
         this.threadPool = threadPool;
         this.onboardingSettings = DependencyInjection.provideOnboardingSettings();
+        this.billingSettings = DependencyInjection.provideBillingSettings();
 
         checkOnboardingEvents();
     }
@@ -95,6 +98,10 @@ public class MainPresenter {
     public boolean checkPassword(String password) {
         String savedPassword = appBlockerSettings.loadPassword();
         return savedPassword.equals(password);
+    }
+
+    public void appHasBeenShared() {
+        billingSettings.saveAppSharedStatus(true);
     }
 
     ////

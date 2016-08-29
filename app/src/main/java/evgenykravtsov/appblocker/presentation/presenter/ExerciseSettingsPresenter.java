@@ -5,6 +5,7 @@ import evgenykravtsov.appblocker.DependencyInjection;
 import evgenykravtsov.appblocker.domain.model.AppBlockerSettings;
 import evgenykravtsov.appblocker.domain.model.exercise.ExerciseSettings;
 import evgenykravtsov.appblocker.external.android.AppBlockerController;
+import evgenykravtsov.appblocker.billing.BillingSettings;
 import evgenykravtsov.appblocker.presentation.onboarding.OnboardingSettings;
 
 public class ExerciseSettingsPresenter {
@@ -20,6 +21,7 @@ public class ExerciseSettingsPresenter {
     private ExerciseSettings exerciseSettings;
     private AppBlockerSettings appBlockerSettings;
     private OnboardingSettings onboardingSettings;
+    private BillingSettings billingSettings;
 
     ////
 
@@ -28,6 +30,7 @@ public class ExerciseSettingsPresenter {
         exerciseSettings = DependencyInjection.provideExerciseSettings();
         appBlockerSettings = DependencyInjection.provideAppBlockerSettings();
         onboardingSettings = DependencyInjection.provideOnboardingSettings();
+        billingSettings = DependencyInjection.provideBillingSettings();
 
         checkOnboardingEvents();
     }
@@ -71,6 +74,14 @@ public class ExerciseSettingsPresenter {
 
     public void setPasswordActivationStatus(boolean status) {
         appBlockerSettings.savePasswordActivationStatus(status);
+    }
+
+    public boolean isAppShared() {
+        return billingSettings.loadAppSharedStatus();
+    }
+
+    public void appHasBeenShared() {
+        billingSettings.saveAppSharedStatus(true);
     }
 
     ////

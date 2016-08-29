@@ -11,6 +11,7 @@ import evgenykravtsov.appblocker.domain.model.exercise.math.MathSettings;
 import evgenykravtsov.appblocker.domain.model.exercise.pictures.PicturesRepository;
 import evgenykravtsov.appblocker.external.android.AppBlockerController;
 import evgenykravtsov.appblocker.domain.model.AppBlockerSettings;
+import evgenykravtsov.appblocker.billing.BillingSettings;
 import evgenykravtsov.appblocker.external.android.InternalPicturesRepository;
 import evgenykravtsov.appblocker.external.android.SystemControllerAndroid;
 import evgenykravtsov.appblocker.presentation.onboarding.OnboardingSettings;
@@ -51,6 +52,10 @@ public class DependencyInjection {
     }
 
     public static OnboardingSettings provideOnboardingSettings() {
+        return new SharedPreferencesHelper();
+    }
+
+    public static BillingSettings provideBillingSettings() {
         return new SharedPreferencesHelper();
     }
 

@@ -8,10 +8,15 @@ import evgenykravtsov.appblocker.domain.model.exercise.ExerciseType;
 import evgenykravtsov.appblocker.domain.model.exercise.math.MathSettings;
 import evgenykravtsov.appblocker.external.android.AppBlockerController;
 import evgenykravtsov.appblocker.domain.model.AppBlockerSettings;
+import evgenykravtsov.appblocker.billing.BillingSettings;
 import evgenykravtsov.appblocker.presentation.onboarding.OnboardingSettings;
 
 public class SharedPreferencesHelper
-        implements AppBlockerSettings, ExerciseSettings, MathSettings, OnboardingSettings {
+        implements AppBlockerSettings,
+        ExerciseSettings,
+        MathSettings,
+        OnboardingSettings,
+        BillingSettings {
 
     private static final String SHARED_PREFERENCES =
             AppBlockerController.class.getSimpleName() + "_shared_preferences";
@@ -233,6 +238,18 @@ public class SharedPreferencesHelper
     @Override
     public void saveNumberOfAppLaunches(int number) {
         saveInt(KEY_NUMBER_OF_APP_LAUNCHES, number);
+    }
+
+    ////
+
+    @Override
+    public boolean loadAppSharedStatus() {
+        return loadBoolean(KEY_APP_SHARED_STATUS, DEFAULT_APP_SHARED_STATUS);
+    }
+
+    @Override
+    public void saveAppSharedStatus(boolean status) {
+        saveBoolean(KEY_APP_SHARED_STATUS, status);
     }
 
     ////
