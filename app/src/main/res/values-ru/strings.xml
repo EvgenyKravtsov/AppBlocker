@@ -18,6 +18,8 @@
     <string name="main_screen_wrong_password">Неправильный пароль</string>
 
     <!-- Exercise settings screen -->
+    <string name="exercise_settings_purchase_dialog_button_label">В магазин</string>
+    <string name="exercise_settings_purchase_text">lald</string>
     <string name="exercise_settings_share_math_text">Поделитесь нашим приложением с друзьями или
         знакомыми, и вас откроется доступ к дополнительным настройкам модуля Математика. По-умолчанию
         мы активировали задачки на сложение чисел от 1 до 10.</string>

@@ -252,6 +252,32 @@ public class SharedPreferencesHelper
         saveBoolean(KEY_APP_SHARED_STATUS, status);
     }
 
+    @Override
+    public boolean loadOddPicturePurchaseStatus() {
+        return loadBoolean(
+                KEY_ODD_PICTURE_EXERCISE_PURCHASE_STATUS,
+                DEFAULT_ODD_PICTURE_EXERCISE_PURCHASE_STATUS
+        );
+    }
+
+    @Override
+    public void saveOddPicturePurchaseStatus(boolean status) {
+        saveBoolean(KEY_ODD_PICTURE_EXERCISE_PURCHASE_STATUS, status);
+    }
+
+    @Override
+    public boolean loadClockExercisePurchaseStatus() {
+        return loadBoolean(
+                KEY_CLOCK_EXERCISE_PURCHASE_STATUS,
+                DEFAULT_CLOCK_EXERCISE_PURCHASE_STATUS
+        );
+    }
+
+    @Override
+    public void saveClockExercisePurchaseStatus(boolean status) {
+        saveBoolean(KEY_CLOCK_EXERCISE_PURCHASE_STATUS, status);
+    }
+
     ////
 
     private void saveLong(String key, long value) {

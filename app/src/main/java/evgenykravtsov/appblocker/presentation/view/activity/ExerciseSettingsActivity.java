@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,10 +20,16 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ScrollView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import evgenykravtsov.appblocker.DependencyInjection;
 import evgenykravtsov.appblocker.R;
+import evgenykravtsov.appblocker.billing.BillingSettings;
+import evgenykravtsov.appblocker.billing.IabHelper;
+import evgenykravtsov.appblocker.billing.IabResult;
+import evgenykravtsov.appblocker.billing.Inventory;
 import evgenykravtsov.appblocker.domain.model.exercise.ExerciseSettings;
 import evgenykravtsov.appblocker.domain.model.exercise.ExerciseType;
 import evgenykravtsov.appblocker.presentation.presenter.ExerciseSettingsPresenter;
@@ -47,8 +54,13 @@ public class ExerciseSettingsActivity extends AppCompatActivity
     private Button testPicturesButton;
     private Button testClockButton;
     private Button testColorButton;
+    private Button unlockPicturesButton;
+    private Button unlockClockButton;
 
     private int activatedExerciseTypesCount;
+
+    private IabHelper iabHelper;
+    private BillingSettings billingSettings;
 
     ////
 
@@ -67,10 +79,13 @@ public class ExerciseSettingsActivity extends AppCompatActivity
         setContentView(R.layout.activity_exercise_settings);
 
         exerciseSettings = DependencyInjection.provideExerciseSettings();
+        billingSettings = DependencyInjection.provideBillingSettings();
 
         prepareActionBar();
         bindViews();
         bindViewListeners();
+
+        prepareIab();
     }
 
     @Override
@@ -97,6 +112,19 @@ public class ExerciseSettingsActivity extends AppCompatActivity
     protected void onStop() {
         super.onStop();
         unbindPresenter();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (iabHelper != null)
+            try {
+                iabHelper.dispose();
+            } catch (IabHelper.IabAsyncInProgressException e) {
+                e.printStackTrace();
+            }
+
+        iabHelper = null;
     }
 
     @Override
@@ -171,6 +199,9 @@ public class ExerciseSettingsActivity extends AppCompatActivity
         testPicturesButton = (Button) findViewById(R.id.exrcise_settings_activity_test_pictures_button);
         testClockButton = (Button) findViewById(R.id.exrcise_settings_activity_test_clock_button);
         testColorButton = (Button) findViewById(R.id.exrcise_settings_activity_test_color_button);
+
+        unlockPicturesButton = (Button) findViewById(R.id.exercise_settings_activity_unlock_pictures_button);
+        unlockClockButton = (Button) findViewById(R.id.exercise_settings_activity_unlock_clock_button);
     }
 
     private void bindViewListeners() {
@@ -233,6 +264,12 @@ public class ExerciseSettingsActivity extends AppCompatActivity
         picturesCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                if (!billingSettings.loadOddPicturePurchaseStatus()) {
+                    showPurchaseDialog(ExerciseType.Pictures);
+                    picturesCheckBox.setChecked(!checked);
+                    return;
+                }
+
                 if (!checked) {
                     if (activatedExerciseTypesCount == 1) {
                         showSnackbar(getString(R.string.exercise_settings_screen_one_type_warning));
@@ -252,6 +289,12 @@ public class ExerciseSettingsActivity extends AppCompatActivity
         clockCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                if (!billingSettings.loadClockExercisePurchaseStatus()) {
+                    showPurchaseDialog(ExerciseType.Clock);
+                    clockCheckBox.setChecked(!checked);
+                    return;
+                }
+
                 if (!checked) {
                     if (activatedExerciseTypesCount == 1) {
                         showSnackbar(getString(R.string.exercise_settings_screen_one_type_warning));
@@ -314,13 +357,64 @@ public class ExerciseSettingsActivity extends AppCompatActivity
                 navigateToTestExerciseActivity(ExerciseType.Color);
             }
         });
+
+        unlockPicturesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                engagePurchase(ExerciseType.Pictures);
+            }
+        });
+
+        unlockClockButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                engagePurchase(ExerciseType.Clock);
+            }
+        });
+    }
+
+    private void prepareIab() {
+        String base64EncodedPublicKey;
+        base64EncodedPublicKey = BillingSettings.KEY_1
+                + BillingSettings.KEY_2
+                + BillingSettings.KEY_3
+                + BillingSettings.KEY_4
+                + BillingSettings.KEY_5
+                + BillingSettings.KEY_6
+                + BillingSettings.KEY_7;
+        iabHelper = new IabHelper(this, base64EncodedPublicKey);
+
+        iabHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+            @Override
+            public void onIabSetupFinished(IabResult result) {
+                if (!result.isSuccess()) Log.d("debug", "error initializing iabHelper");
+                else {
+                    Log.d("debug", "iabHelper success");
+
+                    List<String> skuList = new ArrayList<>();
+                    skuList.add(BillingSettings.ODD_PICTURE_EXERCISE_SKU);
+                    skuList.add(BillingSettings.CLOCK_EXERCISE_SKU);
+
+                    try {
+                        iabHelper.queryInventoryAsync(true, skuList, null, new IabHelper.QueryInventoryFinishedListener() {
+
+                            @Override
+                            public void onQueryInventoryFinished(IabResult result, Inventory inv) {
+                                onPlayStoreInventoryReceived(result, inv);
+                            }
+                        });
+                    } catch (IabHelper.IabAsyncInProgressException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
     private void establishInitialViewsState() {
         parentPasswordCheckBox.setChecked(presenter.getPasswordActivationStatus());
         soundSupportCheckBox.setChecked(presenter.getSoundSupportStatus());
-        numberEditText.setText(
-                String.format(Locale.ROOT, "%d", presenter.getSessionExerciseNumber()));
+        numberEditText.setText(String.format(Locale.ROOT, "%d", presenter.getSessionExerciseNumber()));
     }
 
     private void navigateToTestExerciseActivity(ExerciseType exerciseToTest) {
@@ -434,6 +528,64 @@ public class ExerciseSettingsActivity extends AppCompatActivity
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void showPurchaseDialog(final ExerciseType exerciseType) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.exercise_settings_purchase_text))
+                .setPositiveButton(getString(R.string.exercise_settings_purchase_dialog_button_label),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                engagePurchase(exerciseType);
+                                dialogInterface.dismiss();
+                            }
+                        })
+                .setNegativeButton(android.R.string.cancel, null);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void onPlayStoreInventoryReceived(IabResult result, Inventory inv) {
+        boolean oddPictureExercisePurchsed;
+        boolean clockExercisePurchased;
+
+        if (result.isFailure()) {
+            oddPictureExercisePurchsed = billingSettings.loadOddPicturePurchaseStatus();
+            clockExercisePurchased = billingSettings.loadClockExercisePurchaseStatus();
+        } else {
+            oddPictureExercisePurchsed = inv.hasPurchase(BillingSettings.ODD_PICTURE_EXERCISE_SKU);
+            clockExercisePurchased = inv.hasPurchase(BillingSettings.CLOCK_EXERCISE_SKU);
+            billingSettings.saveOddPicturePurchaseStatus(oddPictureExercisePurchsed);
+            billingSettings.saveClockExercisePurchaseStatus(clockExercisePurchased);
+        }
+
+        if (oddPictureExercisePurchsed) unlockPicturesButton.setVisibility(View.GONE);
+        if (clockExercisePurchased) unlockClockButton.setVisibility(View.GONE);
+    }
+
+    private void engagePurchase(ExerciseType exerciseType) {
+        String sku = "";
+
+        switch (exerciseType) {
+            case Pictures: sku = BillingSettings.ODD_PICTURE_EXERCISE_SKU; break;
+            case Clock: sku = BillingSettings.CLOCK_EXERCISE_SKU; break;
+        }
+
+        try {
+            iabHelper.launchPurchaseFlow(
+                    ExerciseSettingsActivity.this,
+                    sku,
+                    BillingSettings.PURCHASE_REQUEST_CODE,
+                    null,
+                    "");
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            // TODO Delete test code
+            Log.d("debug", "Error during purchase process");
+        }
     }
 }
 

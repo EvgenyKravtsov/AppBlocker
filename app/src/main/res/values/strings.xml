@@ -17,6 +17,8 @@
     <string name="main_screen_wrong_password">Wrong password</string>
 
     <!-- Exercise settings screen -->
+    <string name="exercise_settings_purchase_dialog_button_label">Go to shop</string>
+    <string name="exercise_settings_purchase_text">lald</string>
     <string name="exercise_settings_share_math_text">Share Babyka to unlock additional settings for
         math module. By default, there are addition exercises for numbers from 1 to 10.</string>
     <string name="exercise_settings_screent_title">Exercise settings</string>
@@ -32,10 +34,10 @@
     <string name="exercise_settings_screen_test">Test</string>
     <string name="exercise_settings_screen_odd_picture">Odd picture</string>
     <string name="exercise_settings_screen_odd_picture_description">Provides four pictures, one of
-        which is odd. Can be used to improve cognitive skills.</string>
+        which is odd. To pass the exercise you should find this odd picture.</string>
     <string name="exercise_settings_screen_clock">Clock</string>
     <string name="exercise_settings_screen_clock_description">Represent a classical clock with
-        arrows. Child should enter correct time, base on arrows placement.</string>
+        arrows. You should enter correct time, base on arrows placement.</string>
     <string name="exercise_settings_screen_unlock">Unlock</string>
     <string name="exercise_settings_screen_find_color">Find color</string>
     <string name="exercise_settings_screen_color_description">Show a ten basic colors, randomly
