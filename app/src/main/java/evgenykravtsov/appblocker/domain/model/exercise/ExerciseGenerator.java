@@ -1,5 +1,7 @@
 package evgenykravtsov.appblocker.domain.model.exercise;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -111,15 +113,24 @@ public class ExerciseGenerator {
         pictures[correctPictureIndex] = correctPicture;
 
         for (int i = 0; i < 4; i++) {
-            if (pictures[i] == null) pictures[i] = wrongPicture1;
+            if (pictures[i] == null) {
+                pictures[i] = wrongPicture1;
+                break;
+            }
         }
 
         for (int i = 0; i < 4; i++) {
-            if (pictures[i] == null) pictures[i] = wrongPicture2;
+            if (pictures[i] == null) {
+                pictures[i] = wrongPicture2;
+                break;
+            }
         }
 
         for (int i = 0; i < 4; i++) {
-            if (pictures[i] == null) pictures[i] = wrongPicture3;
+            if (pictures[i] == null) {
+                pictures[i] = wrongPicture3;
+                break;
+            }
         }
 
         return new PicturesExercise(pictures, correctPictureIndex);
