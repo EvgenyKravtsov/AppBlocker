@@ -1,0 +1,100 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:alertDialogTheme"
+            tools:ignore="NewApi">@style/AppTheme.Dialog</item>
+        <item name="alertDialogTheme">@style/AppTheme.Dialog</item>
+    </style>
+
+    <style name="NavigationDrawerItemLayout">
+        <item name="android:layout_height">48dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/navigation_menu_button_background_selector</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingStart" tools:ignore="NewApi">16dp</item>
+    </style>
+
+    <style name="NavigationDrawerItemButton">
+        <item name="android:layout_marginLeft">32dp</item>
+        <item name="android:layout_marginStart" tools:ignore="NewApi">32dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:clickable">false</item>
+    </style>
+
+    <style name="ExerciseSettingsCard">
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingStart" tools:ignore="NewApi">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingEnd" tools:ignore="NewApi">16dp</item>
+    </style>
+
+    <style name="ExerciseSerringsCardTitle">
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:layout_marginBottom">16dp</item>
+    </style>
+
+    <style name="ExerciseSerringsCardDescription">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:layout_marginBottom">16dp</item>
+    </style>
+
+    <style name="AccentedEditText">
+        <item name="android:background">@drawable/accented_edit_text_background</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">3dp</item>
+    </style>
+
+    <style name="AccentedScrollbar">
+        <item name="android:scrollbarThumbVertical">@drawable/scrollbar_thumb_vertical</item>
+    </style>
+
+    <style name="ExerciseCheckButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:paddingTop">24dp</item>
+        <item name="android:paddingLeft">42dp</item>
+        <item name="android:paddingStart" tools:ignore="NewApi">42dp</item>
+        <item name="android:paddingRight">42dp</item>
+        <item name="android:paddingEnd" tools:ignore="NewApi">42dp</item>
+        <item name="android:paddingBottom">24dp</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="MathExerciseText">
+        <item name="android:textSize">34sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="PicturesExerciseImage">
+        <item name="android:layout_width">240dp</item>
+        <item name="android:layout_height">240dp</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="ColorExerciseImage">
+        <item name="android:layout_width">140dp</item>
+        <item name="android:layout_height">140dp</item>
+        <item name="android:layout_margin">2dp</item>
+    </style>
+
+    <style name="AppTheme.Dialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+</resources>

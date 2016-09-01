@@ -5,9 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 
 import evgenykravtsov.appblocker.DependencyInjection;
-import evgenykravtsov.appblocker.presentation.onboarding.OnboardingSettings;
 
 public class AppBlockerController extends Application {
+
+    // TODO Deploy google Analytics
+    // TODO Add share text and image
+    // TODO Get admin rights
 
     public static boolean passwordPassed;
 

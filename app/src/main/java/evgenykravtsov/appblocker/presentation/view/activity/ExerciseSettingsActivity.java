@@ -264,12 +264,6 @@ public class ExerciseSettingsActivity extends AppCompatActivity
         picturesCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                if (!billingSettings.loadOddPicturePurchaseStatus()) {
-                    showPurchaseDialog(ExerciseType.Pictures);
-                    picturesCheckBox.setChecked(!checked);
-                    return;
-                }
-
                 if (!checked) {
                     if (activatedExerciseTypesCount == 1) {
                         showSnackbar(getString(R.string.exercise_settings_screen_one_type_warning));

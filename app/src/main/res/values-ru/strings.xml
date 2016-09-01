@@ -2,6 +2,9 @@
     <string name="app_name">Babyka</string>
 
     <!-- Main screen -->
+    <string name="main_screen_permission_dialog_text">Приложению необходимо разрешение на сбор
+        информации о других установленных приложениях.</string>
+    <string name="main_screen_permission_dialog_button_label">Разрешить</string>
     <string name="main_screen_exercise_settings">Настройки упражнений</string>
     <string name="main_screen_feedback">Отзыв</string>
     <string name="main_screen_blocker_activated">Блокировка включена</string>
@@ -19,7 +22,7 @@
 
     <!-- Exercise settings screen -->
     <string name="exercise_settings_purchase_dialog_button_label">В магазин</string>
-    <string name="exercise_settings_purchase_text">lald</string>
+    <string name="exercise_settings_purchase_text">Данный модуль является платным.</string>
     <string name="exercise_settings_share_math_text">Поделитесь нашим приложением с друзьями или
         знакомыми, и вас откроется доступ к дополнительным настройкам модуля Математика. По-умолчанию
         мы активировали задачки на сложение чисел от 1 до 10.</string>

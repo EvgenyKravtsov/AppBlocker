@@ -273,6 +273,7 @@
                     android:layout_toRightOf="@+id/exrcise_settings_activity_test_pictures_button"
                     android:layout_toEndOf="@+id/exrcise_settings_activity_test_pictures_button"
                     android:text="@string/exercise_settings_screen_unlock"
+                    android:visibility="gone"
                     android:id="@+id/exercise_settings_activity_unlock_pictures_button"
                     style="@style/Widget.AppCompat.Button.Borderless.Colored" />
 

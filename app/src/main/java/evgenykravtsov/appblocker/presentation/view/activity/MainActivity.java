@@ -1,9 +1,12 @@
 package evgenykravtsov.appblocker.presentation.view.activity;
 
 import android.annotation.SuppressLint;
+import android.app.AppOpsManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -57,8 +60,9 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        prepareActionBar();
+        checkForPackageUserStatsPermission();
 
+        prepareActionBar();
         bindViews();
         bindViewListeners();
         prepareAppsRecyclerView();
@@ -111,10 +115,7 @@ public class MainActivity extends AppCompatActivity
 
                 return true;
             case R.id.menu_main_item_share:
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
-                sendIntent.setType("text/plain");
+                Intent sendIntent = prepareShareIntent();
                 startActivity(Intent.createChooser(sendIntent, "Share"));
                 presenter.appHasBeenShared();
                 return true;
@@ -363,5 +364,44 @@ public class MainActivity extends AppCompatActivity
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void showPackageUserStatsPermissionDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setMessage(getString(R.string.main_screen_permission_dialog_text))
+                .setPositiveButton(
+                        getString(R.string.main_screen_permission_dialog_button_label),
+                        new DialogInterface.OnClickListener() {
+                    @SuppressLint("InlinedApi")
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        startActivity(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS));
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void checkForPackageUserStatsPermission() {
+        if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.LOLLIPOP) {
+            AppOpsManager appOps = (AppOpsManager) getSystemService(Context.APP_OPS_SERVICE);
+            int mode = appOps.checkOpNoThrow(
+                    "android:get_usage_stats",
+                    android.os.Process.myUid(),
+                    getPackageName());
+
+            boolean granted = mode == AppOpsManager.MODE_ALLOWED;
+
+            if (!granted) showPackageUserStatsPermissionDialog();
+        }
+    }
+
+    private Intent prepareShareIntent() {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+        intent.setType("text/plain");
+        return intent;
     }
 }
