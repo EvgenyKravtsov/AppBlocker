@@ -4,17 +4,18 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
+
 import evgenykravtsov.appblocker.DependencyInjection;
 
 public class AppBlockerController extends Application {
 
-    // TODO Deploy google Analytics
-    // TODO Add share text and image
-    // TODO Get admin rights
-
     public static boolean passwordPassed;
 
     private static Context context;
+
+    private Tracker tracker;
 
     ////
 
@@ -36,6 +37,17 @@ public class AppBlockerController extends Application {
         super.onCreate();
         context = getApplicationContext();
         startAppBlockerService();
+    }
+
+    ////
+
+    synchronized public Tracker getDefaultTracker() {
+        if (tracker == null) {
+            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+            tracker = analytics.newTracker(777);
+        }
+
+        return tracker;
     }
 
     ////

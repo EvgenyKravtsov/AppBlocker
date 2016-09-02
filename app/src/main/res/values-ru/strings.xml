@@ -2,6 +2,10 @@
     <string name="app_name">Babyka</string>
 
     <!-- Main screen -->
+    <string name="main_screen_share_title">Рекоммендация</string>
+    <string name="main_screen_share_text">Android-приложение Babyka - Ограничьте доступ к
+        развлекательным приложениям при
+        помощи полезных упражнений  - http://kevers.top</string>
     <string name="main_screen_permission_dialog_text">Приложению необходимо разрешение на сбор
         информации о других установленных приложениях.</string>
     <string name="main_screen_permission_dialog_button_label">Разрешить</string>
@@ -12,7 +16,7 @@
     <string name="main_screen_set_parent_password_recommendation_text">Мы рекоммендуем установить
         родительский пароль на вход в приложение. Это можно сделать в меню настроек.</string>
     <string name="main_screen_set_parent_password_recommendation_button_label">Перейти в настройки</string>
-    <string name="main_screen_user_feedback_request_text">Спасибо за использование нашего приложения.
+    <string name="main_screen_user_feedback_request_text">Блигодарим за использование нашего приложения.
         Мы надеемся, что оно принесло вам пользу. Если у вас есть вопросы или пожелание, вы может
         отправить отзыв непосредственно разработчикам.</string>
     <string name="main_screen_user_feedback_recommendation_button_label">Отправить отзыв</string>
@@ -24,7 +28,7 @@
     <string name="exercise_settings_purchase_dialog_button_label">В магазин</string>
     <string name="exercise_settings_purchase_text">Данный модуль является платным.</string>
     <string name="exercise_settings_share_math_text">Поделитесь нашим приложением с друзьями или
-        знакомыми, и вас откроется доступ к дополнительным настройкам модуля Математика. По-умолчанию
+        знакомыми, и вам откроется доступ к дополнительным настройкам модуля Математика. По-умолчанию
         мы активировали задачки на сложение чисел от 1 до 10.</string>
     <string name="exercise_settings_screent_title">Настройки упражнений</string>
     <string name="exercise_settings_screen_share">Поделиться</string>

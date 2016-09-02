@@ -5,7 +5,11 @@ import android.app.AppOpsManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
@@ -31,6 +35,10 @@ import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
 import evgenykravtsov.appblocker.DependencyInjection;
@@ -116,7 +124,9 @@ public class MainActivity extends AppCompatActivity
                 return true;
             case R.id.menu_main_item_share:
                 Intent sendIntent = prepareShareIntent();
-                startActivity(Intent.createChooser(sendIntent, "Share"));
+                startActivity(Intent.createChooser(
+                        sendIntent,
+                        getString(R.string.main_screen_share_title)));
                 presenter.appHasBeenShared();
                 return true;
 
@@ -189,7 +199,6 @@ public class MainActivity extends AppCompatActivity
 
     ////
 
-    @SuppressWarnings("ConstantConditions")
     private void prepareActionBar() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.navigation_menu_icon);
@@ -264,7 +273,6 @@ public class MainActivity extends AppCompatActivity
         appsRecyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
-    @SuppressWarnings("ConstantConditions")
     private void switchActionBarHomeIcon(boolean navigationDrawerOpened) {
         if (navigationDrawerOpened) getSupportActionBar().setHomeAsUpIndicator(R.drawable.navigation_arrow_back);
         else getSupportActionBar().setHomeAsUpIndicator(R.drawable.navigation_menu_icon);
@@ -304,7 +312,6 @@ public class MainActivity extends AppCompatActivity
         textView.startAnimation(fadeIn);
     }
 
-    @SuppressLint("InflateParams")
     private void showRequestPasswordDialog() {
         View dialogLayout = LayoutInflater.from(this).inflate(R.layout.dialog_request_password, null);
 
@@ -353,19 +360,6 @@ public class MainActivity extends AppCompatActivity
         showSnackbar(getString(R.string.main_screen_wrong_password));
     }
 
-    private void showOnboardingDialog(
-            String message,
-            String positiveLabel,
-            DialogInterface.OnClickListener positiveListener) {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                .setMessage(message)
-                .setPositiveButton(positiveLabel, positiveListener);
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
     private void showPackageUserStatsPermissionDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setMessage(getString(R.string.main_screen_permission_dialog_text))
@@ -393,15 +387,48 @@ public class MainActivity extends AppCompatActivity
 
             boolean granted = mode == AppOpsManager.MODE_ALLOWED;
 
-            if (!granted) showPackageUserStatsPermissionDialog();
+            if (!granted) {
+                showPackageUserStatsPermissionDialog();
+            }
         }
     }
 
     private Intent prepareShareIntent() {
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.high_res_app_icon);
+        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                + "/babykaShareImage.png";
+
+        OutputStream outputStream = null;
+        File file = new File(path);
+
+        try {
+            outputStream = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+            outputStream.flush();
+            outputStream.close();
+        } catch (IOException e) { e.printStackTrace(); }
+
+        path = file.getPath();
+        Uri imageUri = Uri.parse("file://" + path);
+
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
-        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.main_screen_share_text));
+        intent.putExtra(Intent.EXTRA_STREAM, imageUri);
+        intent.setType("image/*");
         return intent;
+    }
+
+    private void showOnboardingDialog(
+            String message,
+            String positiveLabel,
+            DialogInterface.OnClickListener positiveListener) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setMessage(message)
+                .setPositiveButton(positiveLabel, positiveListener);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

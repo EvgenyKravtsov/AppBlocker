@@ -2,6 +2,10 @@
     <string name="app_name">Babyka</string>
 
     <!-- Main screen -->
+    <string name="main_screen_share_title">Share</string>
+    <string name="main_screen_share_text">Babyka Android Application - Limit kid access to apps
+        and games by simple exercises.
+        You solve - you play! - http://kevers.top</string>
     <string name="main_screen_permission_dialog_text">Application requires permission for gathering
         other installed apps data.</string>
     <string name="main_screen_permission_dialog_button_label">Grant</string>

@@ -3,7 +3,11 @@ package evgenykravtsov.appblocker.presentation.view.activity;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
@@ -20,6 +24,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ScrollView;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -84,8 +92,6 @@ public class ExerciseSettingsActivity extends AppCompatActivity
         prepareActionBar();
         bindViews();
         bindViewListeners();
-
-        prepareIab();
     }
 
     @Override
@@ -97,6 +103,7 @@ public class ExerciseSettingsActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        prepareIab();
         establishInitialViewsState();
     }
 
@@ -510,10 +517,7 @@ public class ExerciseSettingsActivity extends AppCompatActivity
                         new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent sendIntent = new Intent();
-                        sendIntent.setAction(Intent.ACTION_SEND);
-                        sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
-                        sendIntent.setType("text/plain");
+                        Intent sendIntent = prepareShareIntent();
                         startActivity(Intent.createChooser(sendIntent, "Share"));
                         presenter.appHasBeenShared();
                     }
@@ -522,6 +526,32 @@ public class ExerciseSettingsActivity extends AppCompatActivity
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private Intent prepareShareIntent() {
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.high_res_app_icon);
+        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                + "/babykaShareImage.png";
+
+        OutputStream outputStream = null;
+        File file = new File(path);
+
+        try {
+            outputStream = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+            outputStream.flush();
+            outputStream.close();
+        } catch (IOException e) { e.printStackTrace(); }
+
+        path = file.getPath();
+        Uri imageUri = Uri.parse("file://" + path);
+
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.main_screen_share_text));
+        intent.putExtra(Intent.EXTRA_STREAM, imageUri);
+        intent.setType("image/*");
+        return intent;
     }
 
     private void showPurchaseDialog(final ExerciseType exerciseType) {
@@ -574,12 +604,7 @@ public class ExerciseSettingsActivity extends AppCompatActivity
                     BillingSettings.PURCHASE_REQUEST_CODE,
                     null,
                     "");
-        } catch (Exception e) {
-            e.printStackTrace();
-
-            // TODO Delete test code
-            Log.d("debug", "Error during purchase process");
-        }
+        } catch (Exception e) { e.printStackTrace(); }
     }
 }
 

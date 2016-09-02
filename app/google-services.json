@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "320735936006",
+    "project_id": "api-project-320735936006"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320735936006:android:fe5a6308308cb0aa",
+        "android_client_info": {
+          "package_name": "evgenykravtsov.appblocker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJD-F_KTy8QuVgRCchZVwJR-9ObmNe_go"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-83626440-1"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
