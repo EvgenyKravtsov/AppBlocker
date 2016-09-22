@@ -12,6 +12,7 @@ public interface BillingSettings {
 
     String ODD_PICTURE_EXERCISE_SKU = "odd_picture_exercise";
     String CLOCK_EXERCISE_SKU = "clock_exercise";
+    String MEMORY_EXERCISE_SKU = "memory_exercise";
 
     int PURCHASE_REQUEST_CODE = 777;
 
@@ -21,6 +22,8 @@ public interface BillingSettings {
     boolean DEFAULT_ODD_PICTURE_EXERCISE_PURCHASE_STATUS = false;
     String KEY_CLOCK_EXERCISE_PURCHASE_STATUS = "key_clock_exercise_purchase_status";
     boolean DEFAULT_CLOCK_EXERCISE_PURCHASE_STATUS = false;
+    String KEY_MEMORY_EXERCISE_PURCHASE_STATUS = "key_memory_exercise_purchase_status";
+    boolean DEFAULT_MEMORY_EXERCISE_PURCHASE_STATUS = false;
 
     ////
 
@@ -35,4 +38,8 @@ public interface BillingSettings {
     boolean loadClockExercisePurchaseStatus();
 
     void saveClockExercisePurchaseStatus(boolean status);
+
+    boolean loadMemoryExercisePurchaseStatus();
+
+    void saveMemoryExercisePurchaseStatus(boolean status);
 }

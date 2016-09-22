@@ -24,6 +24,7 @@
     <string name="main_screen_wrong_password">Wrong password</string>
 
     <!-- Exercise settings screen -->
+    <string name="exercise_settings_new_label">NEW</string>
     <string name="exercise_settings_purchase_dialog_button_label">Go to shop</string>
     <string name="exercise_settings_purchase_text">This is paid exercise module. It can be unlocked
         from Google Play</string>
@@ -53,9 +54,18 @@
     <string name="exercise_settings_screen_exercises_tip_text">Here you can add or remove modules
         from exercise pool. Just tick a checkbox. Notice, that app choose exercise randomly from
         exercise pool.</string>
-    <string name="exercise_settings_screen_one_type_warning">At least one type should be activated</string>
+    <string name="exercise_settings_screen_one_type_warning">At least one exercise type should be activated</string>
     <string name="exercise_settings_screen_password_dont_match">Passwords dont match</string>
     <string name="exercise_settings_screen_password_saved">Password saved</string>
+    <string name="exercise_settings_screen_new_item">New</string>
+    <string name="exercise_settings_screen_memory">Visual memory</string>
+    <string name="exercise_settings_screen_memory_description">Classic exercise for strengthening
+        visual memory. App will show group of pictures for limited amout of time. After that pictures
+        become hidden, and you have to find specified picture. You can adjust number of pictures,
+        display time and number of mistakes befor exercise restart.</string>
+    <string name="exercise_settings_screen_number_of_memory_pictures">Number of pictures(2–8)</string>
+    <string name="exercise_settings_screen_number_of_mistakes_pictures">Number of mistakes</string>
+    <string name="exercise_settings_screen_memory_display_time">Display time(seconds)</string>
 
     <!-- Feedback screen -->
     <string name="feedback_screen_title">Feedback</string>
@@ -103,5 +113,8 @@
 
     <!-- Picture exercise screen -->
     <string name="picture_exercise_screen_pick_odd_picture">Pick odd picture</string>
+
+    <!-- Memory exercise screen -->
+    <string name="memory_exercise_screen_find_picture">Find - </string>
 
 </resources>

@@ -13,6 +13,7 @@ import evgenykravtsov.appblocker.presentation.presenter.BlockerPresenter;
 import evgenykravtsov.appblocker.presentation.view.fragment.ClockExerciseFragment;
 import evgenykravtsov.appblocker.presentation.view.fragment.ColorExerciseFragment;
 import evgenykravtsov.appblocker.presentation.view.fragment.MathExerciseFragment;
+import evgenykravtsov.appblocker.presentation.view.fragment.MemoryExerciseFragment;
 import evgenykravtsov.appblocker.presentation.view.fragment.PictureExerciseFragment;
 
 public class BlockerActivity extends AppCompatActivity implements BlockerPresenter.View {
@@ -20,8 +21,8 @@ public class BlockerActivity extends AppCompatActivity implements BlockerPresent
     public static final String KEY_EXERCISE_FRAGMENT_MODE = "key_exercise_fragment_mode";
     public static final int MODE_STANDARD = 0;
     public static final int MODE_TEST = 1;
-    public static final int CORRECTNESS_ANIMATION_DURATION = 400;
-    public static final int EXERCISE_CHANGE_DELAY = 800;
+    public static final int CORRECTNESS_ANIMATION_DURATION = 800;
+    public static final int EXERCISE_CHANGE_DELAY = 1000;
 
     private BlockerPresenter presenter;
 
@@ -68,18 +69,11 @@ public class BlockerActivity extends AppCompatActivity implements BlockerPresent
         Fragment fragment = null;
 
         switch (exerciseType) {
-            case Math:
-                fragment = MathExerciseFragment.newInstance(MODE_STANDARD);
-                break;
-            case Pictures:
-                fragment = PictureExerciseFragment.newInstance(MODE_STANDARD);
-                break;
-            case Clock:
-                fragment = ClockExerciseFragment.newInstance(MODE_STANDARD);
-                break;
-            case Color:
-                fragment = ColorExerciseFragment.newInstance(MODE_STANDARD);
-                break;
+            case Math: fragment = MathExerciseFragment.newInstance(MODE_STANDARD); break;
+            case Pictures: fragment = PictureExerciseFragment.newInstance(MODE_STANDARD); break;
+            case Clock: fragment = ClockExerciseFragment.newInstance(MODE_STANDARD); break;
+            case Color: fragment = ColorExerciseFragment.newInstance(MODE_STANDARD); break;
+            case Memory: fragment = MemoryExerciseFragment.newInstance(MODE_STANDARD); break;
         }
 
         getFragmentManager().beginTransaction()

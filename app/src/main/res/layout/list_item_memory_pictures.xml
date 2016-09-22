@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp">
+
+        <ImageView
+            android:layout_width="86dp"
+            android:layout_height="86dp"
+            android:layout_margin="2dp"
+            android:id="@+id/memory_picture"
+            android:contentDescription="@string/exercise_settings_screen_memory"
+            tools:background="@drawable/memory_picture_1" />
+
+    </android.support.v7.widget.CardView>
+
+</FrameLayout>

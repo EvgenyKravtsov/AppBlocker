@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TableRow android:layout_marginBottom="4dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textColor="@color/colorTextPrimary"
+            android:text="@string/exercise_settings_screen_number_of_memory_pictures" />
+
+        <!--
+        <biz.kasual.materialnumberpicker.MaterialNumberPicker
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/memory_settings_fragment_number_of_pictures_picker"
+            app:npMinValue="4"
+            app:npMaxValue="8"
+            app:npBackgroundColor="@android:color/transparent"
+            app:npSeparatorColor="@color/colorAccent"
+            app:npTextSize="16sp" /> -->
+
+        <EditText
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:id="@+id/memory_settings_fragment_number_of_pictures_edit_text"
+            style="@style/AccentedEditText" />
+
+    </TableRow>
+
+    <TableRow android:layout_marginBottom="4dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textColor="@color/colorTextPrimary"
+            android:text="@string/exercise_settings_screen_number_of_mistakes_pictures" />
+
+        <EditText
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:id="@+id/memory_settings_fragment_number_of_mistakes_edit_text"
+            style="@style/AccentedEditText" />
+
+    </TableRow>
+
+    <TableRow android:layout_marginBottom="4dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textColor="@color/colorTextPrimary"
+            android:text="@string/exercise_settings_screen_memory_display_time" />
+
+        <EditText
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:id="@+id/memory_settings_fragment_display_time_edit_text"
+            style="@style/AccentedEditText" />
+
+    </TableRow>
+
+</TableLayout>

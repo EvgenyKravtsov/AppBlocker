@@ -1,13 +1,13 @@
 package evgenykravtsov.appblocker.presentation.presenter;
 
 import android.app.Fragment;
-import android.util.Log;
 
 import evgenykravtsov.appblocker.domain.model.exercise.ExerciseType;
 import evgenykravtsov.appblocker.presentation.view.activity.BlockerActivity;
 import evgenykravtsov.appblocker.presentation.view.fragment.ClockExerciseFragment;
 import evgenykravtsov.appblocker.presentation.view.fragment.ColorExerciseFragment;
 import evgenykravtsov.appblocker.presentation.view.fragment.MathExerciseFragment;
+import evgenykravtsov.appblocker.presentation.view.fragment.MemoryExerciseFragment;
 import evgenykravtsov.appblocker.presentation.view.fragment.PictureExerciseFragment;
 
 public class TestExercisePresenter {
@@ -48,6 +48,9 @@ public class TestExercisePresenter {
                 break;
             case Color:
                 fragment = ColorExerciseFragment.newInstance(BlockerActivity.MODE_TEST);
+                break;
+            case Memory:
+                fragment = MemoryExerciseFragment.newInstance(BlockerActivity.MODE_TEST);
                 break;
         }
 

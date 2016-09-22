@@ -10,6 +10,8 @@ public interface ExerciseSettings {
     boolean DEFAULT_CLOCK_EXERCISE_TYPE_STATUS = false;
     String KEY_COLOR_EXERCISE_TYPE = "key_color_exercise_type";
     boolean DEFAULT_COLOR_EXERCISE_TYPE_STATUS = false;
+    String KEY_MEMORY_EXERCISE_TYPE = "key_memory_exercise_type";
+    boolean DEFAULT_MEMORY_EXERCISE_TYPE_STATUS = false;
     String KEY_SESSION_EXERCISE_NUMBER = "key_session_exercise_number";
     int DEFAULT_SESSION_EXERCISE_NUMBER = 5;
     String KEY_SOUND_SUPPORT_STATUS = "key_sound_support_status";

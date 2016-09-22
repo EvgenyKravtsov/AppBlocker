@@ -58,4 +58,11 @@ public class UseCaseFactory {
     public static GetColorExercise provideGetColorExerciseUseCase() {
         return new GetColorExercise(new ExerciseGenerator(), EventBus.getDefault());
     }
+
+    public static GetMemoryExercise provideGetMemoryExerciseUseCase() {
+        return new GetMemoryExercise(
+                new ExerciseGenerator(),
+                EventBus.getDefault(),
+                DependencyInjection.provideMemorySettings());
+    }
 }

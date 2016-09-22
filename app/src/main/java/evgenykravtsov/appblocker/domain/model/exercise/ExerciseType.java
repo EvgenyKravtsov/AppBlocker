@@ -2,5 +2,5 @@ package evgenykravtsov.appblocker.domain.model.exercise;
 
 public enum ExerciseType {
 
-    Math, Pictures, Clock, Color;
+    Math, Pictures, Clock, Color, Memory;
 }

@@ -1,8 +1,7 @@
 package evgenykravtsov.appblocker.domain.model.exercise;
 
-import android.util.Log;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -13,18 +12,21 @@ import evgenykravtsov.appblocker.domain.model.exercise.color.ColorExercise;
 import evgenykravtsov.appblocker.domain.model.exercise.color.ColorType;
 import evgenykravtsov.appblocker.domain.model.exercise.math.MathExercise;
 import evgenykravtsov.appblocker.domain.model.exercise.math.MathSettings;
-import evgenykravtsov.appblocker.domain.model.exercise.pictures.Picture;
+import evgenykravtsov.appblocker.domain.model.exercise.memory.MemoryExercise;
+import evgenykravtsov.appblocker.domain.model.exercise.memory.MemorySettings;
 import evgenykravtsov.appblocker.domain.model.exercise.pictures.PictureCategory;
 import evgenykravtsov.appblocker.domain.model.exercise.pictures.PicturesExercise;
 
 public class ExerciseGenerator {
 
     private Random random;
+    private PicturesRepository picturesRepository;
 
     ////
 
     public ExerciseGenerator() {
         random = new Random();
+        picturesRepository = DependencyInjection.providePicturesRepository();
     }
 
     ////
@@ -87,7 +89,7 @@ public class ExerciseGenerator {
 
     public PicturesExercise generatePicturesExercise() {
         Map<PictureCategory, List<Picture>> categorizedPictures =
-                DependencyInjection.providePicturesRepository().getCategorizedPictures();
+                picturesRepository.getCategorizedPictures();
 
         PictureCategory correctCategory = PictureCategory.getRandom();
 
@@ -146,6 +148,15 @@ public class ExerciseGenerator {
     public ColorExercise generateColorExercise() {
         ColorType answerColor = ColorType.values()[random.nextInt(ColorType.values().length)];
         return new ColorExercise(answerColor);
+    }
+
+    public MemoryExercise generateMemoryExercise(MemorySettings memorySettings) {
+        List<Picture> pictures = picturesRepository
+                .getMemoryPictures(memorySettings.loadNumberOfPictures());
+        Collections.shuffle(pictures);
+
+        int correctPictureIndex = random.nextInt(pictures.size());
+        return new MemoryExercise(pictures.toArray(new Picture[pictures.size()]), correctPictureIndex);
     }
 
     ////

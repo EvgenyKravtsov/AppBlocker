@@ -10,14 +10,12 @@ public class MathSettingsPresenter {
     ////
 
     private View view;
-
     private MathSettings mathSettings;
 
     ////
 
     public MathSettingsPresenter(View view) {
         this.view = view;
-
         mathSettings = DependencyInjection.provideMathSettings();
     }
 

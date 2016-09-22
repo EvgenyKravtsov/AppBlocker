@@ -52,16 +52,21 @@ public class ExerciseSettingsActivity extends AppCompatActivity
     private EditText numberEditText;
     private CheckBox parentPasswordCheckBox;
     private CheckBox soundSupportCheckBox;
+    private ImageButton expandMemoryButton;
+    private CheckBox memoryCheckBox;
+    private FrameLayout memoryLayout;
     private ImageButton expandMathButton;
     private CheckBox mathCheckBox;
     private FrameLayout mathLayout;
     private CheckBox picturesCheckBox;
     private CheckBox clockCheckBox;
     private CheckBox colorCheckBox;
+    private Button testMemoryButton;
     private Button testMathButton;
     private Button testPicturesButton;
     private Button testClockButton;
     private Button testColorButton;
+    private Button unlockMemoryButton;
     private Button unlockPicturesButton;
     private Button unlockClockButton;
 
@@ -178,6 +183,15 @@ public class ExerciseSettingsActivity extends AppCompatActivity
         soundSupportCheckBox = (CheckBox)
                 findViewById(R.id.exercise_settings_activity_sound_support_check_box);
 
+        expandMemoryButton = (ImageButton) findViewById(R.id.exercise_settings_activity_expand_memory_button);
+
+        memoryCheckBox = (CheckBox) findViewById(R.id.exercise_settings_activity_memory_check_box);
+        boolean memoryStatus = exerciseSettings.loadExerciseTypeStatus(ExerciseType.Memory);
+        if (memoryStatus) activatedExerciseTypesCount++;
+        memoryCheckBox.setChecked(memoryStatus);
+
+        memoryLayout = (FrameLayout) findViewById(R.id.exercise_settings_activity_memory_layout);
+
         expandMathButton = (ImageButton) findViewById(R.id.exercise_settings_activity_expand_math_button);
 
         mathCheckBox = (CheckBox) findViewById(R.id.exercise_settings_activity_math_check_box);
@@ -202,11 +216,13 @@ public class ExerciseSettingsActivity extends AppCompatActivity
         if (colorStatus) activatedExerciseTypesCount++;
         colorCheckBox.setChecked(colorStatus);
 
+        testMemoryButton = (Button) findViewById(R.id.exrcise_settings_activity_test_memory_button);
         testMathButton = (Button) findViewById(R.id.exrcise_settings_activity_test_math_button);
         testPicturesButton = (Button) findViewById(R.id.exrcise_settings_activity_test_pictures_button);
         testClockButton = (Button) findViewById(R.id.exrcise_settings_activity_test_clock_button);
         testColorButton = (Button) findViewById(R.id.exrcise_settings_activity_test_color_button);
 
+        unlockMemoryButton = (Button) findViewById(R.id.exercise_settings_activity_unlock_memory_button);
         unlockPicturesButton = (Button) findViewById(R.id.exercise_settings_activity_unlock_pictures_button);
         unlockClockButton = (Button) findViewById(R.id.exercise_settings_activity_unlock_clock_button);
     }
@@ -223,6 +239,24 @@ public class ExerciseSettingsActivity extends AppCompatActivity
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 presenter.setSoundSupportStatus(checked);
+            }
+        });
+
+        expandMemoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                expandMemoryButton.setRotation(180);
+                int visibility = memoryLayout.getVisibility();
+                if (visibility == View.GONE) {
+                    expandMemoryButton.setRotation(180);
+                    memoryLayout.setVisibility(View.VISIBLE);
+                    mainLayout.scrollTo(0, expandMemoryButton.getBottom());
+                }
+                if (visibility == View.VISIBLE) {
+                    expandMemoryButton.setRotation(0);
+                    mainLayout.scrollTo(expandMemoryButton.getBottom(), memoryCheckBox.getBottom());
+                    memoryLayout.setVisibility(View.GONE);
+                }
             }
         });
 
@@ -245,6 +279,31 @@ public class ExerciseSettingsActivity extends AppCompatActivity
                     expandMathButton.setRotation(0);
                     mainLayout.scrollTo(expandMathButton.getBottom(), mathCheckBox.getBottom());
                     mathLayout.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        memoryCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                if (!billingSettings.loadMemoryExercisePurchaseStatus()) {
+                    showPurchaseDialog(ExerciseType.Memory);
+                    memoryCheckBox.setChecked(!checked);
+                    return;
+                }
+
+                if (!checked) {
+                    if (activatedExerciseTypesCount == 1) {
+                        showSnackbar(getString(R.string.exercise_settings_screen_one_type_warning));
+                        memoryCheckBox.setChecked(true);
+                        return;
+                    }
+
+                    activatedExerciseTypesCount--;
+                    exerciseSettings.saveExerciseTypeStatus(ExerciseType.Memory, false);
+                } else {
+                    activatedExerciseTypesCount++;
+                    exerciseSettings.saveExerciseTypeStatus(ExerciseType.Memory, true);
                 }
             }
         });
@@ -331,6 +390,13 @@ public class ExerciseSettingsActivity extends AppCompatActivity
             }
         });
 
+        testMemoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigateToTestExerciseActivity(ExerciseType.Memory);
+            }
+        });
+
         testMathButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -356,6 +422,13 @@ public class ExerciseSettingsActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 navigateToTestExerciseActivity(ExerciseType.Color);
+            }
+        });
+
+        unlockMemoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                engagePurchase(ExerciseType.Memory);
             }
         });
 
@@ -433,6 +506,9 @@ public class ExerciseSettingsActivity extends AppCompatActivity
                 break;
             case Color:
                 exerciseTypeCode = TestExerciseActivity.EXTRA_COLOR_TO_TEST;
+                break;
+            case Memory:
+                exerciseTypeCode = TestExerciseActivity.EXTRA_MEMORY_TO_TEST;
                 break;
         }
 
@@ -574,19 +650,24 @@ public class ExerciseSettingsActivity extends AppCompatActivity
     private void onPlayStoreInventoryReceived(IabResult result, Inventory inv) {
         boolean oddPictureExercisePurchsed;
         boolean clockExercisePurchased;
+        boolean memoryExercisePurchaseStatus;
 
         if (result.isFailure()) {
             oddPictureExercisePurchsed = billingSettings.loadOddPicturePurchaseStatus();
             clockExercisePurchased = billingSettings.loadClockExercisePurchaseStatus();
+            memoryExercisePurchaseStatus = billingSettings.loadMemoryExercisePurchaseStatus();
         } else {
             oddPictureExercisePurchsed = inv.hasPurchase(BillingSettings.ODD_PICTURE_EXERCISE_SKU);
             clockExercisePurchased = inv.hasPurchase(BillingSettings.CLOCK_EXERCISE_SKU);
+            memoryExercisePurchaseStatus = inv.hasPurchase(BillingSettings.MEMORY_EXERCISE_SKU);
             billingSettings.saveOddPicturePurchaseStatus(oddPictureExercisePurchsed);
             billingSettings.saveClockExercisePurchaseStatus(clockExercisePurchased);
+            billingSettings.saveMemoryExercisePurchaseStatus(memoryExercisePurchaseStatus);
         }
 
         if (oddPictureExercisePurchsed) unlockPicturesButton.setVisibility(View.GONE);
         if (clockExercisePurchased) unlockClockButton.setVisibility(View.GONE);
+        if (memoryExercisePurchaseStatus) unlockMemoryButton.setVisibility(View.GONE);
     }
 
     private void engagePurchase(ExerciseType exerciseType) {
@@ -595,6 +676,7 @@ public class ExerciseSettingsActivity extends AppCompatActivity
         switch (exerciseType) {
             case Pictures: sku = BillingSettings.ODD_PICTURE_EXERCISE_SKU; break;
             case Clock: sku = BillingSettings.CLOCK_EXERCISE_SKU; break;
+            case Memory: sku = BillingSettings.MEMORY_EXERCISE_SKU; break;
         }
 
         try {

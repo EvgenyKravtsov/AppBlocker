@@ -1,4 +1,4 @@
-package evgenykravtsov.appblocker.domain.model.exercise.pictures;
+package evgenykravtsov.appblocker.domain.model.exercise;
 
 import android.graphics.drawable.Drawable;
 

@@ -8,7 +8,8 @@ import evgenykravtsov.appblocker.domain.model.AppRepository;
 import evgenykravtsov.appblocker.domain.model.SystemController;
 import evgenykravtsov.appblocker.domain.model.exercise.ExerciseSettings;
 import evgenykravtsov.appblocker.domain.model.exercise.math.MathSettings;
-import evgenykravtsov.appblocker.domain.model.exercise.pictures.PicturesRepository;
+import evgenykravtsov.appblocker.domain.model.exercise.memory.MemorySettings;
+import evgenykravtsov.appblocker.domain.model.exercise.PicturesRepository;
 import evgenykravtsov.appblocker.external.android.AppBlockerController;
 import evgenykravtsov.appblocker.domain.model.AppBlockerSettings;
 import evgenykravtsov.appblocker.billing.BillingSettings;
@@ -48,6 +49,10 @@ public class DependencyInjection {
     }
 
     public static MathSettings provideMathSettings() {
+        return new SharedPreferencesHelper();
+    }
+
+    public static MemorySettings provideMemorySettings() {
         return new SharedPreferencesHelper();
     }
 

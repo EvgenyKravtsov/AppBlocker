@@ -16,7 +16,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import evgenykravtsov.appblocker.R;
 import evgenykravtsov.appblocker.domain.model.SoundTipType;
-import evgenykravtsov.appblocker.domain.model.exercise.pictures.Picture;
+import evgenykravtsov.appblocker.domain.model.exercise.Picture;
 import evgenykravtsov.appblocker.domain.model.exercise.pictures.PicturesExercise;
 import evgenykravtsov.appblocker.presentation.presenter.PicturesExercisePresenter;
 import evgenykravtsov.appblocker.presentation.presenter.TestPicturesExercisePresenter;

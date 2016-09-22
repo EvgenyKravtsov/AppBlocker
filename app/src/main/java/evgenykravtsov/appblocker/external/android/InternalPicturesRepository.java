@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
-import evgenykravtsov.appblocker.R;
-import evgenykravtsov.appblocker.domain.model.exercise.pictures.Picture;
+import evgenykravtsov.appblocker.domain.model.exercise.Picture;
 import evgenykravtsov.appblocker.domain.model.exercise.pictures.PictureCategory;
-import evgenykravtsov.appblocker.domain.model.exercise.pictures.PicturesRepository;
+import evgenykravtsov.appblocker.domain.model.exercise.PicturesRepository;
 
 public class InternalPicturesRepository implements PicturesRepository {
 
@@ -64,7 +64,8 @@ public class InternalPicturesRepository implements PicturesRepository {
         for (int i = 1; i < 17; i++) {
             Picture flowersCategoryPicture = new Picture(
                     context.getResources().getDrawable(
-                            getResourceIdByString("picture_exercise_flowers_" + i))
+                            getResourceIdByString("picture_exercise_flowers_" + i)
+                    )
             );
 
             flowersCategoryPictures.add(flowersCategoryPicture);
@@ -77,6 +78,25 @@ public class InternalPicturesRepository implements PicturesRepository {
 
         return categorizedPictures;
     }
+
+    @Override
+    public List<Picture> getMemoryPictures(int numberOfPictures) {
+        List<Picture> allPictures = new ArrayList<>();
+        for (int i = 1; i < 9; i++)
+            allPictures.add(new Picture(context.getResources().getDrawable(
+                    getResourceIdByString("memory_picture_" + i)
+            )));
+
+        Random random = new Random();
+
+        List<Picture> pictures = new ArrayList<>();
+        for (int i = 0; i < numberOfPictures; i++)
+            pictures.add(allPictures.remove(random.nextInt(allPictures.size())));
+
+        return pictures;
+    }
+
+    ////
 
     private int getResourceIdByString(String idTitle) {
         Resources resources = context.getResources();

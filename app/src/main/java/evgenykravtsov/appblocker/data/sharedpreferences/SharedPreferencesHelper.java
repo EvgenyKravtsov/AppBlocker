@@ -3,18 +3,20 @@ package evgenykravtsov.appblocker.data.sharedpreferences;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import evgenykravtsov.appblocker.billing.BillingSettings;
+import evgenykravtsov.appblocker.domain.model.AppBlockerSettings;
 import evgenykravtsov.appblocker.domain.model.exercise.ExerciseSettings;
 import evgenykravtsov.appblocker.domain.model.exercise.ExerciseType;
 import evgenykravtsov.appblocker.domain.model.exercise.math.MathSettings;
+import evgenykravtsov.appblocker.domain.model.exercise.memory.MemorySettings;
 import evgenykravtsov.appblocker.external.android.AppBlockerController;
-import evgenykravtsov.appblocker.domain.model.AppBlockerSettings;
-import evgenykravtsov.appblocker.billing.BillingSettings;
 import evgenykravtsov.appblocker.presentation.onboarding.OnboardingSettings;
 
 public class SharedPreferencesHelper
         implements AppBlockerSettings,
         ExerciseSettings,
         MathSettings,
+        MemorySettings,
         OnboardingSettings,
         BillingSettings {
 
@@ -105,6 +107,8 @@ public class SharedPreferencesHelper
                 return loadBoolean(KEY_CLOCK_EXERCISE_TYPE, DEFAULT_CLOCK_EXERCISE_TYPE_STATUS);
             case Color:
                 return loadBoolean(KEY_COLOR_EXERCISE_TYPE, DEFAULT_COLOR_EXERCISE_TYPE_STATUS);
+            case Memory:
+                return loadBoolean(KEY_MEMORY_EXERCISE_TYPE, DEFAULT_MEMORY_EXERCISE_TYPE_STATUS);
             default:
                 return false;
         }
@@ -124,6 +128,9 @@ public class SharedPreferencesHelper
                 break;
             case Color:
                 saveBoolean(KEY_COLOR_EXERCISE_TYPE, status);
+                break;
+            case Memory:
+                saveBoolean(KEY_MEMORY_EXERCISE_TYPE, status);
                 break;
         }
     }
@@ -148,7 +155,7 @@ public class SharedPreferencesHelper
         saveBoolean(KEY_SOUND_SUPPORT_STATUS, status);
     }
 
-    ////
+    //// MATH EXERCISE
 
     @Override
     public int loadMaxResult() {
@@ -206,6 +213,38 @@ public class SharedPreferencesHelper
         saveBoolean(MathSettings.KEY_DIVISION_STATUS, enabled);
     }
 
+    //// MEMORY EXERCISE
+
+    @Override
+    public int loadNumberOfPictures() {
+        return loadInt(KEY_NUMBER_OF_PICTURES, DEFAULT_NUMBER_OF_PICTURES);
+    }
+
+    @Override
+    public void saveNumberOfPictures(int numberOfPictures) {
+        saveInt(KEY_NUMBER_OF_PICTURES, numberOfPictures);
+    }
+
+    @Override
+    public int loadNumberOfMistakes() {
+        return loadInt(KEY_NUMBER_OF_MISTAKER, DEFAULT_NUMBER_OF_MISTAKES);
+    }
+
+    @Override
+    public void saveNumberOfMistakes(int numberOfMistakes) {
+        saveInt(KEY_NUMBER_OF_MISTAKER, numberOfMistakes);
+    }
+
+    @Override
+    public int loadDisplayTime() {
+        return loadInt(KEY_DISPLAY_TIME, DEFAULT_DISPLAY_TIME);
+    }
+
+    @Override
+    public void saveDisplayTime(int displayTime) {
+        saveInt(KEY_DISPLAY_TIME, displayTime);
+    }
+
     ////
 
     @Override
@@ -240,7 +279,7 @@ public class SharedPreferencesHelper
         saveInt(KEY_NUMBER_OF_APP_LAUNCHES, number);
     }
 
-    ////
+    //// BILLING
 
     @Override
     public boolean loadAppSharedStatus() {
@@ -276,6 +315,16 @@ public class SharedPreferencesHelper
     @Override
     public void saveClockExercisePurchaseStatus(boolean status) {
         saveBoolean(KEY_CLOCK_EXERCISE_PURCHASE_STATUS, status);
+    }
+
+    @Override
+    public boolean loadMemoryExercisePurchaseStatus() {
+        return loadBoolean(KEY_MEMORY_EXERCISE_PURCHASE_STATUS, DEFAULT_MEMORY_EXERCISE_PURCHASE_STATUS);
+    }
+
+    @Override
+    public void saveMemoryExercisePurchaseStatus(boolean status) {
+        saveBoolean(KEY_MEMORY_EXERCISE_PURCHASE_STATUS, status);
     }
 
     ////

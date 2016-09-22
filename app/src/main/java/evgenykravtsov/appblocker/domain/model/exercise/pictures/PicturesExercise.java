@@ -1,5 +1,7 @@
 package evgenykravtsov.appblocker.domain.model.exercise.pictures;
 
+import evgenykravtsov.appblocker.domain.model.exercise.Picture;
+
 public class PicturesExercise {
 
     private final Picture[] pictures;

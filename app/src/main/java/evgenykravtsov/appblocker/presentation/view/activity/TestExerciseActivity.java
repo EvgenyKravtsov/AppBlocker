@@ -4,17 +4,10 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-
-import org.greenrobot.eventbus.EventBus;
 
 import evgenykravtsov.appblocker.R;
 import evgenykravtsov.appblocker.domain.model.exercise.ExerciseType;
 import evgenykravtsov.appblocker.presentation.presenter.TestExercisePresenter;
-import evgenykravtsov.appblocker.presentation.view.fragment.ClockExerciseFragment;
-import evgenykravtsov.appblocker.presentation.view.fragment.ColorExerciseFragment;
-import evgenykravtsov.appblocker.presentation.view.fragment.MathExerciseFragment;
-import evgenykravtsov.appblocker.presentation.view.fragment.PictureExerciseFragment;
 
 public class TestExerciseActivity extends AppCompatActivity
         implements TestExercisePresenter.View {
@@ -24,6 +17,7 @@ public class TestExerciseActivity extends AppCompatActivity
     public static final int EXTRA_PICTURES_TO_TEST = 1;
     public static final int EXTRA_CLOCK_TO_TEST = 2;
     public static final int EXTRA_COLOR_TO_TEST = 3;
+    public static final int EXTRA_MEMORY_TO_TEST = 4;
 
     private TestExercisePresenter presenter;
 
@@ -48,6 +42,7 @@ public class TestExerciseActivity extends AppCompatActivity
             case EXTRA_PICTURES_TO_TEST: exerciseTypeToTest = ExerciseType.Pictures; break;
             case EXTRA_CLOCK_TO_TEST: exerciseTypeToTest = ExerciseType.Clock; break;
             case EXTRA_COLOR_TO_TEST: exerciseTypeToTest = ExerciseType.Color; break;
+            case EXTRA_MEMORY_TO_TEST: exerciseTypeToTest = ExerciseType.Memory; break;
         }
     }
 

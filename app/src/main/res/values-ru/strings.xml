@@ -25,6 +25,7 @@
     <string name="main_screen_wrong_password">Неправильный пароль</string>
 
     <!-- Exercise settings screen -->
+    <string name="exercise_settings_new_label">НОВИНКА</string>
     <string name="exercise_settings_purchase_dialog_button_label">В магазин</string>
     <string name="exercise_settings_purchase_text">Данный модуль является платным.</string>
     <string name="exercise_settings_share_math_text">Поделитесь нашим приложением с друзьями или
@@ -53,9 +54,18 @@
     <string name="exercise_settings_screen_exercises_tip_text">Здесь вы можете включать и исключать
         типы упражнений, просто отмечая нужные галочкой. В ходе сеанса блокировки приложение
         случайно выбирает упражнения из списка активированных.</string>
-    <string name="exercise_settings_screen_one_type_warning">Хотя бы один тип должен быть активен</string>
+    <string name="exercise_settings_screen_one_type_warning">Хотя бы один модуль должен быть активен</string>
     <string name="exercise_settings_screen_password_dont_match">Пароли не совпадают</string>
     <string name="exercise_settings_screen_password_saved">Пароль сохранен</string>
+    <string name="exercise_settings_screen_new_item">Новинка</string>
+    <string name="exercise_settings_screen_memory">Зрительная память</string>
+    <string name="exercise_settings_screen_memory_description">Классическое упражнение для тренировки
+        зрительной памяти. Ребенку демонстрируется несколько картинок в течение ограниченного времени.
+        Затем они скрываются, и необходимо отметить положение указанной картинки. Вы можете настроить
+        количество картинок, длительность показа и количество допустимых ошибок.</string>
+    <string name="exercise_settings_screen_number_of_memory_pictures">Количество картинок(2–8)</string>
+    <string name="exercise_settings_screen_number_of_mistakes_pictures">Количество ошибок</string>
+    <string name="exercise_settings_screen_memory_display_time">Длительность показа(секунды)</string>
 
     <!-- Feedback screen -->
     <string name="feedback_screen_title">Отзыв</string>
@@ -103,5 +113,8 @@
 
     <!-- Picture exercise screen -->
     <string name="picture_exercise_screen_pick_odd_picture">Найди лишнюю картинку</string>
+
+    <!-- Memory exercise screen -->
+    <string name="memory_exercise_screen_find_picture">Найди - </string>
 
 </resources>
